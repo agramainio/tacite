@@ -95,5 +95,17 @@
   "source": "Source : {source}",
   "summary": "Résumé",
   "summarySoFar": "Résumé pour l’instant",
-  "summaryToBring": "Résumé à apporter à un rendez-vous"
+  "summaryToBring": "Résumé à apporter à un rendez-vous",
+  "recordTimelineNote": "Enregistrer une note dans la chronologie",
+  "recordTimelineNoteBody": "Écrivez comme ça vient. Un seul geste l’ajoute à la chronologie et conserve les mots d’origine.",
+  "kindOfNote": "Type de note",
+  "recordToTimeline": "Enregistrer dans la chronologie",
+  "recording": "Enregistrement…",
+  "recordedToTimeline": "Enregistré dans la chronologie. La note originale est conservée.",
+  "couldNotRecordNote": "Impossible d’enregistrer la note : {message}",
+  "@couldNotRecordNote": {
+    "placeholders": {
+      "message": {}
+    }
+  }
 }

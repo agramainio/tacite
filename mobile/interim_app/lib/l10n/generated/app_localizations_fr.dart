@@ -333,4 +333,29 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get summaryToBring => 'Résumé à apporter à un rendez-vous';
+
+  @override
+  String get recordTimelineNote => 'Enregistrer une note dans la chronologie';
+
+  @override
+  String get recordTimelineNoteBody =>
+      'Écrivez comme ça vient. Un seul geste l’ajoute à la chronologie et conserve les mots d’origine.';
+
+  @override
+  String get kindOfNote => 'Type de note';
+
+  @override
+  String get recordToTimeline => 'Enregistrer dans la chronologie';
+
+  @override
+  String get recording => 'Enregistrement…';
+
+  @override
+  String get recordedToTimeline =>
+      'Enregistré dans la chronologie. La note originale est conservée.';
+
+  @override
+  String couldNotRecordNote(Object message) {
+    return 'Impossible d’enregistrer la note : $message';
+  }
 }

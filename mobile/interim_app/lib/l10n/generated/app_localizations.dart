@@ -677,6 +677,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Summary to bring to an appointment'**
   String get summaryToBring;
+
+  /// No description provided for @recordTimelineNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Record a timeline note'**
+  String get recordTimelineNote;
+
+  /// No description provided for @recordTimelineNoteBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Write it as it comes. One tap records it to the timeline and preserves the original wording.'**
+  String get recordTimelineNoteBody;
+
+  /// No description provided for @kindOfNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Kind of note'**
+  String get kindOfNote;
+
+  /// No description provided for @recordToTimeline.
+  ///
+  /// In en, this message translates to:
+  /// **'Record to timeline'**
+  String get recordToTimeline;
+
+  /// No description provided for @recording.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording…'**
+  String get recording;
+
+  /// No description provided for @recordedToTimeline.
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded to timeline. Original note preserved.'**
+  String get recordedToTimeline;
+
+  /// No description provided for @couldNotRecordNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not record the note: {message}'**
+  String couldNotRecordNote(Object message);
 }
 
 class _AppLocalizationsDelegate

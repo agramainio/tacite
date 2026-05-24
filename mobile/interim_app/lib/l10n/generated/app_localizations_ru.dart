@@ -328,4 +328,29 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get summaryToBring => 'Резюме для встречи';
+
+  @override
+  String get recordTimelineNote => 'Записать заметку в хронологию';
+
+  @override
+  String get recordTimelineNoteBody =>
+      'Пишите как есть. Одним нажатием заметка добавляется в хронологию, а исходные слова сохраняются.';
+
+  @override
+  String get kindOfNote => 'Тип заметки';
+
+  @override
+  String get recordToTimeline => 'Записать в хронологию';
+
+  @override
+  String get recording => 'Запись…';
+
+  @override
+  String get recordedToTimeline =>
+      'Записано в хронологию. Исходная заметка сохранена.';
+
+  @override
+  String couldNotRecordNote(Object message) {
+    return 'Не удалось записать заметку: $message';
+  }
 }

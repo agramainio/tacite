@@ -330,4 +330,29 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get summaryToBring => 'Riassunto da portare a un appuntamento';
+
+  @override
+  String get recordTimelineNote => 'Registra una nota nella cronologia';
+
+  @override
+  String get recordTimelineNoteBody =>
+      'Scrivi come viene. Con un solo gesto viene registrata nella cronologia e le parole originali vengono conservate.';
+
+  @override
+  String get kindOfNote => 'Tipo di nota';
+
+  @override
+  String get recordToTimeline => 'Registra nella cronologia';
+
+  @override
+  String get recording => 'Registrazione…';
+
+  @override
+  String get recordedToTimeline =>
+      'Registrata nella cronologia. La nota originale è conservata.';
+
+  @override
+  String couldNotRecordNote(Object message) {
+    return 'Impossibile registrare la nota: $message';
+  }
 }

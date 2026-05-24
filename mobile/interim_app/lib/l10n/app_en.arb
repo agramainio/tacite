@@ -145,5 +145,17 @@
   },
   "summary": "Summary",
   "summarySoFar": "Summary so far",
-  "summaryToBring": "Summary to bring to an appointment"
+  "summaryToBring": "Summary to bring to an appointment",
+  "recordTimelineNote": "Record a timeline note",
+  "recordTimelineNoteBody": "Write it as it comes. One tap records it to the timeline and preserves the original wording.",
+  "kindOfNote": "Kind of note",
+  "recordToTimeline": "Record to timeline",
+  "recording": "Recording…",
+  "recordedToTimeline": "Recorded to timeline. Original note preserved.",
+  "couldNotRecordNote": "Could not record the note: {message}",
+  "@couldNotRecordNote": {
+    "placeholders": {
+      "message": {}
+    }
+  }
 }

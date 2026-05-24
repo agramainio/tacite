@@ -29,7 +29,7 @@ void main() {
   });
 
   testWidgets(
-    'thread detail screen preserves raw-note boundary without network calls',
+    'thread detail screen has one-tap timeline capture without network calls',
     (tester) async {
       await tester.pumpWidget(
         const InterimAppWrapper(
@@ -40,15 +40,11 @@ void main() {
         ),
       );
 
-      expect(find.text('Add a messy note'), findsOneWidget);
+      expect(find.text('Record a timeline note'), findsOneWidget);
+      expect(find.text('Kind of note'), findsOneWidget);
       expect(find.text('Messy note'), findsOneWidget);
-      expect(find.text('Save original note'), findsOneWidget);
-      expect(
-        find.text(
-          'Write it as it comes. The original wording is preserved. AI formatting is not used here.',
-        ),
-        findsOneWidget,
-      );
+      expect(find.text('Record to timeline'), findsOneWidget);
+      expect(find.text('Timeline'), findsOneWidget);
     },
   );
 }

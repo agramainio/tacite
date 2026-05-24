@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../l10n/generated/app_localizations.dart';
 import 'data/thread_models.dart';
 import 'data/thread_repository.dart';
 
@@ -22,15 +23,12 @@ class ThreadDetailScreen extends StatefulWidget {
 class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
   final _repository = ThreadRepository.defaultRepository();
   final _noteController = TextEditingController();
-  final _eventTitleController = TextEditingController();
-  final _eventSummaryController = TextEditingController();
 
   bool _isLoadingExisting = true;
-  bool _isSavingNote = false;
-  bool _isSavingEvent = false;
+  bool _isRecording = false;
   String _eventType = 'note';
   String? _message;
-  RawNote? _savedNote;
+
   final List<RawNote> _rawNotes = [];
   final List<TimelineEvent> _timelineEvents = [];
 
@@ -48,14 +46,13 @@ class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
   @override
   void dispose() {
     _noteController.dispose();
-    _eventTitleController.dispose();
-    _eventSummaryController.dispose();
     super.dispose();
   }
 
   Future<void> _loadExistingRecords() async {
     setState(() {
       _isLoadingExisting = true;
+      _message = null;
     });
 
     try {
@@ -80,31 +77,34 @@ class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
         return;
       }
 
+      final l10n = AppLocalizations.of(context);
+
       setState(() {
         if (error.response?.statusCode == 401) {
-          _message = 'Log in from the home screen first.';
+          _message = l10n.loginFromHomeFirst;
         } else if (error.response?.statusCode == 404) {
-          _message = 'Thread not found.';
+          _message = l10n.threadNotFound;
         } else {
-          _message = 'Could not load saved records: ${error.message}';
+          _message = l10n.couldNotLoadSavedRecords(error.message ?? 'unknown');
         }
         _isLoadingExisting = false;
       });
     }
   }
 
-  Future<void> _saveRawNote() async {
+  Future<void> _recordToTimeline() async {
+    final l10n = AppLocalizations.of(context);
     final text = _noteController.text.trim();
 
     if (text.isEmpty) {
       setState(() {
-        _message = 'Write a note first.';
+        _message = l10n.writeNoteFirst;
       });
       return;
     }
 
     setState(() {
-      _isSavingNote = true;
+      _isRecording = true;
       _message = null;
     });
 
@@ -114,108 +114,63 @@ class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
         originalText: text,
       );
 
-      setState(() {
-        _savedNote = note;
-        _rawNotes.insert(0, note);
-        _noteController.clear();
-        _eventTitleController.text = 'Manual note';
-        _eventSummaryController.text = note.originalText;
-        _message =
-            'Saved original note. Now create a user-approved timeline event.';
-      });
-    } on DioException catch (error) {
-      setState(() {
-        if (error.response?.statusCode == 401) {
-          _message = 'Log in from the home screen first, then save the note.';
-        } else if (error.response?.statusCode == 404) {
-          _message = 'Thread not found.';
-        } else {
-          _message = 'Could not save the note: ${error.message}';
-        }
-      });
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isSavingNote = false;
-        });
-      }
-    }
-  }
-
-  Future<void> _createTimelineEvent() async {
-    final note = _savedNote;
-    final title = _eventTitleController.text.trim();
-    final summary = _eventSummaryController.text.trim();
-
-    if (note == null) {
-      setState(() {
-        _message = 'Save an original note first.';
-      });
-      return;
-    }
-
-    if (title.isEmpty || summary.isEmpty) {
-      setState(() {
-        _message = 'Add a title and approved summary first.';
-      });
-      return;
-    }
-
-    setState(() {
-      _isSavingEvent = true;
-      _message = null;
-    });
-
-    try {
       final event = await _repository.createTimelineEvent(
         threadId: widget.threadId,
         rawNoteId: note.id,
         eventType: _eventType,
-        title: title,
-        userApprovedSummary: summary,
+        title: _defaultTitleFor(_eventType, l10n),
+        userApprovedSummary: note.originalText,
       );
 
       setState(() {
+        _noteController.clear();
+        _rawNotes.insert(0, note);
         _timelineEvents.insert(0, event);
-        _savedNote = null;
-        _eventTitleController.clear();
-        _eventSummaryController.clear();
-        _message = 'Saved user-approved timeline event.';
+        _message = l10n.recordedToTimeline;
       });
     } on DioException catch (error) {
       setState(() {
         if (error.response?.statusCode == 401) {
-          _message =
-              'Log in from the home screen first, then create the timeline event.';
+          _message = l10n.loginFromHomeFirst;
         } else if (error.response?.statusCode == 404) {
-          _message = 'Thread or raw note not found.';
+          _message = l10n.threadOrRawNoteNotFound;
         } else {
-          _message = 'Could not create the timeline event: ${error.message}';
+          _message = l10n.couldNotRecordNote(error.message ?? 'unknown');
         }
       });
     } finally {
       if (mounted) {
         setState(() {
-          _isSavingEvent = false;
+          _isRecording = false;
         });
       }
     }
   }
 
-  bool get _canCreateTimelineEvent => _savedNote != null && !_isSavingEvent;
+  String _defaultTitleFor(String eventType, AppLocalizations l10n) {
+    return switch (eventType) {
+      'baseline_snapshot' => l10n.baselineSnapshot,
+      'started_medication' => l10n.startedTreatmentLabel,
+      'side_effect_note' => l10n.sideEffectNote,
+      'appointment_question' => l10n.appointmentQuestion,
+      _ => l10n.note,
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Thread'),
+        title: Text(l10n.thread),
         actions: [
           TextButton(
-            onPressed: () => context.go('/'),
-            child: const Text('Home'),
+            onPressed: _loadExistingRecords,
+            child: Text(l10n.refresh),
           ),
+          TextButton(onPressed: () => context.go('/'), child: Text(l10n.home)),
         ],
       ),
       body: SafeArea(
@@ -223,60 +178,79 @@ class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
           padding: const EdgeInsets.all(20),
           children: [
             Text(
-              'Add a messy note',
+              l10n.recordTimelineNote,
               style: textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.w700,
               ),
             ),
             const SizedBox(height: 8),
-            const Text(
-              'Write it as it comes. The original wording is preserved. AI formatting is not used here.',
-            ),
+            Text(l10n.recordTimelineNoteBody),
             const SizedBox(height: 20),
+            DropdownButtonFormField<String>(
+              initialValue: _eventType,
+              decoration: InputDecoration(
+                labelText: l10n.kindOfNote,
+                border: const OutlineInputBorder(),
+              ),
+              items: [
+                DropdownMenuItem(value: 'note', child: Text(l10n.note)),
+                DropdownMenuItem(
+                  value: 'baseline_snapshot',
+                  child: Text(l10n.baselineSnapshot),
+                ),
+                DropdownMenuItem(
+                  value: 'started_medication',
+                  child: Text(l10n.startedTreatmentLabel),
+                ),
+                DropdownMenuItem(
+                  value: 'side_effect_note',
+                  child: Text(l10n.sideEffectNote),
+                ),
+                DropdownMenuItem(
+                  value: 'appointment_question',
+                  child: Text(l10n.appointmentQuestion),
+                ),
+              ],
+              onChanged: _isRecording
+                  ? null
+                  : (value) {
+                      if (value == null) {
+                        return;
+                      }
+
+                      setState(() {
+                        _eventType = value;
+                      });
+                    },
+            ),
+            const SizedBox(height: 16),
             TextField(
               controller: _noteController,
               minLines: 5,
               maxLines: 10,
               textInputAction: TextInputAction.newline,
-              decoration: const InputDecoration(
-                labelText: 'Messy note',
-                hintText: 'Use fake test data while developing.',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.messyNote,
+                hintText: l10n.fakeDataHint,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 12),
             FilledButton(
-              onPressed: _isSavingNote ? null : _saveRawNote,
-              child: Text(_isSavingNote ? 'Saving…' : 'Save original note'),
+              onPressed: _isRecording ? null : _recordToTimeline,
+              child: Text(
+                _isRecording ? l10n.recording : l10n.recordToTimeline,
+              ),
             ),
             if (_message != null) ...[
               const SizedBox(height: 16),
               Text(_message!),
             ],
-            if (_savedNote != null) ...[
-              const SizedBox(height: 16),
-              _TimelineEventEditor(
-                eventType: _eventType,
-                eventTitleController: _eventTitleController,
-                eventSummaryController: _eventSummaryController,
-                onEventTypeChanged: (value) {
-                  if (value == null) {
-                    return;
-                  }
-
-                  setState(() {
-                    _eventType = value;
-                  });
-                },
-                onSave: _canCreateTimelineEvent ? _createTimelineEvent : null,
-                isSaving: _isSavingEvent,
-              ),
-            ],
             const SizedBox(height: 24),
             _RecordsSection(
-              title: 'Timeline events',
+              title: l10n.timeline,
               isLoading: _isLoadingExisting,
-              emptyText: 'No timeline events yet.',
+              emptyText: l10n.noTimelineEventsYet,
               children: [
                 for (final event in _timelineEvents)
                   _SavedTimelineEventCard(event: event),
@@ -284,9 +258,9 @@ class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
             ),
             const SizedBox(height: 16),
             _RecordsSection(
-              title: 'Original notes',
+              title: l10n.originalNotes,
               isLoading: _isLoadingExisting,
-              emptyText: 'No original notes yet.',
+              emptyText: l10n.noOriginalNotesYet,
               children: [
                 for (final note in _rawNotes) _SavedRawNoteCard(note: note),
               ],
@@ -313,6 +287,7 @@ class _RecordsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final textTheme = Theme.of(context).textTheme;
 
     return Column(
@@ -321,10 +296,10 @@ class _RecordsSection extends StatelessWidget {
         Text(title, style: textTheme.titleLarge),
         const SizedBox(height: 12),
         if (isLoading)
-          const Card(
+          Card(
             child: Padding(
-              padding: EdgeInsets.all(16),
-              child: Text('Loading saved records…'),
+              padding: const EdgeInsets.all(16),
+              child: Text(l10n.loadingSavedRecords),
             ),
           )
         else if (children.isEmpty)
@@ -349,6 +324,7 @@ class _SavedRawNoteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final textTheme = Theme.of(context).textTheme;
 
     return Card(
@@ -357,102 +333,13 @@ class _SavedRawNoteCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Original note', style: textTheme.titleMedium),
+            Text(l10n.originalNote, style: textTheme.titleMedium),
             const SizedBox(height: 8),
             SelectableText(note.originalText),
             const SizedBox(height: 12),
             Text(
-              'Saved date: ${note.userLocalDate ?? 'unknown'}',
+              l10n.savedDate(note.userLocalDate ?? l10n.unknown),
               style: textTheme.bodySmall,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _TimelineEventEditor extends StatelessWidget {
-  const _TimelineEventEditor({
-    required this.eventType,
-    required this.eventTitleController,
-    required this.eventSummaryController,
-    required this.onEventTypeChanged,
-    required this.onSave,
-    required this.isSaving,
-  });
-
-  final String eventType;
-  final TextEditingController eventTitleController;
-  final TextEditingController eventSummaryController;
-  final ValueChanged<String?> onEventTypeChanged;
-  final VoidCallback? onSave;
-  final bool isSaving;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Create user-approved timeline event',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 8),
-            const Text('This is manual. No AI is interpreting the note.'),
-            const SizedBox(height: 16),
-            DropdownButtonFormField<String>(
-              initialValue: eventType,
-              decoration: const InputDecoration(
-                labelText: 'Event type',
-                border: OutlineInputBorder(),
-              ),
-              items: const [
-                DropdownMenuItem(value: 'note', child: Text('Note')),
-                DropdownMenuItem(
-                  value: 'baseline_snapshot',
-                  child: Text('Baseline snapshot'),
-                ),
-                DropdownMenuItem(
-                  value: 'started_medication',
-                  child: Text('Started treatment label'),
-                ),
-                DropdownMenuItem(
-                  value: 'side_effect_note',
-                  child: Text('Side-effect note'),
-                ),
-                DropdownMenuItem(
-                  value: 'appointment_question',
-                  child: Text('Appointment question'),
-                ),
-              ],
-              onChanged: isSaving ? null : onEventTypeChanged,
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: eventTitleController,
-              decoration: const InputDecoration(
-                labelText: 'Timeline title',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: eventSummaryController,
-              minLines: 4,
-              maxLines: 8,
-              decoration: const InputDecoration(
-                labelText: 'User-approved summary',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 16),
-            FilledButton(
-              onPressed: onSave,
-              child: Text(isSaving ? 'Saving event…' : 'Save timeline event'),
             ),
           ],
         ),
@@ -468,6 +355,7 @@ class _SavedTimelineEventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final textTheme = Theme.of(context).textTheme;
 
     return Card(
@@ -476,7 +364,7 @@ class _SavedTimelineEventCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Timeline event', style: textTheme.titleMedium),
+            Text(l10n.timelineEvent, style: textTheme.titleMedium),
             const SizedBox(height: 8),
             Text(
               event.title,
@@ -485,7 +373,7 @@ class _SavedTimelineEventCard extends StatelessWidget {
             const SizedBox(height: 8),
             SelectableText(event.userApprovedSummary),
             const SizedBox(height: 12),
-            Text('Source: ${event.source}', style: textTheme.bodySmall),
+            Text(l10n.source(event.source), style: textTheme.bodySmall),
           ],
         ),
       ),

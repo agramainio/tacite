@@ -95,5 +95,17 @@
   "source": "Fonte: {source}",
   "summary": "Riassunto",
   "summarySoFar": "Riassunto finora",
-  "summaryToBring": "Riassunto da portare a un appuntamento"
+  "summaryToBring": "Riassunto da portare a un appuntamento",
+  "recordTimelineNote": "Registra una nota nella cronologia",
+  "recordTimelineNoteBody": "Scrivi come viene. Con un solo gesto viene registrata nella cronologia e le parole originali vengono conservate.",
+  "kindOfNote": "Tipo di nota",
+  "recordToTimeline": "Registra nella cronologia",
+  "recording": "Registrazione…",
+  "recordedToTimeline": "Registrata nella cronologia. La nota originale è conservata.",
+  "couldNotRecordNote": "Impossibile registrare la nota: {message}",
+  "@couldNotRecordNote": {
+    "placeholders": {
+      "message": {}
+    }
+  }
 }

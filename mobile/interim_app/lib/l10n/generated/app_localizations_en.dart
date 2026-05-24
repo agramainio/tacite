@@ -327,4 +327,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get summaryToBring => 'Summary to bring to an appointment';
+
+  @override
+  String get recordTimelineNote => 'Record a timeline note';
+
+  @override
+  String get recordTimelineNoteBody =>
+      'Write it as it comes. One tap records it to the timeline and preserves the original wording.';
+
+  @override
+  String get kindOfNote => 'Kind of note';
+
+  @override
+  String get recordToTimeline => 'Record to timeline';
+
+  @override
+  String get recording => 'Recording…';
+
+  @override
+  String get recordedToTimeline =>
+      'Recorded to timeline. Original note preserved.';
+
+  @override
+  String couldNotRecordNote(Object message) {
+    return 'Could not record the note: $message';
+  }
 }

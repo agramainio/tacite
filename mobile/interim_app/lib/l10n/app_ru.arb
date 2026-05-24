@@ -95,5 +95,17 @@
   "source": "Источник: {source}",
   "summary": "Резюме",
   "summarySoFar": "Резюме на данный момент",
-  "summaryToBring": "Резюме для встречи"
+  "summaryToBring": "Резюме для встречи",
+  "recordTimelineNote": "Записать заметку в хронологию",
+  "recordTimelineNoteBody": "Пишите как есть. Одним нажатием заметка добавляется в хронологию, а исходные слова сохраняются.",
+  "kindOfNote": "Тип заметки",
+  "recordToTimeline": "Записать в хронологию",
+  "recording": "Запись…",
+  "recordedToTimeline": "Записано в хронологию. Исходная заметка сохранена.",
+  "couldNotRecordNote": "Не удалось записать заметку: {message}",
+  "@couldNotRecordNote": {
+    "placeholders": {
+      "message": {}
+    }
+  }
 }
