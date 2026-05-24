@@ -11,6 +11,9 @@ class Settings(BaseSettings):
     database_url: str = (
         "postgresql+psycopg://interim:interim_dev_password@127.0.0.1:55432/interim_dev"
     )
+    auth_secret_key: str = "local-dev-secret-change-before-production"
+    login_code_ttl_minutes: int = 10
+    session_ttl_days: int = 30
 
     model_config = SettingsConfigDict(
         env_file=".env",
