@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:interim_app/features/home/home_screen.dart';
 import 'package:interim_app/features/thread/new_thread_screen.dart';
 import 'package:interim_app/features/thread/thread_detail_screen.dart';
+import 'package:interim_app/l10n/generated/app_localizations.dart';
 
 void main() {
   testWidgets('home screen shows core product boundary without network calls', (
@@ -59,6 +60,11 @@ class InterimAppWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: child);
+    return MaterialApp(
+      locale: const Locale('en'),
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      home: child,
+    );
   }
 }

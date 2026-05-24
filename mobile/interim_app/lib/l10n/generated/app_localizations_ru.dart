@@ -1,0 +1,331 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for Russian (`ru`).
+class AppLocalizationsRu extends AppLocalizations {
+  AppLocalizationsRu([String locale = 'ru']) : super(locale);
+
+  @override
+  String get appTitle => 'interim';
+
+  @override
+  String get language => 'Язык';
+
+  @override
+  String get languageEnglish => 'английский';
+
+  @override
+  String get languageFrench => 'французский';
+
+  @override
+  String get languageItalian => 'итальянский';
+
+  @override
+  String get languageRussian => 'русский';
+
+  @override
+  String get login => 'Войти';
+
+  @override
+  String get logout => 'Выйти';
+
+  @override
+  String get home => 'Главная';
+
+  @override
+  String get refresh => 'Обновить';
+
+  @override
+  String get loggedIn => 'Вы вошли';
+
+  @override
+  String get notLoggedIn => 'Вы не вошли';
+
+  @override
+  String get checkingSession => 'Проверка сессии';
+
+  @override
+  String get checkingSessionBody => 'Ищем сохранённый токен входа.';
+
+  @override
+  String get loginBeforePrivateRecords =>
+      'Войдите, прежде чем создавать личные записи.';
+
+  @override
+  String get homeHero =>
+      'Личная память для того, что позже может быть трудно объяснить.';
+
+  @override
+  String get homeBody =>
+      'Записывайте хаотичные заметки, сохраняйте исходные слова и готовьте редактируемое резюме.';
+
+  @override
+  String get startThread => 'Начать тему';
+
+  @override
+  String get viewSampleTimeline => 'Посмотреть пример хронологии';
+
+  @override
+  String get productBoundaries => 'Границы продукта';
+
+  @override
+  String get boundaryNoRealName => 'Настоящее имя не требуется.';
+
+  @override
+  String get boundaryAiOptional => 'ИИ необязателен и по умолчанию выключен.';
+
+  @override
+  String get boundaryOriginalNotes => 'Исходные заметки сохраняются.';
+
+  @override
+  String get boundaryNoShame =>
+      'Пропускать нормально. Без серий и чувства вины.';
+
+  @override
+  String get noMedicalAdviceTitle => 'Не медицинский совет';
+
+  @override
+  String get noMedicalAdviceBody =>
+      'interim помогает записывать и организовывать ваши собственные заметки. Приложение не ставит диагнозы, не рекомендует лечение и не заменяет врача, психиатра, психолога, терапевта или экстренную службу.';
+
+  @override
+  String get loginTitle => 'Настоящее имя не требуется.';
+
+  @override
+  String get loginBody =>
+      'Используйте e-mail, к которому у вас есть доступ, чтобы interim мог связать записи с вашим аккаунтом.';
+
+  @override
+  String get email => 'E-mail';
+
+  @override
+  String get requestLoginCode => 'Запросить код входа';
+
+  @override
+  String get loginCode => 'Код входа';
+
+  @override
+  String get verifyCode => 'Проверить код';
+
+  @override
+  String get loginCodeCreated => 'Код входа создан.';
+
+  @override
+  String localDevCode(Object code) {
+    return 'Локальный код разработки: $code';
+  }
+
+  @override
+  String couldNotRequestCode(Object message) {
+    return 'Не удалось запросить код входа: $message';
+  }
+
+  @override
+  String couldNotVerifyCode(Object message) {
+    return 'Не удалось проверить код: $message';
+  }
+
+  @override
+  String loggedInAs(Object email) {
+    return 'Вход выполнен как $email';
+  }
+
+  @override
+  String get startThreadTitle => 'Что вы хотите ясно помнить позже?';
+
+  @override
+  String get startThreadBody =>
+      'Создайте личную тему для изменения лечения или подготовки к встрече.';
+
+  @override
+  String get threadType => 'Тип темы';
+
+  @override
+  String get treatmentChange => 'Изменение лечения';
+
+  @override
+  String get appointmentPreparation => 'Подготовка к встрече';
+
+  @override
+  String get shortTitle => 'Короткое название';
+
+  @override
+  String get shortTitleHint => 'Например: перед встречей с психиатром';
+
+  @override
+  String get threadGoal => 'Что эта тема должна помочь вам запомнить?';
+
+  @override
+  String get threadGoalHint =>
+      'Необязательно. Используйте тестовые данные во время разработки.';
+
+  @override
+  String get createThread => 'Создать тему';
+
+  @override
+  String get creating => 'Создание…';
+
+  @override
+  String get addShortTitleFirst => 'Сначала добавьте короткое название.';
+
+  @override
+  String get loginFromHomeFirst => 'Сначала войдите с главной страницы.';
+
+  @override
+  String get loginFromHomeBeforeCreating =>
+      'Войдите с главной страницы, затем создайте тему.';
+
+  @override
+  String couldNotCreateThread(Object message) {
+    return 'Не удалось создать тему: $message';
+  }
+
+  @override
+  String get thread => 'Тема';
+
+  @override
+  String get addMessyNote => 'Добавить хаотичную заметку';
+
+  @override
+  String get rawNoteBoundary =>
+      'Пишите как есть. Исходные слова сохраняются. Здесь ИИ ничего не форматирует.';
+
+  @override
+  String get messyNote => 'Хаотичная заметка';
+
+  @override
+  String get fakeDataHint => 'Используйте тестовые данные во время разработки.';
+
+  @override
+  String get saveOriginalNote => 'Сохранить исходную заметку';
+
+  @override
+  String get saving => 'Сохранение…';
+
+  @override
+  String get writeNoteFirst => 'Сначала напишите заметку.';
+
+  @override
+  String get savedOriginalNote => 'Исходная заметка сохранена.';
+
+  @override
+  String get savedOriginalNoteNext =>
+      'Исходная заметка сохранена. Теперь создайте подтверждённое вами событие хронологии.';
+
+  @override
+  String couldNotSaveNote(Object message) {
+    return 'Не удалось сохранить заметку: $message';
+  }
+
+  @override
+  String get timelineEvents => 'События хронологии';
+
+  @override
+  String get timeline => 'Хронология';
+
+  @override
+  String get originalNotes => 'Исходные заметки';
+
+  @override
+  String get noTimelineEventsYet => 'Пока нет событий.';
+
+  @override
+  String get noOriginalNotesYet => 'Пока нет исходных заметок.';
+
+  @override
+  String get loadingSavedRecords => 'Загрузка сохранённых записей…';
+
+  @override
+  String couldNotLoadSavedRecords(Object message) {
+    return 'Не удалось загрузить сохранённые записи: $message';
+  }
+
+  @override
+  String get threadNotFound => 'Тема не найдена.';
+
+  @override
+  String get threadOrRawNoteNotFound => 'Тема или исходная заметка не найдены.';
+
+  @override
+  String get originalNote => 'Исходная заметка';
+
+  @override
+  String savedDate(Object date) {
+    return 'Дата сохранения: $date';
+  }
+
+  @override
+  String get unknown => 'неизвестно';
+
+  @override
+  String get createUserApprovedTimelineEvent =>
+      'Создать подтверждённое событие хронологии';
+
+  @override
+  String get manualNoAi => 'Это вручную. ИИ не интерпретирует заметку.';
+
+  @override
+  String get eventType => 'Тип события';
+
+  @override
+  String get note => 'Заметка';
+
+  @override
+  String get baselineSnapshot => 'Исходное состояние';
+
+  @override
+  String get startedTreatmentLabel => 'Начало лечения по метке';
+
+  @override
+  String get sideEffectNote => 'Заметка о побочном эффекте';
+
+  @override
+  String get appointmentQuestion => 'Вопрос для встречи';
+
+  @override
+  String get timelineTitle => 'Название в хронологии';
+
+  @override
+  String get userApprovedSummary => 'Подтверждённое вами резюме';
+
+  @override
+  String get saveTimelineEvent => 'Сохранить событие';
+
+  @override
+  String get savingEvent => 'Сохранение события…';
+
+  @override
+  String get saveOriginalNoteFirst => 'Сначала сохраните исходную заметку.';
+
+  @override
+  String get addTitleAndSummaryFirst =>
+      'Сначала добавьте название и подтверждённое резюме.';
+
+  @override
+  String get savedUserApprovedTimelineEvent => 'Событие хронологии сохранено.';
+
+  @override
+  String couldNotCreateTimelineEvent(Object message) {
+    return 'Не удалось создать событие: $message';
+  }
+
+  @override
+  String get timelineEvent => 'Событие хронологии';
+
+  @override
+  String source(Object source) {
+    return 'Источник: $source';
+  }
+
+  @override
+  String get summary => 'Резюме';
+
+  @override
+  String get summarySoFar => 'Резюме на данный момент';
+
+  @override
+  String get summaryToBring => 'Резюме для встречи';
+}

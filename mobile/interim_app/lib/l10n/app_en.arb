@@ -1,0 +1,149 @@
+{
+  "@@locale": "en",
+  "appTitle": "interim",
+  "language": "Language",
+  "languageEnglish": "English",
+  "languageFrench": "French",
+  "languageItalian": "Italian",
+  "languageRussian": "Russian",
+  "login": "Log in",
+  "logout": "Log out",
+  "home": "Home",
+  "refresh": "Refresh",
+  "loggedIn": "Logged in",
+  "notLoggedIn": "Not logged in",
+  "checkingSession": "Checking session",
+  "checkingSessionBody": "Looking for a saved login token.",
+  "loginBeforePrivateRecords": "Log in before creating private records.",
+  "homeHero": "A private memory for what you may need to explain later.",
+  "homeBody": "Capture messy notes, keep the original wording, and prepare an editable summary.",
+  "startThread": "Start a thread",
+  "viewSampleTimeline": "View sample timeline",
+  "productBoundaries": "Product boundaries",
+  "boundaryNoRealName": "No real name required.",
+  "boundaryAiOptional": "AI is optional and off by default.",
+  "boundaryOriginalNotes": "Original notes are preserved.",
+  "boundaryNoShame": "Skip is normal. No streaks, no shame.",
+  "noMedicalAdviceTitle": "No medical advice",
+  "noMedicalAdviceBody": "interim helps you record and organize your own notes. It does not diagnose, recommend treatment, or replace a doctor, psychiatrist, psychologist, therapist, or emergency service.",
+  "loginTitle": "No real name required.",
+  "loginBody": "Use an email you control so interim can keep your records linked to your account.",
+  "email": "Email",
+  "requestLoginCode": "Request login code",
+  "loginCode": "Login code",
+  "verifyCode": "Verify code",
+  "loginCodeCreated": "A login code was created.",
+  "localDevCode": "Local dev code: {code}",
+  "@localDevCode": {
+    "placeholders": {
+      "code": {}
+    }
+  },
+  "couldNotRequestCode": "Could not request a login code: {message}",
+  "@couldNotRequestCode": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "couldNotVerifyCode": "Could not verify the code: {message}",
+  "@couldNotVerifyCode": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "loggedInAs": "Logged in as {email}",
+  "@loggedInAs": {
+    "placeholders": {
+      "email": {}
+    }
+  },
+  "startThreadTitle": "What do you want to remember clearly later?",
+  "startThreadBody": "Create a private thread for one treatment change or one appointment-preparation topic.",
+  "threadType": "Thread type",
+  "treatmentChange": "Treatment change",
+  "appointmentPreparation": "Appointment preparation",
+  "shortTitle": "Short title",
+  "shortTitleHint": "Example: before psychiatrist appointment",
+  "threadGoal": "What should this help you remember?",
+  "threadGoalHint": "Optional. Use fake test data while developing.",
+  "createThread": "Create thread",
+  "creating": "Creating…",
+  "addShortTitleFirst": "Add a short title first.",
+  "loginFromHomeFirst": "Log in from the home screen first.",
+  "loginFromHomeBeforeCreating": "Log in from the home screen first, then create the thread.",
+  "couldNotCreateThread": "Could not create the thread: {message}",
+  "@couldNotCreateThread": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "thread": "Thread",
+  "addMessyNote": "Add a messy note",
+  "rawNoteBoundary": "Write it as it comes. The original wording is preserved. AI formatting is not used here.",
+  "messyNote": "Messy note",
+  "fakeDataHint": "Use fake test data while developing.",
+  "saveOriginalNote": "Save original note",
+  "saving": "Saving…",
+  "writeNoteFirst": "Write a note first.",
+  "savedOriginalNote": "Saved original note.",
+  "savedOriginalNoteNext": "Saved original note. Now create a user-approved timeline event.",
+  "couldNotSaveNote": "Could not save the note: {message}",
+  "@couldNotSaveNote": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "timelineEvents": "Timeline events",
+  "timeline": "Timeline",
+  "originalNotes": "Original notes",
+  "noTimelineEventsYet": "No timeline events yet.",
+  "noOriginalNotesYet": "No original notes yet.",
+  "loadingSavedRecords": "Loading saved records…",
+  "couldNotLoadSavedRecords": "Could not load saved records: {message}",
+  "@couldNotLoadSavedRecords": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "threadNotFound": "Thread not found.",
+  "threadOrRawNoteNotFound": "Thread or raw note not found.",
+  "originalNote": "Original note",
+  "savedDate": "Saved date: {date}",
+  "@savedDate": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "unknown": "unknown",
+  "createUserApprovedTimelineEvent": "Create user-approved timeline event",
+  "manualNoAi": "This is manual. No AI is interpreting the note.",
+  "eventType": "Event type",
+  "note": "Note",
+  "baselineSnapshot": "Baseline snapshot",
+  "startedTreatmentLabel": "Started treatment label",
+  "sideEffectNote": "Side-effect note",
+  "appointmentQuestion": "Appointment question",
+  "timelineTitle": "Timeline title",
+  "userApprovedSummary": "User-approved summary",
+  "saveTimelineEvent": "Save timeline event",
+  "savingEvent": "Saving event…",
+  "saveOriginalNoteFirst": "Save an original note first.",
+  "addTitleAndSummaryFirst": "Add a title and approved summary first.",
+  "savedUserApprovedTimelineEvent": "Saved user-approved timeline event.",
+  "couldNotCreateTimelineEvent": "Could not create the timeline event: {message}",
+  "@couldNotCreateTimelineEvent": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "timelineEvent": "Timeline event",
+  "source": "Source: {source}",
+  "@source": {
+    "placeholders": {
+      "source": {}
+    }
+  },
+  "summary": "Summary",
+  "summarySoFar": "Summary so far",
+  "summaryToBring": "Summary to bring to an appointment"
+}

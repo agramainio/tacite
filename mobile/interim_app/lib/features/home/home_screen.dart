@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../l10n/generated/app_localizations.dart';
+import '../../shared/locale/locale_scope.dart';
 import '../../shared/widgets/boundary_card.dart';
 import '../auth/auth_models.dart';
 import '../auth/auth_repository.dart';
@@ -78,12 +80,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final textTheme = Theme.of(context).textTheme;
     final profile = _profile;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('interim'),
+        title: Text(l10n.appTitle),
         actions: [
           if (_isCheckingSession)
             const Padding(
@@ -98,10 +101,10 @@ class _HomeScreenState extends State<HomeScreen> {
           else if (profile == null)
             TextButton(
               onPressed: () => context.go('/login'),
-              child: const Text('Log in'),
+              child: Text(l10n.login),
             )
           else
-            TextButton(onPressed: _logout, child: const Text('Log out')),
+            TextButton(onPressed: _logout, child: Text(l10n.logout)),
         ],
       ),
       body: SafeArea(
@@ -109,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.all(20),
           children: [
             Text(
-              'A private memory for what you may need to explain later.',
+              l10n.homeHero,
               style: textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.w700,
                 height: 1.15,
@@ -117,9 +120,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 12),
             Text(
-              'Capture messy notes, keep the original wording, and prepare an editable summary for an appointment.',
+              l10n.homeBody,
               style: textTheme.bodyLarge?.copyWith(height: 1.35),
             ),
+            const SizedBox(height: 20),
+            const _LanguagePicker(),
             const SizedBox(height: 20),
             _SessionCard(
               profile: profile,
@@ -130,16 +135,60 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 20),
             FilledButton(
               onPressed: () => context.go('/threads/new'),
-              child: const Text('Start a thread'),
+              child: Text(l10n.startThread),
             ),
             const SizedBox(height: 12),
             OutlinedButton(
               onPressed: () => context.go('/threads/placeholder'),
-              child: const Text('View sample timeline'),
+              child: Text(l10n.viewSampleTimeline),
             ),
             const SizedBox(height: 28),
             const _PrinciplesList(),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LanguagePicker extends StatelessWidget {
+  const _LanguagePicker();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final controller = LocaleScope.maybeOf(context);
+
+    if (controller == null) {
+      return const SizedBox.shrink();
+    }
+
+    final selectedCode =
+        controller.locale?.languageCode ??
+        Localizations.localeOf(context).languageCode;
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: DropdownButtonFormField<String>(
+          initialValue: selectedCode,
+          decoration: InputDecoration(
+            labelText: l10n.language,
+            border: const OutlineInputBorder(),
+          ),
+          items: [
+            DropdownMenuItem(value: 'en', child: Text(l10n.languageEnglish)),
+            DropdownMenuItem(value: 'fr', child: Text(l10n.languageFrench)),
+            DropdownMenuItem(value: 'it', child: Text(l10n.languageItalian)),
+            DropdownMenuItem(value: 'ru', child: Text(l10n.languageRussian)),
+          ],
+          onChanged: (value) {
+            if (value == null) {
+              return;
+            }
+
+            controller.setLocale(Locale(value));
+          },
         ),
       ),
     );
@@ -154,19 +203,20 @@ class _SessionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final textTheme = Theme.of(context).textTheme;
 
     String title;
     String body;
 
     if (isCheckingSession) {
-      title = 'Checking session';
-      body = 'Looking for a saved login token.';
+      title = l10n.checkingSession;
+      body = l10n.checkingSessionBody;
     } else if (profile == null) {
-      title = 'Not logged in';
-      body = 'Log in before creating private records.';
+      title = l10n.notLoggedIn;
+      body = l10n.loginBeforePrivateRecords;
     } else {
-      title = 'Logged in';
+      title = l10n.loggedIn;
       body = profile!.emailIdentifier;
     }
 
@@ -191,13 +241,14 @@ class _PrinciplesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final textTheme = Theme.of(context).textTheme;
 
-    const items = [
-      'No real name required.',
-      'AI is optional and off by default.',
-      'Original notes are preserved.',
-      'Skip is normal. No streaks, no shame.',
+    final items = [
+      l10n.boundaryNoRealName,
+      l10n.boundaryAiOptional,
+      l10n.boundaryOriginalNotes,
+      l10n.boundaryNoShame,
     ];
 
     return Card(
@@ -206,7 +257,7 @@ class _PrinciplesList extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Product boundaries', style: textTheme.titleMedium),
+            Text(l10n.productBoundaries, style: textTheme.titleMedium),
             const SizedBox(height: 12),
             for (final item in items)
               Padding(

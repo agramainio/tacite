@@ -45,7 +45,7 @@ Avoid:
 - symptom snapshot
 - side-effect observation
 - functioning snapshot
-- doctor export
+- summary export
 - safety flag
 
 ## Ownership rule
@@ -65,7 +65,7 @@ Never log:
 - AI responses containing user notes
 - medication labels
 - side effect notes
-- doctor summaries
+- summaries
 - safety flags
 - email login codes
 

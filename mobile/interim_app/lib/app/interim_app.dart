@@ -6,10 +6,20 @@ import '../features/home/home_screen.dart';
 import '../features/thread/new_thread_screen.dart';
 import '../features/thread/thread_detail_screen.dart';
 import '../features/thread/thread_placeholder_screen.dart';
+import '../l10n/generated/app_localizations.dart';
+import '../shared/locale/locale_controller.dart';
+import '../shared/locale/locale_scope.dart';
 import '../shared/theme/interim_theme.dart';
 
-class InterimApp extends StatelessWidget {
+class InterimApp extends StatefulWidget {
   const InterimApp({super.key});
+
+  @override
+  State<InterimApp> createState() => _InterimAppState();
+}
+
+class _InterimAppState extends State<InterimApp> {
+  late final LocaleController _localeController;
 
   static final GoRouter _router = GoRouter(
     routes: [
@@ -35,12 +45,30 @@ class InterimApp extends StatelessWidget {
   );
 
   @override
+  void initState() {
+    super.initState();
+
+    _localeController = LocaleController()..load();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'interim',
-      debugShowCheckedModeBanner: false,
-      theme: InterimTheme.light,
-      routerConfig: _router,
+    return LocaleScope(
+      controller: _localeController,
+      child: AnimatedBuilder(
+        animation: _localeController,
+        builder: (context, _) {
+          return MaterialApp.router(
+            title: 'interim',
+            debugShowCheckedModeBanner: false,
+            theme: InterimTheme.light,
+            locale: _localeController.locale,
+            supportedLocales: AppLocalizations.supportedLocales,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            routerConfig: _router,
+          );
+        },
+      ),
     );
   }
 }

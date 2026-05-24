@@ -90,7 +90,7 @@ Checkpoint:
 
 checkpoint-ai-draft-extraction-v1
 
-## Phase 7 — Doctor export
+## Phase 7 — Summary export
 
 - Date range selection.
 - Plain text export.
