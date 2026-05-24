@@ -23,3 +23,18 @@ Run local server:
 Health endpoint:
 
     curl http://127.0.0.1:8000/health
+
+
+## Database
+
+Start local PostgreSQL:
+
+    docker compose up -d postgres
+
+Run migrations:
+
+    uv run alembic upgrade head
+
+Run tests:
+
+    uv run pytest

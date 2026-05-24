@@ -8,6 +8,9 @@ class Settings(BaseSettings):
     app_name: str = "interim"
     app_version: str = "0.1.0"
     log_level: str = "INFO"
+    database_url: str = (
+        "postgresql+psycopg://interim:interim_dev_password@127.0.0.1:55432/interim_dev"
+    )
 
     model_config = SettingsConfigDict(
         env_file=".env",
