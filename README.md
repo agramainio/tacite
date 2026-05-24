@@ -25,3 +25,10 @@ Core stack:
 Core product rule:
 
 The original note is sacred. AI may format or summarize only when the user chooses it.
+
+
+## Local development
+
+See:
+
+    docs/LOCAL_DEVELOPMENT.md

@@ -14,6 +14,21 @@ class Settings(BaseSettings):
     auth_secret_key: str = "local-dev-secret-change-before-production"
     login_code_ttl_minutes: int = 10
     session_ttl_days: int = 30
+    cors_allowed_origins: str = (
+        "http://localhost:3000,"
+        "http://localhost:5173,"
+        "http://127.0.0.1:3000,"
+        "http://127.0.0.1:5173,"
+        "http://127.0.0.1:8000"
+    )
+
+    @property
+    def cors_origins(self) -> list[str]:
+        return [
+            origin.strip()
+            for origin in self.cors_allowed_origins.split(",")
+            if origin.strip()
+        ]
 
     model_config = SettingsConfigDict(
         env_file=".env",
