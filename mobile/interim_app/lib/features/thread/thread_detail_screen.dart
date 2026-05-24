@@ -6,9 +6,14 @@ import 'data/thread_models.dart';
 import 'data/thread_repository.dart';
 
 class ThreadDetailScreen extends StatefulWidget {
-  const ThreadDetailScreen({required this.threadId, super.key});
+  const ThreadDetailScreen({
+    required this.threadId,
+    this.loadExistingRecords = true,
+    super.key,
+  });
 
   final String threadId;
+  final bool loadExistingRecords;
 
   @override
   State<ThreadDetailScreen> createState() => _ThreadDetailScreenState();
@@ -20,12 +25,25 @@ class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
   final _eventTitleController = TextEditingController();
   final _eventSummaryController = TextEditingController();
 
+  bool _isLoadingExisting = true;
   bool _isSavingNote = false;
   bool _isSavingEvent = false;
   String _eventType = 'note';
   String? _message;
   RawNote? _savedNote;
-  TimelineEvent? _savedEvent;
+  final List<RawNote> _rawNotes = [];
+  final List<TimelineEvent> _timelineEvents = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.loadExistingRecords) {
+      _loadExistingRecords();
+    } else {
+      _isLoadingExisting = false;
+    }
+  }
 
   @override
   void dispose() {
@@ -33,6 +51,46 @@ class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
     _eventTitleController.dispose();
     _eventSummaryController.dispose();
     super.dispose();
+  }
+
+  Future<void> _loadExistingRecords() async {
+    setState(() {
+      _isLoadingExisting = true;
+    });
+
+    try {
+      final notes = await _repository.listRawNotes(widget.threadId);
+      final events = await _repository.listTimelineEvents(widget.threadId);
+
+      if (!mounted) {
+        return;
+      }
+
+      setState(() {
+        _rawNotes
+          ..clear()
+          ..addAll(notes.reversed);
+        _timelineEvents
+          ..clear()
+          ..addAll(events.reversed);
+        _isLoadingExisting = false;
+      });
+    } on DioException catch (error) {
+      if (!mounted) {
+        return;
+      }
+
+      setState(() {
+        if (error.response?.statusCode == 401) {
+          _message = 'Log in from the home screen first.';
+        } else if (error.response?.statusCode == 404) {
+          _message = 'Thread not found.';
+        } else {
+          _message = 'Could not load saved records: ${error.message}';
+        }
+        _isLoadingExisting = false;
+      });
+    }
   }
 
   Future<void> _saveRawNote() async {
@@ -48,7 +106,6 @@ class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
     setState(() {
       _isSavingNote = true;
       _message = null;
-      _savedEvent = null;
     });
 
     try {
@@ -59,6 +116,7 @@ class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
 
       setState(() {
         _savedNote = note;
+        _rawNotes.insert(0, note);
         _noteController.clear();
         _eventTitleController.text = 'Manual note';
         _eventSummaryController.text = note.originalText;
@@ -68,7 +126,7 @@ class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
     } on DioException catch (error) {
       setState(() {
         if (error.response?.statusCode == 401) {
-          _message = 'Log in first, then save the note.';
+          _message = 'Log in from the home screen first, then save the note.';
         } else if (error.response?.statusCode == 404) {
           _message = 'Thread not found.';
         } else {
@@ -118,13 +176,17 @@ class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
       );
 
       setState(() {
-        _savedEvent = event;
+        _timelineEvents.insert(0, event);
+        _savedNote = null;
+        _eventTitleController.clear();
+        _eventSummaryController.clear();
         _message = 'Saved user-approved timeline event.';
       });
     } on DioException catch (error) {
       setState(() {
         if (error.response?.statusCode == 401) {
-          _message = 'Log in first, then create the timeline event.';
+          _message =
+              'Log in from the home screen first, then create the timeline event.';
         } else if (error.response?.statusCode == 404) {
           _message = 'Thread or raw note not found.';
         } else {
@@ -151,8 +213,8 @@ class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
         title: const Text('Thread'),
         actions: [
           TextButton(
-            onPressed: () => context.go('/login'),
-            child: const Text('Log in'),
+            onPressed: () => context.go('/'),
+            child: const Text('Home'),
           ),
         ],
       ),
@@ -191,16 +253,7 @@ class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
               const SizedBox(height: 16),
               Text(_message!),
             ],
-            const SizedBox(height: 24),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: SelectableText('Thread ID:\n${widget.threadId}'),
-              ),
-            ),
             if (_savedNote != null) ...[
-              const SizedBox(height: 16),
-              _SavedRawNoteCard(note: _savedNote!),
               const SizedBox(height: 16),
               _TimelineEventEditor(
                 eventType: _eventType,
@@ -219,13 +272,72 @@ class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
                 isSaving: _isSavingEvent,
               ),
             ],
-            if (_savedEvent != null) ...[
-              const SizedBox(height: 16),
-              _SavedTimelineEventCard(event: _savedEvent!),
-            ],
+            const SizedBox(height: 24),
+            _RecordsSection(
+              title: 'Timeline events',
+              isLoading: _isLoadingExisting,
+              emptyText: 'No timeline events yet.',
+              children: [
+                for (final event in _timelineEvents)
+                  _SavedTimelineEventCard(event: event),
+              ],
+            ),
+            const SizedBox(height: 16),
+            _RecordsSection(
+              title: 'Original notes',
+              isLoading: _isLoadingExisting,
+              emptyText: 'No original notes yet.',
+              children: [
+                for (final note in _rawNotes) _SavedRawNoteCard(note: note),
+              ],
+            ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _RecordsSection extends StatelessWidget {
+  const _RecordsSection({
+    required this.title,
+    required this.isLoading,
+    required this.emptyText,
+    required this.children,
+  });
+
+  final String title;
+  final bool isLoading;
+  final String emptyText;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(title, style: textTheme.titleLarge),
+        const SizedBox(height: 12),
+        if (isLoading)
+          const Card(
+            child: Padding(
+              padding: EdgeInsets.all(16),
+              child: Text('Loading saved records…'),
+            ),
+          )
+        else if (children.isEmpty)
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Text(emptyText),
+            ),
+          )
+        else
+          for (final child in children)
+            Padding(padding: const EdgeInsets.only(bottom: 12), child: child),
+      ],
     );
   }
 }
@@ -245,7 +357,7 @@ class _SavedRawNoteCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Saved original note', style: textTheme.titleMedium),
+            Text('Original note', style: textTheme.titleMedium),
             const SizedBox(height: 8),
             SelectableText(note.originalText),
             const SizedBox(height: 12),
@@ -364,7 +476,7 @@ class _SavedTimelineEventCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Saved timeline event', style: textTheme.titleMedium),
+            Text('Timeline event', style: textTheme.titleMedium),
             const SizedBox(height: 8),
             Text(
               event.title,

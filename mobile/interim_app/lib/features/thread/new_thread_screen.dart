@@ -57,7 +57,8 @@ class _NewThreadScreenState extends State<NewThreadScreen> {
     } on DioException catch (error) {
       setState(() {
         if (error.response?.statusCode == 401) {
-          _message = 'Log in first, then create the thread.';
+          _message =
+              'Log in from the home screen first, then create the thread.';
         } else {
           _message = 'Could not create the thread: ${error.message}';
         }
@@ -80,8 +81,8 @@ class _NewThreadScreenState extends State<NewThreadScreen> {
         title: const Text('Start a thread'),
         actions: [
           TextButton(
-            onPressed: () => context.go('/login'),
-            child: const Text('Log in'),
+            onPressed: () => context.go('/'),
+            child: const Text('Home'),
           ),
         ],
       ),
@@ -153,11 +154,6 @@ class _NewThreadScreenState extends State<NewThreadScreen> {
             FilledButton(
               onPressed: _isSaving ? null : _createThread,
               child: Text(_isSaving ? 'Creating…' : 'Create thread'),
-            ),
-            const SizedBox(height: 12),
-            OutlinedButton(
-              onPressed: _isSaving ? null : () => context.go('/login'),
-              child: const Text('Log in first'),
             ),
             if (_message != null) ...[
               const SizedBox(height: 16),

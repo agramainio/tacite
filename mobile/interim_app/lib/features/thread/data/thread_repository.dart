@@ -39,6 +39,15 @@ class ThreadRepository {
     return PreparationThread.fromJson(response.data ?? <String, dynamic>{});
   }
 
+  Future<List<RawNote>> listRawNotes(String threadId) async {
+    final response = await _apiClient.dio.get<List<dynamic>>(
+      '/threads/$threadId/notes',
+    );
+    final data = response.data ?? <dynamic>[];
+
+    return data.cast<Map<String, dynamic>>().map(RawNote.fromJson).toList();
+  }
+
   Future<RawNote> createRawNote({
     required String threadId,
     required String originalText,
@@ -56,6 +65,18 @@ class ThreadRepository {
     );
 
     return RawNote.fromJson(response.data ?? <String, dynamic>{});
+  }
+
+  Future<List<TimelineEvent>> listTimelineEvents(String threadId) async {
+    final response = await _apiClient.dio.get<List<dynamic>>(
+      '/threads/$threadId/timeline',
+    );
+    final data = response.data ?? <dynamic>[];
+
+    return data
+        .cast<Map<String, dynamic>>()
+        .map(TimelineEvent.fromJson)
+        .toList();
   }
 
   Future<TimelineEvent> createTimelineEvent({

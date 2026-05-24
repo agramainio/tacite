@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:interim_app/app/interim_app.dart';
+import 'package:interim_app/features/home/home_screen.dart';
+import 'package:interim_app/features/thread/new_thread_screen.dart';
 import 'package:interim_app/features/thread/thread_detail_screen.dart';
 
 void main() {
-  testWidgets('home screen shows product boundary', (tester) async {
-    await tester.pumpWidget(const InterimApp());
+  testWidgets('home screen shows core product boundary without network calls', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      const InterimAppWrapper(child: HomeScreen(loadSessionOnStart: false)),
+    );
 
     expect(find.text('interim'), findsOneWidget);
     expect(find.text('No medical advice'), findsOneWidget);
-    expect(find.text('No real name required.'), findsOneWidget);
-    expect(find.text('AI is optional and off by default.'), findsOneWidget);
+    expect(find.text('Not logged in'), findsOneWidget);
+    expect(find.text('Start a thread'), findsOneWidget);
   });
 
   testWidgets('new thread screen shows thread creation form', (tester) async {
-    await tester.pumpWidget(const InterimApp());
-
-    await tester.tap(find.text('Start a thread'));
-    await tester.pumpAndSettle();
+    await tester.pumpWidget(const InterimAppWrapper(child: NewThreadScreen()));
 
     expect(find.text('Treatment change'), findsOneWidget);
     expect(find.text('Short title'), findsOneWidget);
@@ -25,25 +27,29 @@ void main() {
     expect(find.text('Create thread'), findsOneWidget);
   });
 
-  testWidgets('thread detail screen preserves raw-note boundary', (
-    tester,
-  ) async {
-    await tester.pumpWidget(
-      const InterimAppWrapper(
-        child: ThreadDetailScreen(threadId: 'test-thread-id'),
-      ),
-    );
+  testWidgets(
+    'thread detail screen preserves raw-note boundary without network calls',
+    (tester) async {
+      await tester.pumpWidget(
+        const InterimAppWrapper(
+          child: ThreadDetailScreen(
+            threadId: 'test-thread-id',
+            loadExistingRecords: false,
+          ),
+        ),
+      );
 
-    expect(find.text('Add a messy note'), findsOneWidget);
-    expect(find.text('Messy note'), findsOneWidget);
-    expect(find.text('Save original note'), findsOneWidget);
-    expect(
-      find.text(
-        'Write it as it comes. The original wording is preserved. AI formatting is not used here.',
-      ),
-      findsOneWidget,
-    );
-  });
+      expect(find.text('Add a messy note'), findsOneWidget);
+      expect(find.text('Messy note'), findsOneWidget);
+      expect(find.text('Save original note'), findsOneWidget);
+      expect(
+        find.text(
+          'Write it as it comes. The original wording is preserved. AI formatting is not used here.',
+        ),
+        findsOneWidget,
+      );
+    },
+  );
 }
 
 class InterimAppWrapper extends StatelessWidget {
