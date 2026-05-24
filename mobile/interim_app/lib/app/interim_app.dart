@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../features/auth/login_screen.dart';
 import '../features/home/home_screen.dart';
 import '../features/thread/new_thread_screen.dart';
 import '../features/thread/thread_placeholder_screen.dart';
@@ -12,6 +13,7 @@ class InterimApp extends StatelessWidget {
   static final GoRouter _router = GoRouter(
     routes: [
       GoRoute(path: '/', builder: (context, state) => const HomeScreen()),
+      GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
       GoRoute(
         path: '/threads/new',
         builder: (context, state) => const NewThreadScreen(),

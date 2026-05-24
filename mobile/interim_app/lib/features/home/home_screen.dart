@@ -11,7 +11,15 @@ class HomeScreen extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('interim')),
+      appBar: AppBar(
+        title: const Text('interim'),
+        actions: [
+          TextButton(
+            onPressed: () => context.go('/login'),
+            child: const Text('Log in'),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.all(20),
