@@ -38,4 +38,23 @@ class ThreadRepository {
 
     return PreparationThread.fromJson(response.data ?? <String, dynamic>{});
   }
+
+  Future<RawNote> createRawNote({
+    required String threadId,
+    required String originalText,
+    String inputMode = 'text',
+  }) async {
+    final localDate = DateTime.now().toIso8601String().split('T').first;
+
+    final response = await _apiClient.dio.post<Map<String, dynamic>>(
+      '/threads/$threadId/notes',
+      data: {
+        'original_text': originalText,
+        'input_mode': inputMode,
+        'user_local_date': localDate,
+      },
+    );
+
+    return RawNote.fromJson(response.data ?? <String, dynamic>{});
+  }
 }
