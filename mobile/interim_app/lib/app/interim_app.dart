@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../features/auth/login_screen.dart';
 import '../features/home/home_screen.dart';
 import '../features/thread/new_thread_screen.dart';
+import '../features/thread/thread_detail_screen.dart';
 import '../features/thread/thread_placeholder_screen.dart';
 import '../shared/theme/interim_theme.dart';
 
@@ -21,6 +22,14 @@ class InterimApp extends StatelessWidget {
       GoRoute(
         path: '/threads/placeholder',
         builder: (context, state) => const ThreadPlaceholderScreen(),
+      ),
+      GoRoute(
+        path: '/threads/:threadId',
+        builder: (context, state) {
+          final threadId = state.pathParameters['threadId']!;
+
+          return ThreadDetailScreen(threadId: threadId);
+        },
       ),
     ],
   );

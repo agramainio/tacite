@@ -1,71 +1,169 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class NewThreadScreen extends StatelessWidget {
+import 'data/thread_repository.dart';
+
+class NewThreadScreen extends StatefulWidget {
   const NewThreadScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Start a thread')),
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(20),
-          children: [
-            _ThreadTypeCard(
-              title: 'Treatment change',
-              description:
-                  'For remembering what changed, why it changed, how you felt before and after, and what to mention later.',
-              onTap: () => context.go('/threads/placeholder'),
-            ),
-            const SizedBox(height: 12),
-            _ThreadTypeCard(
-              title: 'Appointment preparation',
-              description:
-                  'For putting into words what feels wrong, what it affects, and what you want help with.',
-              onTap: () => context.go('/threads/placeholder'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  State<NewThreadScreen> createState() => _NewThreadScreenState();
 }
 
-class _ThreadTypeCard extends StatelessWidget {
-  const _ThreadTypeCard({
-    required this.title,
-    required this.description,
-    required this.onTap,
-  });
+class _NewThreadScreenState extends State<NewThreadScreen> {
+  final _repository = ThreadRepository.defaultRepository();
+  final _titleController = TextEditingController();
+  final _goalController = TextEditingController();
 
-  final String title;
-  final String description;
-  final VoidCallback onTap;
+  String _kind = 'treatment_episode';
+  bool _isSaving = false;
+  String? _message;
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _goalController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _createThread() async {
+    final title = _titleController.text.trim();
+
+    if (title.isEmpty) {
+      setState(() {
+        _message = 'Add a short title first.';
+      });
+      return;
+    }
+
+    setState(() {
+      _isSaving = true;
+      _message = null;
+    });
+
+    try {
+      final thread = await _repository.createThread(
+        kind: _kind,
+        title: title,
+        userGoal: _goalController.text.trim(),
+      );
+
+      if (!mounted) {
+        return;
+      }
+
+      context.go('/threads/${thread.id}');
+    } on DioException catch (error) {
+      setState(() {
+        if (error.response?.statusCode == 401) {
+          _message = 'Log in first, then create the thread.';
+        } else {
+          _message = 'Could not create the thread: ${error.message}';
+        }
+      });
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isSaving = false;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    return Card(
-      child: InkWell(
-        borderRadius: BorderRadius.circular(18),
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(title, style: textTheme.titleMedium),
-              const SizedBox(height: 8),
-              Text(
-                description,
-                style: textTheme.bodyMedium?.copyWith(height: 1.35),
-              ),
-              const SizedBox(height: 12),
-              const Text('Continue →'),
-            ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Start a thread'),
+        actions: [
+          TextButton(
+            onPressed: () => context.go('/login'),
+            child: const Text('Log in'),
           ),
+        ],
+      ),
+      body: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.all(20),
+          children: [
+            Text(
+              'What do you want to remember clearly later?',
+              style: textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'Create a private thread for one treatment change or one appointment-preparation topic.',
+            ),
+            const SizedBox(height: 20),
+            DropdownButtonFormField<String>(
+              initialValue: _kind,
+              decoration: const InputDecoration(
+                labelText: 'Thread type',
+                border: OutlineInputBorder(),
+              ),
+              items: const [
+                DropdownMenuItem(
+                  value: 'treatment_episode',
+                  child: Text('Treatment change'),
+                ),
+                DropdownMenuItem(
+                  value: 'appointment_preparation',
+                  child: Text('Appointment preparation'),
+                ),
+              ],
+              onChanged: _isSaving
+                  ? null
+                  : (value) {
+                      if (value == null) {
+                        return;
+                      }
+
+                      setState(() {
+                        _kind = value;
+                      });
+                    },
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: _titleController,
+              textInputAction: TextInputAction.next,
+              decoration: const InputDecoration(
+                labelText: 'Short title',
+                hintText: 'Example: before psychiatrist appointment',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: _goalController,
+              minLines: 3,
+              maxLines: 5,
+              decoration: const InputDecoration(
+                labelText: 'What should this help you remember?',
+                hintText: 'Optional. Use fake test data while developing.',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 20),
+            FilledButton(
+              onPressed: _isSaving ? null : _createThread,
+              child: Text(_isSaving ? 'Creating…' : 'Create thread'),
+            ),
+            const SizedBox(height: 12),
+            OutlinedButton(
+              onPressed: _isSaving ? null : () => context.go('/login'),
+              child: const Text('Log in first'),
+            ),
+            if (_message != null) ...[
+              const SizedBox(height: 16),
+              Text(_message!),
+            ],
+          ],
         ),
       ),
     );
