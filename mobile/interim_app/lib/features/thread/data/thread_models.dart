@@ -70,3 +70,47 @@ class RawNote {
   final String createdAt;
   final String updatedAt;
 }
+
+class TimelineEvent {
+  const TimelineEvent({
+    required this.id,
+    required this.threadId,
+    required this.eventType,
+    required this.eventDatePrecision,
+    required this.title,
+    required this.userApprovedSummary,
+    required this.source,
+    required this.createdAt,
+    required this.updatedAt,
+    this.rawNoteId,
+    this.eventDate,
+  });
+
+  factory TimelineEvent.fromJson(Map<String, dynamic> json) {
+    return TimelineEvent(
+      id: json['id'] as String,
+      threadId: json['thread_id'] as String,
+      rawNoteId: json['raw_note_id'] as String?,
+      eventType: json['event_type'] as String,
+      eventDate: json['event_date'] as String?,
+      eventDatePrecision: json['event_date_precision'] as String,
+      title: json['title'] as String,
+      userApprovedSummary: json['user_approved_summary'] as String,
+      source: json['source'] as String,
+      createdAt: json['created_at'] as String,
+      updatedAt: json['updated_at'] as String,
+    );
+  }
+
+  final String id;
+  final String threadId;
+  final String? rawNoteId;
+  final String eventType;
+  final String? eventDate;
+  final String eventDatePrecision;
+  final String title;
+  final String userApprovedSummary;
+  final String source;
+  final String createdAt;
+  final String updatedAt;
+}

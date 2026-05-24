@@ -38,7 +38,9 @@ void main() {
     expect(find.text('Messy note'), findsOneWidget);
     expect(find.text('Save original note'), findsOneWidget);
     expect(
-      find.text('Turn note into timeline event — next checkpoint'),
+      find.text(
+        'Write it as it comes. The original wording is preserved. AI formatting is not used here.',
+      ),
       findsOneWidget,
     );
   });

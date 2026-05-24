@@ -57,4 +57,28 @@ class ThreadRepository {
 
     return RawNote.fromJson(response.data ?? <String, dynamic>{});
   }
+
+  Future<TimelineEvent> createTimelineEvent({
+    required String threadId,
+    required String rawNoteId,
+    required String eventType,
+    required String title,
+    required String userApprovedSummary,
+  }) async {
+    final eventDate = DateTime.now().toIso8601String().split('T').first;
+
+    final response = await _apiClient.dio.post<Map<String, dynamic>>(
+      '/threads/$threadId/timeline-events',
+      data: {
+        'raw_note_id': rawNoteId,
+        'event_type': eventType,
+        'event_date': eventDate,
+        'event_date_precision': 'exact',
+        'title': title,
+        'user_approved_summary': userApprovedSummary,
+      },
+    );
+
+    return TimelineEvent.fromJson(response.data ?? <String, dynamic>{});
+  }
 }
