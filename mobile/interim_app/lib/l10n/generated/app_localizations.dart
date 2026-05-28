@@ -791,6 +791,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This choice is not stored yet. The next phase adds timeline beginning and starting snapshot.'**
   String get setupLaterNote;
+
+  /// No description provided for @timelineBeginningTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Where should this timeline begin?'**
+  String get timelineBeginningTitle;
+
+  /// No description provided for @timelineBeginningBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Signup date is not always the real beginning. Choose the closest starting point. You can correct this later.'**
+  String get timelineBeginningBody;
+
+  /// No description provided for @timelineBeginToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get timelineBeginToday;
+
+  /// No description provided for @timelineBeginWhenStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'When this started'**
+  String get timelineBeginWhenStarted;
+
+  /// No description provided for @timelineBeginTreatmentChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'When treatment changed'**
+  String get timelineBeginTreatmentChanged;
+
+  /// No description provided for @timelineBeginLastAppointment.
+  ///
+  /// In en, this message translates to:
+  /// **'Last appointment'**
+  String get timelineBeginLastAppointment;
+
+  /// No description provided for @timelineBeginNotSure.
+  ///
+  /// In en, this message translates to:
+  /// **'I’m not sure'**
+  String get timelineBeginNotSure;
+
+  /// No description provided for @startingSnapshotTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Save a quick picture of how things feel now?'**
+  String get startingSnapshotTitle;
+
+  /// No description provided for @startingSnapshotBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This helps compare later changes. It is not a diagnosis or clinical score.'**
+  String get startingSnapshotBody;
+
+  /// No description provided for @quickSnapshot.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick snapshot'**
+  String get quickSnapshot;
+
+  /// No description provided for @skipForNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip for now'**
+  String get skipForNow;
+
+  /// No description provided for @snapshotMood.
+  ///
+  /// In en, this message translates to:
+  /// **'Mood'**
+  String get snapshotMood;
+
+  /// No description provided for @snapshotAnxiety.
+  ///
+  /// In en, this message translates to:
+  /// **'Anxiety'**
+  String get snapshotAnxiety;
+
+  /// No description provided for @snapshotSleep.
+  ///
+  /// In en, this message translates to:
+  /// **'Sleep'**
+  String get snapshotSleep;
+
+  /// No description provided for @snapshotEnergy.
+  ///
+  /// In en, this message translates to:
+  /// **'Energy'**
+  String get snapshotEnergy;
+
+  /// No description provided for @snapshotFocus.
+  ///
+  /// In en, this message translates to:
+  /// **'Focus'**
+  String get snapshotFocus;
+
+  /// No description provided for @snapshotStartingTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Starting tasks'**
+  String get snapshotStartingTasks;
+
+  /// No description provided for @snapshotLow.
+  ///
+  /// In en, this message translates to:
+  /// **'low'**
+  String get snapshotLow;
+
+  /// No description provided for @snapshotMixed.
+  ///
+  /// In en, this message translates to:
+  /// **'mixed'**
+  String get snapshotMixed;
+
+  /// No description provided for @snapshotOkay.
+  ///
+  /// In en, this message translates to:
+  /// **'okay'**
+  String get snapshotOkay;
+
+  /// No description provided for @snapshotHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'high'**
+  String get snapshotHigh;
+
+  /// No description provided for @snapshotHard.
+  ///
+  /// In en, this message translates to:
+  /// **'hard'**
+  String get snapshotHard;
+
+  /// No description provided for @snapshotPossible.
+  ///
+  /// In en, this message translates to:
+  /// **'possible'**
+  String get snapshotPossible;
+
+  /// No description provided for @continueToFirstThread.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue to first thread'**
+  String get continueToFirstThread;
 }
 
 class _AppLocalizationsDelegate

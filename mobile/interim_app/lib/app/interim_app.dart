@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../features/auth/login_screen.dart';
 import '../features/home/home_screen.dart';
 import '../features/onboarding/purpose_onboarding_screen.dart';
+import '../features/onboarding/starting_point_screen.dart';
 import '../features/thread/new_thread_screen.dart';
 import '../features/thread/thread_detail_screen.dart';
 import '../features/thread/thread_placeholder_screen.dart';
@@ -28,6 +29,10 @@ class _InterimAppState extends State<InterimApp> {
       GoRoute(
         path: '/onboarding',
         builder: (context, state) => const PurposeOnboardingScreen(),
+      ),
+      GoRoute(
+        path: '/onboarding/start',
+        builder: (context, state) => const StartingPointScreen(),
       ),
       GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
       GoRoute(

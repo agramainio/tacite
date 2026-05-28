@@ -394,4 +394,79 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get setupLaterNote =>
       'Этот выбор пока не сохраняется. В следующей фазе появятся начало хронологии и исходное состояние.';
+
+  @override
+  String get timelineBeginningTitle => 'Где должна начинаться эта хронология?';
+
+  @override
+  String get timelineBeginningBody =>
+      'Дата регистрации не всегда настоящий старт. Выберите ближайший вариант. Позже это можно исправить.';
+
+  @override
+  String get timelineBeginToday => 'Сегодня';
+
+  @override
+  String get timelineBeginWhenStarted => 'Когда это началось';
+
+  @override
+  String get timelineBeginTreatmentChanged => 'Когда изменилось лечение';
+
+  @override
+  String get timelineBeginLastAppointment => 'Последняя встреча';
+
+  @override
+  String get timelineBeginNotSure => 'Я не уверен';
+
+  @override
+  String get startingSnapshotTitle =>
+      'Сохранить короткий снимок того, как всё ощущается сейчас?';
+
+  @override
+  String get startingSnapshotBody =>
+      'Это поможет сравнивать изменения позже. Это не диагноз и не клиническая оценка.';
+
+  @override
+  String get quickSnapshot => 'Короткий снимок';
+
+  @override
+  String get skipForNow => 'Пока пропустить';
+
+  @override
+  String get snapshotMood => 'Настроение';
+
+  @override
+  String get snapshotAnxiety => 'Тревога';
+
+  @override
+  String get snapshotSleep => 'Сон';
+
+  @override
+  String get snapshotEnergy => 'Энергия';
+
+  @override
+  String get snapshotFocus => 'Фокус';
+
+  @override
+  String get snapshotStartingTasks => 'Начинать задачи';
+
+  @override
+  String get snapshotLow => 'низко';
+
+  @override
+  String get snapshotMixed => 'смешанно';
+
+  @override
+  String get snapshotOkay => 'нормально';
+
+  @override
+  String get snapshotHigh => 'высоко';
+
+  @override
+  String get snapshotHard => 'трудно';
+
+  @override
+  String get snapshotPossible => 'возможно';
+
+  @override
+  String get continueToFirstThread => 'Перейти к первой теме';
 }

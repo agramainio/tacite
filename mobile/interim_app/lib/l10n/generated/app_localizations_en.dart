@@ -393,4 +393,79 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get setupLaterNote =>
       'This choice is not stored yet. The next phase adds timeline beginning and starting snapshot.';
+
+  @override
+  String get timelineBeginningTitle => 'Where should this timeline begin?';
+
+  @override
+  String get timelineBeginningBody =>
+      'Signup date is not always the real beginning. Choose the closest starting point. You can correct this later.';
+
+  @override
+  String get timelineBeginToday => 'Today';
+
+  @override
+  String get timelineBeginWhenStarted => 'When this started';
+
+  @override
+  String get timelineBeginTreatmentChanged => 'When treatment changed';
+
+  @override
+  String get timelineBeginLastAppointment => 'Last appointment';
+
+  @override
+  String get timelineBeginNotSure => 'I’m not sure';
+
+  @override
+  String get startingSnapshotTitle =>
+      'Save a quick picture of how things feel now?';
+
+  @override
+  String get startingSnapshotBody =>
+      'This helps compare later changes. It is not a diagnosis or clinical score.';
+
+  @override
+  String get quickSnapshot => 'Quick snapshot';
+
+  @override
+  String get skipForNow => 'Skip for now';
+
+  @override
+  String get snapshotMood => 'Mood';
+
+  @override
+  String get snapshotAnxiety => 'Anxiety';
+
+  @override
+  String get snapshotSleep => 'Sleep';
+
+  @override
+  String get snapshotEnergy => 'Energy';
+
+  @override
+  String get snapshotFocus => 'Focus';
+
+  @override
+  String get snapshotStartingTasks => 'Starting tasks';
+
+  @override
+  String get snapshotLow => 'low';
+
+  @override
+  String get snapshotMixed => 'mixed';
+
+  @override
+  String get snapshotOkay => 'okay';
+
+  @override
+  String get snapshotHigh => 'high';
+
+  @override
+  String get snapshotHard => 'hard';
+
+  @override
+  String get snapshotPossible => 'possible';
+
+  @override
+  String get continueToFirstThread => 'Continue to first thread';
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:interim_app/features/home/home_screen.dart';
 import 'package:interim_app/features/onboarding/purpose_onboarding_screen.dart';
+import 'package:interim_app/features/onboarding/starting_point_screen.dart';
 import 'package:interim_app/features/thread/new_thread_screen.dart';
 import 'package:interim_app/features/thread/thread_detail_screen.dart';
 import 'package:interim_app/l10n/generated/app_localizations.dart';
@@ -34,6 +35,26 @@ void main() {
     expect(find.text('I’m preparing for care'), findsOneWidget);
     expect(find.text('Just record something'), findsOneWidget);
   });
+
+  testWidgets(
+    'starting point screen shows timeline beginning and skippable snapshot',
+    (tester) async {
+      await tester.pumpWidget(
+        const InterimAppWrapper(child: StartingPointScreen()),
+      );
+
+      expect(find.text('Where should this timeline begin?'), findsOneWidget);
+      expect(find.text('Today'), findsOneWidget);
+      expect(find.text('When this started'), findsOneWidget);
+      expect(find.text('Last appointment'), findsOneWidget);
+      expect(
+        find.text('Save a quick picture of how things feel now?'),
+        findsOneWidget,
+      );
+      expect(find.text('Quick snapshot'), findsOneWidget);
+      expect(find.text('Skip for now'), findsOneWidget);
+    },
+  );
 
   testWidgets('new thread screen shows thread creation form', (tester) async {
     await tester.pumpWidget(const InterimAppWrapper(child: NewThreadScreen()));

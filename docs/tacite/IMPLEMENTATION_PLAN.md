@@ -161,3 +161,16 @@ A frontend-only onboarding foundation has been added:
 - no backend persistence yet
 - selection storage comes later
 - next phase adds timeline beginning and starting snapshot
+
+
+## Starting point onboarding note
+
+A frontend-only starting point screen has been added:
+
+- route: /onboarding/start
+- asks where the timeline should begin
+- offers a skippable quick starting snapshot
+- uses subjective labels only
+- does not persist choices yet
+- does not create clinical scores
+- next phase should add AI-off structured capture cards

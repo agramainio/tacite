@@ -399,4 +399,80 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get setupLaterNote =>
       'Ce choix n’est pas encore enregistré. La prochaine phase ajoute le début de la chronologie et le point de départ.';
+
+  @override
+  String get timelineBeginningTitle =>
+      'Où cette chronologie doit-elle commencer ?';
+
+  @override
+  String get timelineBeginningBody =>
+      'La date d’inscription n’est pas toujours le vrai début. Choisissez le point de départ le plus proche. Vous pourrez le corriger plus tard.';
+
+  @override
+  String get timelineBeginToday => 'Aujourd’hui';
+
+  @override
+  String get timelineBeginWhenStarted => 'Quand cela a commencé';
+
+  @override
+  String get timelineBeginTreatmentChanged => 'Quand le traitement a changé';
+
+  @override
+  String get timelineBeginLastAppointment => 'Dernier rendez-vous';
+
+  @override
+  String get timelineBeginNotSure => 'Je ne suis pas sûr';
+
+  @override
+  String get startingSnapshotTitle =>
+      'Enregistrer une image rapide de comment ça va maintenant ?';
+
+  @override
+  String get startingSnapshotBody =>
+      'Cela aide à comparer les changements plus tard. Ce n’est pas un diagnostic ni un score clinique.';
+
+  @override
+  String get quickSnapshot => 'Point de départ rapide';
+
+  @override
+  String get skipForNow => 'Passer pour l’instant';
+
+  @override
+  String get snapshotMood => 'Humeur';
+
+  @override
+  String get snapshotAnxiety => 'Anxiété';
+
+  @override
+  String get snapshotSleep => 'Sommeil';
+
+  @override
+  String get snapshotEnergy => 'Énergie';
+
+  @override
+  String get snapshotFocus => 'Concentration';
+
+  @override
+  String get snapshotStartingTasks => 'Commencer les tâches';
+
+  @override
+  String get snapshotLow => 'bas';
+
+  @override
+  String get snapshotMixed => 'mitigé';
+
+  @override
+  String get snapshotOkay => 'correct';
+
+  @override
+  String get snapshotHigh => 'élevé';
+
+  @override
+  String get snapshotHard => 'difficile';
+
+  @override
+  String get snapshotPossible => 'possible';
+
+  @override
+  String get continueToFirstThread => 'Continuer vers le premier fil';
 }

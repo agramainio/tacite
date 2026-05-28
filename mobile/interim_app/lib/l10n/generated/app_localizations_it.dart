@@ -396,4 +396,81 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get setupLaterNote =>
       'Questa scelta non viene ancora salvata. La prossima fase aggiunge l’inizio della cronologia e il punto di partenza.';
+
+  @override
+  String get timelineBeginningTitle =>
+      'Da dove dovrebbe iniziare questa cronologia?';
+
+  @override
+  String get timelineBeginningBody =>
+      'La data di iscrizione non è sempre il vero inizio. Scegli il punto di partenza più vicino. Potrai correggerlo più tardi.';
+
+  @override
+  String get timelineBeginToday => 'Oggi';
+
+  @override
+  String get timelineBeginWhenStarted => 'Quando è iniziato';
+
+  @override
+  String get timelineBeginTreatmentChanged =>
+      'Quando è cambiato il trattamento';
+
+  @override
+  String get timelineBeginLastAppointment => 'Ultimo appuntamento';
+
+  @override
+  String get timelineBeginNotSure => 'Non lo so';
+
+  @override
+  String get startingSnapshotTitle =>
+      'Salvare una fotografia rapida di come stanno le cose ora?';
+
+  @override
+  String get startingSnapshotBody =>
+      'Aiuta a confrontare i cambiamenti più tardi. Non è una diagnosi né un punteggio clinico.';
+
+  @override
+  String get quickSnapshot => 'Punto di partenza rapido';
+
+  @override
+  String get skipForNow => 'Salta per ora';
+
+  @override
+  String get snapshotMood => 'Umore';
+
+  @override
+  String get snapshotAnxiety => 'Ansia';
+
+  @override
+  String get snapshotSleep => 'Sonno';
+
+  @override
+  String get snapshotEnergy => 'Energia';
+
+  @override
+  String get snapshotFocus => 'Concentrazione';
+
+  @override
+  String get snapshotStartingTasks => 'Iniziare i compiti';
+
+  @override
+  String get snapshotLow => 'basso';
+
+  @override
+  String get snapshotMixed => 'misto';
+
+  @override
+  String get snapshotOkay => 'ok';
+
+  @override
+  String get snapshotHigh => 'alto';
+
+  @override
+  String get snapshotHard => 'difficile';
+
+  @override
+  String get snapshotPossible => 'possibile';
+
+  @override
+  String get continueToFirstThread => 'Continua al primo filo';
 }

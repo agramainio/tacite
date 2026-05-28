@@ -13,7 +13,7 @@ class PurposeOnboardingScreen extends StatelessWidget {
   const PurposeOnboardingScreen({super.key});
 
   void _continue(BuildContext context) {
-    context.go('/threads/new');
+    context.go('/onboarding/start');
   }
 
   @override
