@@ -143,3 +143,10 @@ checkpoint-ai-extraction-foundation-v1
 Tacite should avoid raw default Flutter visuals on product screens.
 
 The design foundation introduces Tacite-specific tokens and components. Future product screens should prefer Tacite components over direct Material widgets when practical.
+
+
+## Screen refactor note
+
+The current screens have been refactored to use Tacite visual components for scaffolding, panels, primary actions, text areas, section headers, messages, and timeline cards.
+
+This is still not the final Tacite UX, but it removes the most obvious default Flutter structure before onboarding and structured capture work.

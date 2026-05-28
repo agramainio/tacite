@@ -2,6 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../l10n/generated/app_localizations.dart';
+import '../../shared/theme/tacite_spacing.dart';
+import '../../shared/theme/tacite_text_styles.dart';
+import '../../shared/widgets/tacite_message.dart';
+import '../../shared/widgets/tacite_panel.dart';
+import '../../shared/widgets/tacite_primary_button.dart';
+import '../../shared/widgets/tacite_scaffold.dart';
+import '../../shared/widgets/tacite_text_area.dart';
 import 'data/thread_repository.dart';
 
 class NewThreadScreen extends StatefulWidget {
@@ -28,11 +36,12 @@ class _NewThreadScreenState extends State<NewThreadScreen> {
   }
 
   Future<void> _createThread() async {
+    final l10n = AppLocalizations.of(context);
     final title = _titleController.text.trim();
 
     if (title.isEmpty) {
       setState(() {
-        _message = 'Add a short title first.';
+        _message = l10n.addShortTitleFirst;
       });
       return;
     }
@@ -57,10 +66,9 @@ class _NewThreadScreenState extends State<NewThreadScreen> {
     } on DioException catch (error) {
       setState(() {
         if (error.response?.statusCode == 401) {
-          _message =
-              'Log in from the home screen first, then create the thread.';
+          _message = l10n.loginFromHomeBeforeCreating;
         } else {
-          _message = 'Could not create the thread: ${error.message}';
+          _message = l10n.couldNotCreateThread(error.message ?? l10n.unknown);
         }
       });
     } finally {
@@ -74,94 +82,78 @@ class _NewThreadScreenState extends State<NewThreadScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Start a thread'),
-        actions: [
-          TextButton(
-            onPressed: () => context.go('/'),
-            child: const Text('Home'),
-          ),
-        ],
-      ),
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(20),
-          children: [
-            Text(
-              'What do you want to remember clearly later?',
-              style: textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              'Create a private thread for one treatment change or one appointment-preparation topic.',
-            ),
-            const SizedBox(height: 20),
-            DropdownButtonFormField<String>(
-              initialValue: _kind,
-              decoration: const InputDecoration(
-                labelText: 'Thread type',
-                border: OutlineInputBorder(),
-              ),
-              items: const [
-                DropdownMenuItem(
-                  value: 'treatment_episode',
-                  child: Text('Treatment change'),
-                ),
-                DropdownMenuItem(
-                  value: 'appointment_preparation',
-                  child: Text('Appointment preparation'),
-                ),
-              ],
-              onChanged: _isSaving
-                  ? null
-                  : (value) {
-                      if (value == null) {
-                        return;
-                      }
+    return TaciteScaffold(
+      title: l10n.startThread,
+      actions: [
+        TextButton(onPressed: () => context.go('/'), child: Text(l10n.home)),
+      ],
+      children: [
+        Text(l10n.startThreadTitle, style: TaciteTextStyles.screenTitle),
+        const SizedBox(height: TaciteSpacing.sm),
+        Text(l10n.startThreadBody, style: TaciteTextStyles.bodyMuted),
+        const SizedBox(height: TaciteSpacing.xl),
+        TacitePanel(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              DropdownButtonFormField<String>(
+                initialValue: _kind,
+                decoration: InputDecoration(labelText: l10n.threadType),
+                items: [
+                  DropdownMenuItem(
+                    value: 'treatment_episode',
+                    child: Text(l10n.treatmentChange),
+                  ),
+                  DropdownMenuItem(
+                    value: 'appointment_preparation',
+                    child: Text(l10n.appointmentPreparation),
+                  ),
+                ],
+                onChanged: _isSaving
+                    ? null
+                    : (value) {
+                        if (value == null) {
+                          return;
+                        }
 
-                      setState(() {
-                        _kind = value;
-                      });
-                    },
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: _titleController,
-              textInputAction: TextInputAction.next,
-              decoration: const InputDecoration(
-                labelText: 'Short title',
-                hintText: 'Example: before psychiatrist appointment',
-                border: OutlineInputBorder(),
+                        setState(() {
+                          _kind = value;
+                        });
+                      },
               ),
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: _goalController,
-              minLines: 3,
-              maxLines: 5,
-              decoration: const InputDecoration(
-                labelText: 'What should this help you remember?',
-                hintText: 'Optional. Use fake test data while developing.',
-                border: OutlineInputBorder(),
+              const SizedBox(height: TaciteSpacing.md),
+              TextField(
+                controller: _titleController,
+                textInputAction: TextInputAction.next,
+                decoration: InputDecoration(
+                  labelText: l10n.shortTitle,
+                  hintText: l10n.shortTitleHint,
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            FilledButton(
-              onPressed: _isSaving ? null : _createThread,
-              child: Text(_isSaving ? 'Creating…' : 'Create thread'),
-            ),
-            if (_message != null) ...[
-              const SizedBox(height: 16),
-              Text(_message!),
+              const SizedBox(height: TaciteSpacing.md),
+              TaciteTextArea(
+                controller: _goalController,
+                label: l10n.threadGoal,
+                hint: l10n.threadGoalHint,
+                minLines: 3,
+                maxLines: 5,
+              ),
+              const SizedBox(height: TaciteSpacing.lg),
+              TacitePrimaryButton(
+                onPressed: _isSaving ? null : _createThread,
+                isBusy: _isSaving,
+                label: _isSaving ? l10n.creating : l10n.createThread,
+              ),
             ],
-          ],
+          ),
         ),
-      ),
+        if (_message != null) ...[
+          const SizedBox(height: TaciteSpacing.md),
+          TaciteMessage(message: _message!, isWarning: true),
+        ],
+      ],
     );
   }
 }

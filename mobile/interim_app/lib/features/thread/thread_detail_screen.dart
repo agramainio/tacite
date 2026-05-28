@@ -3,6 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../l10n/generated/app_localizations.dart';
+import '../../shared/theme/tacite_spacing.dart';
+import '../../shared/theme/tacite_text_styles.dart';
+import '../../shared/widgets/tacite_message.dart';
+import '../../shared/widgets/tacite_panel.dart';
+import '../../shared/widgets/tacite_primary_button.dart';
+import '../../shared/widgets/tacite_scaffold.dart';
+import '../../shared/widgets/tacite_section_header.dart';
+import '../../shared/widgets/tacite_text_area.dart';
+import '../../shared/widgets/tacite_timeline_card.dart';
 import 'data/thread_models.dart';
 import 'data/thread_repository.dart';
 
@@ -160,114 +169,101 @@ class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final textTheme = Theme.of(context).textTheme;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.thread),
-        actions: [
-          TextButton(
-            onPressed: _loadExistingRecords,
-            child: Text(l10n.refresh),
-          ),
-          TextButton(onPressed: () => context.go('/'), child: Text(l10n.home)),
-        ],
-      ),
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(20),
-          children: [
-            Text(
-              l10n.recordTimelineNote,
-              style: textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(l10n.recordTimelineNoteBody),
-            const SizedBox(height: 20),
-            DropdownButtonFormField<String>(
-              initialValue: _eventType,
-              decoration: InputDecoration(
-                labelText: l10n.kindOfNote,
-                border: const OutlineInputBorder(),
-              ),
-              items: [
-                DropdownMenuItem(value: 'note', child: Text(l10n.note)),
-                DropdownMenuItem(
-                  value: 'baseline_snapshot',
-                  child: Text(l10n.baselineSnapshot),
-                ),
-                DropdownMenuItem(
-                  value: 'started_medication',
-                  child: Text(l10n.startedTreatmentLabel),
-                ),
-                DropdownMenuItem(
-                  value: 'side_effect_note',
-                  child: Text(l10n.sideEffectNote),
-                ),
-                DropdownMenuItem(
-                  value: 'appointment_question',
-                  child: Text(l10n.appointmentQuestion),
-                ),
-              ],
-              onChanged: _isRecording
-                  ? null
-                  : (value) {
-                      if (value == null) {
-                        return;
-                      }
+    return TaciteScaffold(
+      title: l10n.thread,
+      actions: [
+        TextButton(onPressed: _loadExistingRecords, child: Text(l10n.refresh)),
+        TextButton(onPressed: () => context.go('/'), child: Text(l10n.home)),
+      ],
+      children: [
+        Text(l10n.recordTimelineNote, style: TaciteTextStyles.screenTitle),
+        const SizedBox(height: TaciteSpacing.sm),
+        Text(l10n.recordTimelineNoteBody, style: TaciteTextStyles.bodyMuted),
+        const SizedBox(height: TaciteSpacing.xl),
+        TacitePanel(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              DropdownButtonFormField<String>(
+                initialValue: _eventType,
+                decoration: InputDecoration(labelText: l10n.kindOfNote),
+                items: [
+                  DropdownMenuItem(value: 'note', child: Text(l10n.note)),
+                  DropdownMenuItem(
+                    value: 'baseline_snapshot',
+                    child: Text(l10n.baselineSnapshot),
+                  ),
+                  DropdownMenuItem(
+                    value: 'started_medication',
+                    child: Text(l10n.startedTreatmentLabel),
+                  ),
+                  DropdownMenuItem(
+                    value: 'side_effect_note',
+                    child: Text(l10n.sideEffectNote),
+                  ),
+                  DropdownMenuItem(
+                    value: 'appointment_question',
+                    child: Text(l10n.appointmentQuestion),
+                  ),
+                ],
+                onChanged: _isRecording
+                    ? null
+                    : (value) {
+                        if (value == null) {
+                          return;
+                        }
 
-                      setState(() {
-                        _eventType = value;
-                      });
-                    },
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: _noteController,
-              minLines: 5,
-              maxLines: 10,
-              textInputAction: TextInputAction.newline,
-              decoration: InputDecoration(
-                labelText: l10n.messyNote,
-                hintText: l10n.fakeDataHint,
-                border: const OutlineInputBorder(),
+                        setState(() {
+                          _eventType = value;
+                        });
+                      },
               ),
-            ),
-            const SizedBox(height: 12),
-            FilledButton(
-              onPressed: _isRecording ? null : _recordToTimeline,
-              child: Text(
-                _isRecording ? l10n.recording : l10n.recordToTimeline,
+              const SizedBox(height: TaciteSpacing.md),
+              TaciteTextArea(
+                controller: _noteController,
+                label: l10n.messyNote,
+                hint: l10n.fakeDataHint,
+                minLines: 5,
+                maxLines: 10,
               ),
-            ),
-            if (_message != null) ...[
-              const SizedBox(height: 16),
-              Text(_message!),
+              const SizedBox(height: TaciteSpacing.md),
+              TacitePrimaryButton(
+                onPressed: _isRecording ? null : _recordToTimeline,
+                isBusy: _isRecording,
+                label: _isRecording ? l10n.recording : l10n.recordToTimeline,
+              ),
             ],
-            const SizedBox(height: 24),
-            _RecordsSection(
-              title: l10n.timeline,
-              isLoading: _isLoadingExisting,
-              emptyText: l10n.noTimelineEventsYet,
-              children: [
-                for (final event in _timelineEvents)
-                  _SavedTimelineEventCard(event: event),
-              ],
-            ),
-            const SizedBox(height: 16),
-            _RecordsSection(
-              title: l10n.originalNotes,
-              isLoading: _isLoadingExisting,
-              emptyText: l10n.noOriginalNotesYet,
-              children: [
-                for (final note in _rawNotes) _SavedRawNoteCard(note: note),
-              ],
-            ),
+          ),
+        ),
+        if (_message != null) ...[
+          const SizedBox(height: TaciteSpacing.md),
+          TaciteMessage(message: _message!),
+        ],
+        const SizedBox(height: TaciteSpacing.xl),
+        _RecordsSection(
+          title: l10n.timeline,
+          isLoading: _isLoadingExisting,
+          emptyText: l10n.noTimelineEventsYet,
+          children: [
+            for (final event in _timelineEvents)
+              TaciteTimelineCard(
+                title: event.title,
+                body: event.userApprovedSummary,
+                meta: l10n.source(event.source),
+              ),
           ],
         ),
-      ),
+        const SizedBox(height: TaciteSpacing.lg),
+        _RecordsSection(
+          title: l10n.originalNotes,
+          isLoading: _isLoadingExisting,
+          emptyText: l10n.noOriginalNotesYet,
+          children: [
+            for (final note in _rawNotes) _OriginalNotePanel(note: note),
+          ],
+        ),
+      ],
     );
   }
 }
@@ -288,94 +284,53 @@ class _RecordsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final textTheme = Theme.of(context).textTheme;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: textTheme.titleLarge),
-        const SizedBox(height: 12),
+        TaciteSectionHeader(title: title),
         if (isLoading)
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(l10n.loadingSavedRecords),
+          TacitePanel(
+            child: Text(
+              l10n.loadingSavedRecords,
+              style: TaciteTextStyles.bodyMuted,
             ),
           )
         else if (children.isEmpty)
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(emptyText),
-            ),
-          )
+          TacitePanel(child: Text(emptyText, style: TaciteTextStyles.bodyMuted))
         else
           for (final child in children)
-            Padding(padding: const EdgeInsets.only(bottom: 12), child: child),
+            Padding(
+              padding: const EdgeInsets.only(bottom: TaciteSpacing.sm),
+              child: child,
+            ),
       ],
     );
   }
 }
 
-class _SavedRawNoteCard extends StatelessWidget {
-  const _SavedRawNoteCard({required this.note});
+class _OriginalNotePanel extends StatelessWidget {
+  const _OriginalNotePanel({required this.note});
 
   final RawNote note;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final textTheme = Theme.of(context).textTheme;
 
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(l10n.originalNote, style: textTheme.titleMedium),
-            const SizedBox(height: 8),
-            SelectableText(note.originalText),
-            const SizedBox(height: 12),
-            Text(
-              l10n.savedDate(note.userLocalDate ?? l10n.unknown),
-              style: textTheme.bodySmall,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _SavedTimelineEventCard extends StatelessWidget {
-  const _SavedTimelineEventCard({required this.event});
-
-  final TimelineEvent event;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final textTheme = Theme.of(context).textTheme;
-
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(l10n.timelineEvent, style: textTheme.titleMedium),
-            const SizedBox(height: 8),
-            Text(
-              event.title,
-              style: const TextStyle(fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 8),
-            SelectableText(event.userApprovedSummary),
-            const SizedBox(height: 12),
-            Text(l10n.source(event.source), style: textTheme.bodySmall),
-          ],
-        ),
+    return TacitePanel(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(l10n.originalNote, style: TaciteTextStyles.sectionTitle),
+          const SizedBox(height: TaciteSpacing.xs),
+          SelectableText(note.originalText, style: TaciteTextStyles.body),
+          const SizedBox(height: TaciteSpacing.sm),
+          Text(
+            l10n.savedDate(note.userLocalDate ?? l10n.unknown),
+            style: TaciteTextStyles.small,
+          ),
+        ],
       ),
     );
   }

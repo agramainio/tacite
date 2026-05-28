@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../shared/theme/tacite_spacing.dart';
+import '../../shared/theme/tacite_text_styles.dart';
+import '../../shared/widgets/tacite_scaffold.dart';
+import '../../shared/widgets/tacite_timeline_card.dart';
+
 class ThreadPlaceholderScreen extends StatelessWidget {
   const ThreadPlaceholderScreen({super.key});
 
@@ -14,48 +19,26 @@ class ThreadPlaceholderScreen extends StatelessWidget {
       ('8 May', 'Question to discuss at next appointment.'),
     ];
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('Timeline')),
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(20),
-          children: [
-            Text(
-              'Timeline preview',
-              style: Theme.of(
-                context,
-              ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              'Confirmed entries will appear here. AI drafts will never become final without review.',
-            ),
-            const SizedBox(height: 20),
-            for (final entry in entries)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 12),
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: 64,
-                          child: Text(
-                            entry.$1,
-                            style: const TextStyle(fontWeight: FontWeight.w700),
-                          ),
-                        ),
-                        Expanded(child: Text(entry.$2)),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-          ],
+    return TaciteScaffold(
+      title: 'Timeline',
+      children: [
+        Text('Timeline preview', style: TaciteTextStyles.screenTitle),
+        const SizedBox(height: TaciteSpacing.sm),
+        const Text(
+          'Confirmed entries will appear here. AI drafts will never become final without review.',
+          style: TaciteTextStyles.bodyMuted,
         ),
-      ),
+        const SizedBox(height: TaciteSpacing.xl),
+        for (final entry in entries)
+          Padding(
+            padding: const EdgeInsets.only(bottom: TaciteSpacing.sm),
+            child: TaciteTimelineCard(
+              meta: entry.$1,
+              title: 'Preview entry',
+              body: entry.$2,
+            ),
+          ),
+      ],
     );
   }
 }

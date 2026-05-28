@@ -2,6 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../l10n/generated/app_localizations.dart';
+import '../../shared/theme/tacite_spacing.dart';
+import '../../shared/theme/tacite_text_styles.dart';
+import '../../shared/widgets/tacite_message.dart';
+import '../../shared/widgets/tacite_panel.dart';
+import '../../shared/widgets/tacite_primary_button.dart';
+import '../../shared/widgets/tacite_scaffold.dart';
+import '../../shared/widgets/tacite_secondary_button.dart';
 import 'auth_repository.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -28,6 +36,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _requestCode() async {
+    final l10n = AppLocalizations.of(context);
+
     setState(() {
       _isLoading = true;
       _message = null;
@@ -39,24 +49,36 @@ class _LoginScreenState extends State<LoginScreen> {
         _emailController.text.trim(),
       );
 
+      if (!mounted) {
+        return;
+      }
+
       setState(() {
         _devCode = code;
         _message = code == null
-            ? 'A login code was created.'
-            : 'Local dev code: $code';
+            ? l10n.loginCodeCreated
+            : l10n.localDevCode(code);
       });
     } on DioException catch (error) {
+      if (!mounted) {
+        return;
+      }
+
       setState(() {
-        _message = 'Could not request a login code: ${error.message}';
+        _message = l10n.couldNotRequestCode(error.message ?? l10n.unknown);
       });
     } finally {
-      setState(() {
-        _isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 
   Future<void> _verifyCode() async {
+    final l10n = AppLocalizations.of(context);
+
     setState(() {
       _isLoading = true;
       _message = null;
@@ -73,80 +95,85 @@ class _LoginScreenState extends State<LoginScreen> {
       }
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Logged in as ${profile.emailIdentifier}')),
+        SnackBar(content: Text(l10n.loggedInAs(profile.emailIdentifier))),
       );
 
       context.go('/');
     } on DioException catch (error) {
+      if (!mounted) {
+        return;
+      }
+
       setState(() {
-        _message = 'Could not verify the code: ${error.message}';
+        _message = l10n.couldNotVerifyCode(error.message ?? l10n.unknown);
       });
     } finally {
-      setState(() {
-        _isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context);
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('Log in')),
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(20),
-          children: [
-            Text(
-              'No real name required.',
-              style: textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.w700,
+    return TaciteScaffold(
+      title: l10n.login,
+      actions: [
+        TextButton(onPressed: () => context.go('/'), child: Text(l10n.home)),
+      ],
+      children: [
+        Text(l10n.loginTitle, style: TaciteTextStyles.screenTitle),
+        const SizedBox(height: TaciteSpacing.sm),
+        Text(l10n.loginBody, style: TaciteTextStyles.bodyMuted),
+        const SizedBox(height: TaciteSpacing.xl),
+        TacitePanel(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(l10n.email, style: TaciteTextStyles.label),
+              const SizedBox(height: TaciteSpacing.sm),
+              TextField(
+                controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
+                autofillHints: const [AutofillHints.email],
+                decoration: InputDecoration(hintText: l10n.email),
               ),
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              'Use an email you control so interim can keep your records linked to your account.',
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              controller: _emailController,
-              keyboardType: TextInputType.emailAddress,
-              autofillHints: const [AutofillHints.email],
-              decoration: const InputDecoration(
-                labelText: 'Email',
-                border: OutlineInputBorder(),
+              const SizedBox(height: TaciteSpacing.md),
+              TaciteSecondaryButton(
+                onPressed: _isLoading ? null : _requestCode,
+                label: l10n.requestLoginCode,
               ),
-            ),
-            const SizedBox(height: 12),
-            FilledButton(
-              onPressed: _isLoading ? null : _requestCode,
-              child: const Text('Request login code'),
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              controller: _codeController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: 'Login code',
-                helperText: _devCode == null
-                    ? null
-                    : 'Local dev code: $_devCode',
-                border: const OutlineInputBorder(),
+              const SizedBox(height: TaciteSpacing.xl),
+              Text(l10n.loginCode, style: TaciteTextStyles.label),
+              const SizedBox(height: TaciteSpacing.sm),
+              TextField(
+                controller: _codeController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  hintText: l10n.loginCode,
+                  helperText: _devCode == null
+                      ? null
+                      : l10n.localDevCode(_devCode!),
+                ),
               ),
-            ),
-            const SizedBox(height: 12),
-            FilledButton(
-              onPressed: _isLoading ? null : _verifyCode,
-              child: const Text('Verify code'),
-            ),
-            if (_message != null) ...[
-              const SizedBox(height: 16),
-              Text(_message!),
+              const SizedBox(height: TaciteSpacing.md),
+              TacitePrimaryButton(
+                onPressed: _isLoading ? null : _verifyCode,
+                isBusy: _isLoading,
+                label: l10n.verifyCode,
+              ),
             ],
-          ],
+          ),
         ),
-      ),
+        if (_message != null) ...[
+          const SizedBox(height: TaciteSpacing.md),
+          TaciteMessage(message: _message!),
+        ],
+      ],
     );
   }
 }
