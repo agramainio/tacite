@@ -1097,6 +1097,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{action} will be wired in the next product pass.'**
   String timelineActionPlaceholder(Object action);
+
+  /// No description provided for @summaryScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Summary so far'**
+  String get summaryScreenTitle;
+
+  /// No description provided for @summaryScreenBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Create an editable summary from a selected range. This is a draft you can change before bringing it to care.'**
+  String get summaryScreenBody;
+
+  /// No description provided for @summaryRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Range'**
+  String get summaryRange;
+
+  /// No description provided for @summaryRangeSinceLastAppointment.
+  ///
+  /// In en, this message translates to:
+  /// **'Since last appointment'**
+  String get summaryRangeSinceLastAppointment;
+
+  /// No description provided for @summaryRangeSinceTreatmentChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Since treatment change'**
+  String get summaryRangeSinceTreatmentChange;
+
+  /// No description provided for @summaryRangeSinceDoseChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Since dose change'**
+  String get summaryRangeSinceDoseChange;
+
+  /// No description provided for @summaryRangeLastTwoWeeks.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 2 weeks'**
+  String get summaryRangeLastTwoWeeks;
+
+  /// No description provided for @summaryRangeLastMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Last month'**
+  String get summaryRangeLastMonth;
+
+  /// No description provided for @summaryRangeCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom range'**
+  String get summaryRangeCustom;
+
+  /// No description provided for @summaryDraftLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Editable summary'**
+  String get summaryDraftLabel;
+
+  /// No description provided for @summaryTemplate.
+  ///
+  /// In en, this message translates to:
+  /// **'Summary so far\\n\\nRange: selected range\\n\\nWhat I want help with:\\n- \\n\\nWhat changed:\\n- \\n\\nWhat I noticed after:\\n- \\n\\nSide effects or body changes:\\n- \\n\\nFunctioning:\\n- \\n\\nContext that may matter:\\n- \\n\\nQuestions to bring up:\\n- '**
+  String get summaryTemplate;
+
+  /// No description provided for @copySummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy summary'**
+  String get copySummary;
+
+  /// No description provided for @summaryCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Summary copied.'**
+  String get summaryCopied;
+
+  /// No description provided for @summaryNotMedicalAdvice.
+  ///
+  /// In en, this message translates to:
+  /// **'This summary is based on what you recorded. It is not medical advice or a diagnosis.'**
+  String get summaryNotMedicalAdvice;
 }
 
 class _AppLocalizationsDelegate

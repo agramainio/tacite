@@ -230,5 +230,19 @@
     "placeholders": {
       "action": {}
     }
-  }
+  },
+  "summaryScreenTitle": "Summary so far",
+  "summaryScreenBody": "Create an editable summary from a selected range. This is a draft you can change before bringing it to care.",
+  "summaryRange": "Range",
+  "summaryRangeSinceLastAppointment": "Since last appointment",
+  "summaryRangeSinceTreatmentChange": "Since treatment change",
+  "summaryRangeSinceDoseChange": "Since dose change",
+  "summaryRangeLastTwoWeeks": "Last 2 weeks",
+  "summaryRangeLastMonth": "Last month",
+  "summaryRangeCustom": "Custom range",
+  "summaryDraftLabel": "Editable summary",
+  "summaryTemplate": "Summary so far\\n\\nRange: selected range\\n\\nWhat I want help with:\\n- \\n\\nWhat changed:\\n- \\n\\nWhat I noticed after:\\n- \\n\\nSide effects or body changes:\\n- \\n\\nFunctioning:\\n- \\n\\nContext that may matter:\\n- \\n\\nQuestions to bring up:\\n- ",
+  "copySummary": "Copy summary",
+  "summaryCopied": "Summary copied.",
+  "summaryNotMedicalAdvice": "This summary is based on what you recorded. It is not medical advice or a diagnosis."
 }

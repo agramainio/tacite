@@ -122,6 +122,11 @@ class _HomeScreenState extends State<HomeScreen> {
           onPressed: () => context.go('/threads/new'),
           label: l10n.justRecordSomething,
         ),
+        const SizedBox(height: TaciteSpacing.sm),
+        TaciteSecondaryButton(
+          onPressed: () => context.go('/summary'),
+          label: l10n.summarySoFar,
+        ),
         const SizedBox(height: TaciteSpacing.xl),
         const _PrinciplesList(),
       ],

@@ -559,4 +559,50 @@ class AppLocalizationsIt extends AppLocalizations {
   String timelineActionPlaceholder(Object action) {
     return '$action verrà collegato in un prossimo passaggio prodotto.';
   }
+
+  @override
+  String get summaryScreenTitle => 'Riassunto finora';
+
+  @override
+  String get summaryScreenBody =>
+      'Crea un riassunto modificabile da un periodo scelto. È una bozza che puoi cambiare prima di portarla in cura.';
+
+  @override
+  String get summaryRange => 'Periodo';
+
+  @override
+  String get summaryRangeSinceLastAppointment => 'Dall’ultimo appuntamento';
+
+  @override
+  String get summaryRangeSinceTreatmentChange =>
+      'Dal cambiamento di trattamento';
+
+  @override
+  String get summaryRangeSinceDoseChange => 'Dal cambio dose';
+
+  @override
+  String get summaryRangeLastTwoWeeks => 'Ultime 2 settimane';
+
+  @override
+  String get summaryRangeLastMonth => 'Ultimo mese';
+
+  @override
+  String get summaryRangeCustom => 'Periodo personalizzato';
+
+  @override
+  String get summaryDraftLabel => 'Riassunto modificabile';
+
+  @override
+  String get summaryTemplate =>
+      'Riassunto finora\\n\\nPeriodo: periodo scelto\\n\\nPer cosa voglio aiuto:\\n- \\n\\nCosa è cambiato:\\n- \\n\\nCosa ho notato dopo:\\n- \\n\\nEffetti collaterali o cambiamenti fisici:\\n- \\n\\nFunzionamento:\\n- \\n\\nContesto che può contare:\\n- \\n\\nDomande da fare:\\n- ';
+
+  @override
+  String get copySummary => 'Copia riassunto';
+
+  @override
+  String get summaryCopied => 'Riassunto copiato.';
+
+  @override
+  String get summaryNotMedicalAdvice =>
+      'Questo riassunto si basa su ciò che hai registrato. Non è un consiglio medico né una diagnosi.';
 }

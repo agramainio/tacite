@@ -201,3 +201,18 @@ Timeline cards now support non-destructive swipe shortcuts:
 - backend wiring comes later with the summary feature
 
 Swipe is a shortcut, not the only access path.
+
+
+## Summary so far note
+
+A frontend-only Summary so far surface has been added:
+
+- route: /summary
+- range selector
+- editable summary draft
+- copy summary action
+- no backend persistence yet
+- no PDF export yet
+- no AI generation yet
+
+This is the second core product surface after the timeline.

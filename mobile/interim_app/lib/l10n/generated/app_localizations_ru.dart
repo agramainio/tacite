@@ -555,4 +555,49 @@ class AppLocalizationsRu extends AppLocalizations {
   String timelineActionPlaceholder(Object action) {
     return '$action будет подключено на следующем продуктовом этапе.';
   }
+
+  @override
+  String get summaryScreenTitle => 'Резюме на данный момент';
+
+  @override
+  String get summaryScreenBody =>
+      'Создайте редактируемое резюме за выбранный период. Это черновик, который можно изменить перед визитом.';
+
+  @override
+  String get summaryRange => 'Период';
+
+  @override
+  String get summaryRangeSinceLastAppointment => 'С последней встречи';
+
+  @override
+  String get summaryRangeSinceTreatmentChange => 'С изменения лечения';
+
+  @override
+  String get summaryRangeSinceDoseChange => 'С изменения дозы';
+
+  @override
+  String get summaryRangeLastTwoWeeks => 'Последние 2 недели';
+
+  @override
+  String get summaryRangeLastMonth => 'Последний месяц';
+
+  @override
+  String get summaryRangeCustom => 'Свой период';
+
+  @override
+  String get summaryDraftLabel => 'Редактируемое резюме';
+
+  @override
+  String get summaryTemplate =>
+      'Резюме на данный момент\\n\\nПериод: выбранный период\\n\\nС чем я хочу получить помощь:\\n- \\n\\nЧто изменилось:\\n- \\n\\nЧто я заметил после:\\n- \\n\\nПобочные эффекты или изменения в теле:\\n- \\n\\nФункционирование:\\n- \\n\\nКонтекст, который может быть важен:\\n- \\n\\nВопросы, которые нужно обсудить:\\n- ';
+
+  @override
+  String get copySummary => 'Скопировать резюме';
+
+  @override
+  String get summaryCopied => 'Резюме скопировано.';
+
+  @override
+  String get summaryNotMedicalAdvice =>
+      'Это резюме основано на ваших записях. Это не медицинский совет и не диагноз.';
 }

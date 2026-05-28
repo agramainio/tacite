@@ -180,5 +180,19 @@
     "placeholders": {
       "action": {}
     }
-  }
+  },
+  "summaryScreenTitle": "Riassunto finora",
+  "summaryScreenBody": "Crea un riassunto modificabile da un periodo scelto. È una bozza che puoi cambiare prima di portarla in cura.",
+  "summaryRange": "Periodo",
+  "summaryRangeSinceLastAppointment": "Dall’ultimo appuntamento",
+  "summaryRangeSinceTreatmentChange": "Dal cambiamento di trattamento",
+  "summaryRangeSinceDoseChange": "Dal cambio dose",
+  "summaryRangeLastTwoWeeks": "Ultime 2 settimane",
+  "summaryRangeLastMonth": "Ultimo mese",
+  "summaryRangeCustom": "Periodo personalizzato",
+  "summaryDraftLabel": "Riassunto modificabile",
+  "summaryTemplate": "Riassunto finora\\n\\nPeriodo: periodo scelto\\n\\nPer cosa voglio aiuto:\\n- \\n\\nCosa è cambiato:\\n- \\n\\nCosa ho notato dopo:\\n- \\n\\nEffetti collaterali o cambiamenti fisici:\\n- \\n\\nFunzionamento:\\n- \\n\\nContesto che può contare:\\n- \\n\\nDomande da fare:\\n- ",
+  "copySummary": "Copia riassunto",
+  "summaryCopied": "Riassunto copiato.",
+  "summaryNotMedicalAdvice": "Questo riassunto si basa su ciò che hai registrato. Non è un consiglio medico né una diagnosi."
 }

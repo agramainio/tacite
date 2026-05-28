@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:interim_app/features/home/home_screen.dart';
 import 'package:interim_app/features/onboarding/purpose_onboarding_screen.dart';
 import 'package:interim_app/features/onboarding/starting_point_screen.dart';
+import 'package:interim_app/features/summary/summary_screen.dart';
 import 'package:interim_app/features/thread/new_thread_screen.dart';
 import 'package:interim_app/features/thread/thread_detail_screen.dart';
 import 'package:interim_app/features/thread/thread_placeholder_screen.dart';
@@ -10,7 +11,7 @@ import 'package:interim_app/l10n/generated/app_localizations.dart';
 
 void main() {
   testWidgets(
-    'home screen shows setup and quick record actions without network calls',
+    'home screen shows setup, quick record, and summary actions without network calls',
     (tester) async {
       await tester.pumpWidget(
         const InterimAppWrapper(child: HomeScreen(loadSessionOnStart: false)),
@@ -21,8 +22,29 @@ void main() {
       expect(find.text('Not logged in'), findsOneWidget);
       expect(find.text('Start setup'), findsOneWidget);
       expect(find.text('Just record something'), findsOneWidget);
+
+      await tester.scrollUntilVisible(
+        find.text('Summary so far'),
+        400,
+        scrollable: find.byType(Scrollable),
+      );
+
+      expect(find.text('Summary so far'), findsOneWidget);
     },
   );
+
+  testWidgets('summary screen shows range selector and editable summary', (
+    tester,
+  ) async {
+    await tester.pumpWidget(const InterimAppWrapper(child: SummaryScreen()));
+
+    expect(find.text('Summary so far'), findsWidgets);
+    expect(find.text('Range'), findsOneWidget);
+    expect(find.text('Since last appointment'), findsOneWidget);
+    expect(find.text('Editable summary'), findsOneWidget);
+    expect(find.text('Copy summary'), findsOneWidget);
+    expect(find.textContaining('What I want help with'), findsOneWidget);
+  });
 
   testWidgets('purpose onboarding shows three starting choices', (
     tester,

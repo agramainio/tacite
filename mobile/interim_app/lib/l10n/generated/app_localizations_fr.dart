@@ -561,4 +561,51 @@ class AppLocalizationsFr extends AppLocalizations {
   String timelineActionPlaceholder(Object action) {
     return '$action sera connecté dans une prochaine étape produit.';
   }
+
+  @override
+  String get summaryScreenTitle => 'Résumé pour l’instant';
+
+  @override
+  String get summaryScreenBody =>
+      'Créez un résumé modifiable à partir d’une période choisie. C’est un brouillon que vous pouvez corriger avant de l’apporter en consultation.';
+
+  @override
+  String get summaryRange => 'Période';
+
+  @override
+  String get summaryRangeSinceLastAppointment =>
+      'Depuis le dernier rendez-vous';
+
+  @override
+  String get summaryRangeSinceTreatmentChange =>
+      'Depuis le changement de traitement';
+
+  @override
+  String get summaryRangeSinceDoseChange => 'Depuis le changement de dose';
+
+  @override
+  String get summaryRangeLastTwoWeeks => 'Deux dernières semaines';
+
+  @override
+  String get summaryRangeLastMonth => 'Dernier mois';
+
+  @override
+  String get summaryRangeCustom => 'Période personnalisée';
+
+  @override
+  String get summaryDraftLabel => 'Résumé modifiable';
+
+  @override
+  String get summaryTemplate =>
+      'Résumé pour l’instant\\n\\nPériode : période choisie\\n\\nCe pour quoi je veux de l’aide :\\n- \\n\\nCe qui a changé :\\n- \\n\\nCe que j’ai remarqué après :\\n- \\n\\nEffets indésirables ou changements corporels :\\n- \\n\\nFonctionnement :\\n- \\n\\nContexte qui peut compter :\\n- \\n\\nQuestions à aborder :\\n- ';
+
+  @override
+  String get copySummary => 'Copier le résumé';
+
+  @override
+  String get summaryCopied => 'Résumé copié.';
+
+  @override
+  String get summaryNotMedicalAdvice =>
+      'Ce résumé est basé sur ce que vous avez noté. Ce n’est pas un avis médical ni un diagnostic.';
 }

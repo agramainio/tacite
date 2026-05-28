@@ -180,5 +180,19 @@
     "placeholders": {
       "action": {}
     }
-  }
+  },
+  "summaryScreenTitle": "Résumé pour l’instant",
+  "summaryScreenBody": "Créez un résumé modifiable à partir d’une période choisie. C’est un brouillon que vous pouvez corriger avant de l’apporter en consultation.",
+  "summaryRange": "Période",
+  "summaryRangeSinceLastAppointment": "Depuis le dernier rendez-vous",
+  "summaryRangeSinceTreatmentChange": "Depuis le changement de traitement",
+  "summaryRangeSinceDoseChange": "Depuis le changement de dose",
+  "summaryRangeLastTwoWeeks": "Deux dernières semaines",
+  "summaryRangeLastMonth": "Dernier mois",
+  "summaryRangeCustom": "Période personnalisée",
+  "summaryDraftLabel": "Résumé modifiable",
+  "summaryTemplate": "Résumé pour l’instant\\n\\nPériode : période choisie\\n\\nCe pour quoi je veux de l’aide :\\n- \\n\\nCe qui a changé :\\n- \\n\\nCe que j’ai remarqué après :\\n- \\n\\nEffets indésirables ou changements corporels :\\n- \\n\\nFonctionnement :\\n- \\n\\nContexte qui peut compter :\\n- \\n\\nQuestions à aborder :\\n- ",
+  "copySummary": "Copier le résumé",
+  "summaryCopied": "Résumé copié.",
+  "summaryNotMedicalAdvice": "Ce résumé est basé sur ce que vous avez noté. Ce n’est pas un avis médical ni un diagnostic."
 }

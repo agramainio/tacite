@@ -554,4 +554,49 @@ class AppLocalizationsEn extends AppLocalizations {
   String timelineActionPlaceholder(Object action) {
     return '$action will be wired in the next product pass.';
   }
+
+  @override
+  String get summaryScreenTitle => 'Summary so far';
+
+  @override
+  String get summaryScreenBody =>
+      'Create an editable summary from a selected range. This is a draft you can change before bringing it to care.';
+
+  @override
+  String get summaryRange => 'Range';
+
+  @override
+  String get summaryRangeSinceLastAppointment => 'Since last appointment';
+
+  @override
+  String get summaryRangeSinceTreatmentChange => 'Since treatment change';
+
+  @override
+  String get summaryRangeSinceDoseChange => 'Since dose change';
+
+  @override
+  String get summaryRangeLastTwoWeeks => 'Last 2 weeks';
+
+  @override
+  String get summaryRangeLastMonth => 'Last month';
+
+  @override
+  String get summaryRangeCustom => 'Custom range';
+
+  @override
+  String get summaryDraftLabel => 'Editable summary';
+
+  @override
+  String get summaryTemplate =>
+      'Summary so far\\n\\nRange: selected range\\n\\nWhat I want help with:\\n- \\n\\nWhat changed:\\n- \\n\\nWhat I noticed after:\\n- \\n\\nSide effects or body changes:\\n- \\n\\nFunctioning:\\n- \\n\\nContext that may matter:\\n- \\n\\nQuestions to bring up:\\n- ';
+
+  @override
+  String get copySummary => 'Copy summary';
+
+  @override
+  String get summaryCopied => 'Summary copied.';
+
+  @override
+  String get summaryNotMedicalAdvice =>
+      'This summary is based on what you recorded. It is not medical advice or a diagnosis.';
 }
