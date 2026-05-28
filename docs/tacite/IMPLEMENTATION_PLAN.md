@@ -136,3 +136,10 @@ Only after AI-off product value exists.
 Checkpoint:
 
 checkpoint-ai-extraction-foundation-v1
+
+
+## Design foundation note
+
+Tacite should avoid raw default Flutter visuals on product screens.
+
+The design foundation introduces Tacite-specific tokens and components. Future product screens should prefer Tacite components over direct Material widgets when practical.
