@@ -168,5 +168,17 @@
     "placeholders": {
       "kind": {}
     }
+  },
+  "addToSummary": "Ajouter au résumé",
+  "edit": "Modifier",
+  "moreOptions": "Plus d’options",
+  "showOriginalNote": "Voir la note originale",
+  "swipeAddToSummary": "Ajouter au résumé",
+  "swipeMoreOptions": "Plus d’options",
+  "timelineActionPlaceholder": "{action} sera connecté dans une prochaine étape produit.",
+  "@timelineActionPlaceholder": {
+    "placeholders": {
+      "action": {}
+    }
   }
 }

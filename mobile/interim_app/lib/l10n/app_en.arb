@@ -218,5 +218,17 @@
     "placeholders": {
       "kind": {}
     }
+  },
+  "addToSummary": "Add to summary",
+  "edit": "Edit",
+  "moreOptions": "More options",
+  "showOriginalNote": "Show original note",
+  "swipeAddToSummary": "Add to summary",
+  "swipeMoreOptions": "More options",
+  "timelineActionPlaceholder": "{action} will be wired in the next product pass.",
+  "@timelineActionPlaceholder": {
+    "placeholders": {
+      "action": {}
+    }
   }
 }

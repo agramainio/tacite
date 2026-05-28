@@ -5,6 +5,7 @@ import 'package:interim_app/features/onboarding/purpose_onboarding_screen.dart';
 import 'package:interim_app/features/onboarding/starting_point_screen.dart';
 import 'package:interim_app/features/thread/new_thread_screen.dart';
 import 'package:interim_app/features/thread/thread_detail_screen.dart';
+import 'package:interim_app/features/thread/thread_placeholder_screen.dart';
 import 'package:interim_app/l10n/generated/app_localizations.dart';
 
 void main() {
@@ -95,6 +96,23 @@ void main() {
       expect(find.text('Record to timeline'), findsOneWidget);
     },
   );
+
+  testWidgets('timeline preview cards expose visible fallback options', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      const InterimAppWrapper(child: ThreadPlaceholderScreen()),
+    );
+
+    expect(find.text('Timeline preview'), findsOneWidget);
+
+    await tester.tap(find.byIcon(Icons.more_horiz).first);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Add to summary'), findsOneWidget);
+    expect(find.text('Edit'), findsOneWidget);
+    expect(find.text('Show original note'), findsOneWidget);
+  });
 }
 
 class InterimAppWrapper extends StatelessWidget {

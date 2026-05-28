@@ -531,4 +531,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String selectedCaptureKind(Object kind) {
     return 'Selected: $kind';
   }
+
+  @override
+  String get addToSummary => 'Add to summary';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get moreOptions => 'More options';
+
+  @override
+  String get showOriginalNote => 'Show original note';
+
+  @override
+  String get swipeAddToSummary => 'Add to summary';
+
+  @override
+  String get swipeMoreOptions => 'More options';
+
+  @override
+  String timelineActionPlaceholder(Object action) {
+    return '$action will be wired in the next product pass.';
+  }
 }

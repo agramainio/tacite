@@ -532,4 +532,27 @@ class AppLocalizationsRu extends AppLocalizations {
   String selectedCaptureKind(Object kind) {
     return 'Выбрано: $kind';
   }
+
+  @override
+  String get addToSummary => 'Добавить в резюме';
+
+  @override
+  String get edit => 'Редактировать';
+
+  @override
+  String get moreOptions => 'Ещё действия';
+
+  @override
+  String get showOriginalNote => 'Показать исходную заметку';
+
+  @override
+  String get swipeAddToSummary => 'Добавить в резюме';
+
+  @override
+  String get swipeMoreOptions => 'Ещё действия';
+
+  @override
+  String timelineActionPlaceholder(Object action) {
+    return '$action будет подключено на следующем продуктовом этапе.';
+  }
 }

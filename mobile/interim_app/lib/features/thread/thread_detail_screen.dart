@@ -270,6 +270,14 @@ class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
     ];
   }
 
+  void _showTimelineActionPlaceholder(String action) {
+    final l10n = AppLocalizations.of(context);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(l10n.timelineActionPlaceholder(action))),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -329,9 +337,21 @@ class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
           children: [
             for (final event in _timelineEvents)
               TaciteTimelineCard(
+                cardKey: ValueKey('timeline-\${event.id}'),
                 title: event.title,
                 body: event.userApprovedSummary,
                 meta: l10n.source(event.source),
+                addToSummaryLabel: l10n.addToSummary,
+                editLabel: l10n.edit,
+                moreOptionsLabel: l10n.moreOptions,
+                showOriginalNoteLabel: l10n.showOriginalNote,
+                swipeAddToSummaryLabel: l10n.swipeAddToSummary,
+                swipeMoreOptionsLabel: l10n.swipeMoreOptions,
+                onAddToSummary: () =>
+                    _showTimelineActionPlaceholder(l10n.addToSummary),
+                onEdit: () => _showTimelineActionPlaceholder(l10n.edit),
+                onShowOriginalNote: () =>
+                    _showTimelineActionPlaceholder(l10n.showOriginalNote),
               ),
           ],
         ),
@@ -359,7 +379,6 @@ class _CaptureCardPanel extends StatelessWidget {
   final List<_CaptureSection> sections;
   final String selectedCaptureId;
   final ValueChanged<_CaptureOption> onSelected;
-
   @override
   Widget build(BuildContext context) {
     return TacitePanel(
@@ -402,7 +421,6 @@ class _RecordsSection extends StatelessWidget {
   final bool isLoading;
   final String emptyText;
   final List<Widget> children;
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -435,7 +453,6 @@ class _OriginalNotePanel extends StatelessWidget {
   const _OriginalNotePanel({required this.note});
 
   final RawNote note;
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);

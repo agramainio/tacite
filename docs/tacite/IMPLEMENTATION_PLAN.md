@@ -188,3 +188,16 @@ The thread capture screen now has a frontend-only structured capture surface:
 These cards do not add backend schema yet. They select a capture kind and map it onto the existing raw note + timeline event endpoint.
 
 This is the first product step away from a generic notes app. The next product step should make timeline cards more useful, including swipe actions and visible fallback options.
+
+
+## Swipeable timeline cards note
+
+Timeline cards now support non-destructive swipe shortcuts:
+
+- right swipe: add to summary placeholder
+- left swipe: edit/more-options placeholder
+- visible fallback menu is always available
+- no destructive delete is implemented
+- backend wiring comes later with the summary feature
+
+Swipe is a shortcut, not the only access path.

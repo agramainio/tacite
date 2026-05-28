@@ -1055,6 +1055,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Selected: {kind}'**
   String selectedCaptureKind(Object kind);
+
+  /// No description provided for @addToSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to summary'**
+  String get addToSummary;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// No description provided for @moreOptions.
+  ///
+  /// In en, this message translates to:
+  /// **'More options'**
+  String get moreOptions;
+
+  /// No description provided for @showOriginalNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Show original note'**
+  String get showOriginalNote;
+
+  /// No description provided for @swipeAddToSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to summary'**
+  String get swipeAddToSummary;
+
+  /// No description provided for @swipeMoreOptions.
+  ///
+  /// In en, this message translates to:
+  /// **'More options'**
+  String get swipeMoreOptions;
+
+  /// No description provided for @timelineActionPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'{action} will be wired in the next product pass.'**
+  String timelineActionPlaceholder(Object action);
 }
 
 class _AppLocalizationsDelegate

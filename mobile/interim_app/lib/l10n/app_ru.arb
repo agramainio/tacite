@@ -168,5 +168,17 @@
     "placeholders": {
       "kind": {}
     }
+  },
+  "addToSummary": "Добавить в резюме",
+  "edit": "Редактировать",
+  "moreOptions": "Ещё действия",
+  "showOriginalNote": "Показать исходную заметку",
+  "swipeAddToSummary": "Добавить в резюме",
+  "swipeMoreOptions": "Ещё действия",
+  "timelineActionPlaceholder": "{action} будет подключено на следующем продуктовом этапе.",
+  "@timelineActionPlaceholder": {
+    "placeholders": {
+      "action": {}
+    }
   }
 }
