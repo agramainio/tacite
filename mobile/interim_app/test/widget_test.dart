@@ -13,7 +13,7 @@ void main() {
       const InterimAppWrapper(child: HomeScreen(loadSessionOnStart: false)),
     );
 
-    expect(find.text('interim'), findsOneWidget);
+    expect(find.text('Tacite'), findsOneWidget);
     expect(find.text('No medical advice'), findsOneWidget);
     expect(find.text('Not logged in'), findsOneWidget);
     expect(find.text('Start a thread'), findsOneWidget);

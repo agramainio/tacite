@@ -41,3 +41,10 @@ Tacite product source of truth:
     docs/tacite/
 
 The current Flutter/FastAPI implementation is a technical spike until the Tacite product foundation is fully implemented.
+
+
+## Product name
+
+The user-facing product name is Tacite.
+
+Current technical folder/package names may still contain `interim` while the product is being reset. Do not treat technical names as product copy.

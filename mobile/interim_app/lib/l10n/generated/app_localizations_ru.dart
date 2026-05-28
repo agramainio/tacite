@@ -9,7 +9,7 @@ class AppLocalizationsRu extends AppLocalizations {
   AppLocalizationsRu([String locale = 'ru']) : super(locale);
 
   @override
-  String get appTitle => 'interim';
+  String get appTitle => 'Tacite';
 
   @override
   String get language => 'Язык';
@@ -89,14 +89,14 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get noMedicalAdviceBody =>
-      'interim помогает записывать и организовывать ваши собственные заметки. Приложение не ставит диагнозы, не рекомендует лечение и не заменяет врача, психиатра, психолога, терапевта или экстренную службу.';
+      'Tacite помогает записывать и организовывать ваши собственные заметки. Приложение не ставит диагнозы, не рекомендует лечение и не заменяет врача, психиатра, психолога, терапевта или экстренную службу.';
 
   @override
   String get loginTitle => 'Настоящее имя не требуется.';
 
   @override
   String get loginBody =>
-      'Используйте e-mail, к которому у вас есть доступ, чтобы interim мог связать записи с вашим аккаунтом.';
+      'Используйте e-mail, к которому у вас есть доступ, чтобы Tacite мог связать записи с вашим аккаунтом.';
 
   @override
   String get email => 'E-mail';

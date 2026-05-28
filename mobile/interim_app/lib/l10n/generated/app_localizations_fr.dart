@@ -9,7 +9,7 @@ class AppLocalizationsFr extends AppLocalizations {
   AppLocalizationsFr([String locale = 'fr']) : super(locale);
 
   @override
-  String get appTitle => 'interim';
+  String get appTitle => 'Tacite';
 
   @override
   String get language => 'Langue';
@@ -91,14 +91,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get noMedicalAdviceBody =>
-      'interim vous aide à enregistrer et organiser vos propres notes. L’app ne pose pas de diagnostic, ne recommande pas de traitement et ne remplace pas un médecin, psychiatre, psychologue, thérapeute ou service d’urgence.';
+      'Tacite vous aide à enregistrer et organiser vos propres notes. L’app ne pose pas de diagnostic, ne recommande pas de traitement et ne remplace pas un médecin, psychiatre, psychologue, thérapeute ou service d’urgence.';
 
   @override
   String get loginTitle => 'Aucun vrai nom requis.';
 
   @override
   String get loginBody =>
-      'Utilisez une adresse e-mail à laquelle vous avez accès pour qu’interim puisse relier vos notes à votre compte.';
+      'Utilisez une adresse e-mail à laquelle vous avez accès pour que Tacite puisse relier vos notes à votre compte.';
 
   @override
   String get email => 'E-mail';

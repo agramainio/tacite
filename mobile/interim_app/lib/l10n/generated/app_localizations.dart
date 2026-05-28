@@ -105,7 +105,7 @@ abstract class AppLocalizations {
   /// No description provided for @appTitle.
   ///
   /// In en, this message translates to:
-  /// **'interim'**
+  /// **'Tacite'**
   String get appTitle;
 
   /// No description provided for @language.
@@ -255,7 +255,7 @@ abstract class AppLocalizations {
   /// No description provided for @noMedicalAdviceBody.
   ///
   /// In en, this message translates to:
-  /// **'interim helps you record and organize your own notes. It does not diagnose, recommend treatment, or replace a doctor, psychiatrist, psychologist, therapist, or emergency service.'**
+  /// **'Tacite helps you record and organize your own notes. It does not diagnose, recommend treatment, or replace a doctor, psychiatrist, psychologist, therapist, or emergency service.'**
   String get noMedicalAdviceBody;
 
   /// No description provided for @loginTitle.
@@ -267,7 +267,7 @@ abstract class AppLocalizations {
   /// No description provided for @loginBody.
   ///
   /// In en, this message translates to:
-  /// **'Use an email you control so interim can keep your records linked to your account.'**
+  /// **'Use an email you control so Tacite can keep your records linked to your account.'**
   String get loginBody;
 
   /// No description provided for @email.
