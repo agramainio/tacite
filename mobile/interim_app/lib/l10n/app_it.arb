@@ -143,5 +143,30 @@
   "snapshotHigh": "alto",
   "snapshotHard": "difficile",
   "snapshotPossible": "possibile",
-  "continueToFirstThread": "Continua al primo filo"
+  "continueToFirstThread": "Continua al primo filo",
+  "captureSomething": "Registra qualcosa",
+  "captureSomethingBody": "Scegli una scheda rapida o scrivi liberamente. Qui non serve l’IA.",
+  "captureTreatment": "Trattamento",
+  "captureExperience": "Esperienza",
+  "captureAppointment": "Appuntamento",
+  "captureOther": "Altro",
+  "captureStartTreatment": "Inizio trattamento etichettato",
+  "captureChangeDose": "Cambio dose",
+  "captureStopTreatment": "Stop trattamento etichettato",
+  "captureMissedLateDose": "Dose saltata/in ritardo",
+  "captureMoodAnxiety": "Umore/ansia",
+  "captureSleep": "Sonno",
+  "captureFocusTasks": "Concentrazione/compiti",
+  "captureSideEffect": "Effetto collaterale",
+  "captureFunctioning": "Funzionamento",
+  "captureQuestion": "Domanda",
+  "captureThingToMention": "Cosa da menzionare",
+  "captureSummaryNote": "Nota di riassunto",
+  "captureFreeNote": "Nota libera",
+  "selectedCaptureKind": "Selezionato: {kind}",
+  "@selectedCaptureKind": {
+    "placeholders": {
+      "kind": {}
+    }
+  }
 }

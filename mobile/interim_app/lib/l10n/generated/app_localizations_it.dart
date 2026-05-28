@@ -473,4 +473,67 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get continueToFirstThread => 'Continua al primo filo';
+
+  @override
+  String get captureSomething => 'Registra qualcosa';
+
+  @override
+  String get captureSomethingBody =>
+      'Scegli una scheda rapida o scrivi liberamente. Qui non serve l’IA.';
+
+  @override
+  String get captureTreatment => 'Trattamento';
+
+  @override
+  String get captureExperience => 'Esperienza';
+
+  @override
+  String get captureAppointment => 'Appuntamento';
+
+  @override
+  String get captureOther => 'Altro';
+
+  @override
+  String get captureStartTreatment => 'Inizio trattamento etichettato';
+
+  @override
+  String get captureChangeDose => 'Cambio dose';
+
+  @override
+  String get captureStopTreatment => 'Stop trattamento etichettato';
+
+  @override
+  String get captureMissedLateDose => 'Dose saltata/in ritardo';
+
+  @override
+  String get captureMoodAnxiety => 'Umore/ansia';
+
+  @override
+  String get captureSleep => 'Sonno';
+
+  @override
+  String get captureFocusTasks => 'Concentrazione/compiti';
+
+  @override
+  String get captureSideEffect => 'Effetto collaterale';
+
+  @override
+  String get captureFunctioning => 'Funzionamento';
+
+  @override
+  String get captureQuestion => 'Domanda';
+
+  @override
+  String get captureThingToMention => 'Cosa da menzionare';
+
+  @override
+  String get captureSummaryNote => 'Nota di riassunto';
+
+  @override
+  String get captureFreeNote => 'Nota libera';
+
+  @override
+  String selectedCaptureKind(Object kind) {
+    return 'Selezionato: $kind';
+  }
 }

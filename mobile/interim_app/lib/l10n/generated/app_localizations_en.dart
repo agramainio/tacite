@@ -468,4 +468,67 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get continueToFirstThread => 'Continue to first thread';
+
+  @override
+  String get captureSomething => 'Record something';
+
+  @override
+  String get captureSomethingBody =>
+      'Choose a quick card or write freely. AI is not needed for this.';
+
+  @override
+  String get captureTreatment => 'Treatment';
+
+  @override
+  String get captureExperience => 'Experience';
+
+  @override
+  String get captureAppointment => 'Appointment';
+
+  @override
+  String get captureOther => 'Other';
+
+  @override
+  String get captureStartTreatment => 'Start treatment label';
+
+  @override
+  String get captureChangeDose => 'Change dose';
+
+  @override
+  String get captureStopTreatment => 'Stop treatment label';
+
+  @override
+  String get captureMissedLateDose => 'Missed/late dose';
+
+  @override
+  String get captureMoodAnxiety => 'Mood/anxiety';
+
+  @override
+  String get captureSleep => 'Sleep';
+
+  @override
+  String get captureFocusTasks => 'Focus/tasks';
+
+  @override
+  String get captureSideEffect => 'Side effect';
+
+  @override
+  String get captureFunctioning => 'Functioning';
+
+  @override
+  String get captureQuestion => 'Question';
+
+  @override
+  String get captureThingToMention => 'Thing to mention';
+
+  @override
+  String get captureSummaryNote => 'Summary note';
+
+  @override
+  String get captureFreeNote => 'Free note';
+
+  @override
+  String selectedCaptureKind(Object kind) {
+    return 'Selected: $kind';
+  }
 }

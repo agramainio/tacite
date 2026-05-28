@@ -935,6 +935,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Continue to first thread'**
   String get continueToFirstThread;
+
+  /// No description provided for @captureSomething.
+  ///
+  /// In en, this message translates to:
+  /// **'Record something'**
+  String get captureSomething;
+
+  /// No description provided for @captureSomethingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a quick card or write freely. AI is not needed for this.'**
+  String get captureSomethingBody;
+
+  /// No description provided for @captureTreatment.
+  ///
+  /// In en, this message translates to:
+  /// **'Treatment'**
+  String get captureTreatment;
+
+  /// No description provided for @captureExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'Experience'**
+  String get captureExperience;
+
+  /// No description provided for @captureAppointment.
+  ///
+  /// In en, this message translates to:
+  /// **'Appointment'**
+  String get captureAppointment;
+
+  /// No description provided for @captureOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get captureOther;
+
+  /// No description provided for @captureStartTreatment.
+  ///
+  /// In en, this message translates to:
+  /// **'Start treatment label'**
+  String get captureStartTreatment;
+
+  /// No description provided for @captureChangeDose.
+  ///
+  /// In en, this message translates to:
+  /// **'Change dose'**
+  String get captureChangeDose;
+
+  /// No description provided for @captureStopTreatment.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop treatment label'**
+  String get captureStopTreatment;
+
+  /// No description provided for @captureMissedLateDose.
+  ///
+  /// In en, this message translates to:
+  /// **'Missed/late dose'**
+  String get captureMissedLateDose;
+
+  /// No description provided for @captureMoodAnxiety.
+  ///
+  /// In en, this message translates to:
+  /// **'Mood/anxiety'**
+  String get captureMoodAnxiety;
+
+  /// No description provided for @captureSleep.
+  ///
+  /// In en, this message translates to:
+  /// **'Sleep'**
+  String get captureSleep;
+
+  /// No description provided for @captureFocusTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Focus/tasks'**
+  String get captureFocusTasks;
+
+  /// No description provided for @captureSideEffect.
+  ///
+  /// In en, this message translates to:
+  /// **'Side effect'**
+  String get captureSideEffect;
+
+  /// No description provided for @captureFunctioning.
+  ///
+  /// In en, this message translates to:
+  /// **'Functioning'**
+  String get captureFunctioning;
+
+  /// No description provided for @captureQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Question'**
+  String get captureQuestion;
+
+  /// No description provided for @captureThingToMention.
+  ///
+  /// In en, this message translates to:
+  /// **'Thing to mention'**
+  String get captureThingToMention;
+
+  /// No description provided for @captureSummaryNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Summary note'**
+  String get captureSummaryNote;
+
+  /// No description provided for @captureFreeNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Free note'**
+  String get captureFreeNote;
+
+  /// No description provided for @selectedCaptureKind.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected: {kind}'**
+  String selectedCaptureKind(Object kind);
 }
 
 class _AppLocalizationsDelegate

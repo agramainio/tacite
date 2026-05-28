@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../shared/theme/tacite_spacing.dart';
 import '../../shared/theme/tacite_text_styles.dart';
+import '../../shared/widgets/tacite_chip.dart';
 import '../../shared/widgets/tacite_message.dart';
 import '../../shared/widgets/tacite_panel.dart';
 import '../../shared/widgets/tacite_primary_button.dart';
@@ -35,6 +36,7 @@ class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
 
   bool _isLoadingExisting = true;
   bool _isRecording = false;
+  String _selectedCaptureId = 'free_note';
   String _eventType = 'note';
   String? _message;
 
@@ -127,7 +129,7 @@ class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
         threadId: widget.threadId,
         rawNoteId: note.id,
         eventType: _eventType,
-        title: _defaultTitleFor(_eventType, l10n),
+        title: _selectedCaptureLabel(l10n),
         userApprovedSummary: note.originalText,
       );
 
@@ -156,19 +158,122 @@ class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
     }
   }
 
-  String _defaultTitleFor(String eventType, AppLocalizations l10n) {
-    return switch (eventType) {
-      'baseline_snapshot' => l10n.baselineSnapshot,
-      'started_medication' => l10n.startedTreatmentLabel,
-      'side_effect_note' => l10n.sideEffectNote,
-      'appointment_question' => l10n.appointmentQuestion,
-      _ => l10n.note,
-    };
+  void _selectCaptureOption(_CaptureOption option) {
+    setState(() {
+      _selectedCaptureId = option.id;
+      _eventType = option.eventType;
+    });
+  }
+
+  String _selectedCaptureLabel(AppLocalizations l10n) {
+    final options = _captureSections(l10n).expand((section) => section.options);
+
+    return options
+        .firstWhere(
+          (option) => option.id == _selectedCaptureId,
+          orElse: () => _CaptureOption(
+            id: 'free_note',
+            label: l10n.captureFreeNote,
+            eventType: 'note',
+          ),
+        )
+        .label;
+  }
+
+  List<_CaptureSection> _captureSections(AppLocalizations l10n) {
+    return [
+      _CaptureSection(
+        title: l10n.captureTreatment,
+        options: [
+          _CaptureOption(
+            id: 'start_treatment',
+            label: l10n.captureStartTreatment,
+            eventType: 'started_medication',
+          ),
+          _CaptureOption(
+            id: 'change_dose',
+            label: l10n.captureChangeDose,
+            eventType: 'note',
+          ),
+          _CaptureOption(
+            id: 'stop_treatment',
+            label: l10n.captureStopTreatment,
+            eventType: 'note',
+          ),
+          _CaptureOption(
+            id: 'missed_late_dose',
+            label: l10n.captureMissedLateDose,
+            eventType: 'note',
+          ),
+        ],
+      ),
+      _CaptureSection(
+        title: l10n.captureExperience,
+        options: [
+          _CaptureOption(
+            id: 'mood_anxiety',
+            label: l10n.captureMoodAnxiety,
+            eventType: 'note',
+          ),
+          _CaptureOption(
+            id: 'sleep',
+            label: l10n.captureSleep,
+            eventType: 'note',
+          ),
+          _CaptureOption(
+            id: 'focus_tasks',
+            label: l10n.captureFocusTasks,
+            eventType: 'note',
+          ),
+          _CaptureOption(
+            id: 'side_effect',
+            label: l10n.captureSideEffect,
+            eventType: 'side_effect_note',
+          ),
+          _CaptureOption(
+            id: 'functioning',
+            label: l10n.captureFunctioning,
+            eventType: 'note',
+          ),
+        ],
+      ),
+      _CaptureSection(
+        title: l10n.captureAppointment,
+        options: [
+          _CaptureOption(
+            id: 'question',
+            label: l10n.captureQuestion,
+            eventType: 'appointment_question',
+          ),
+          _CaptureOption(
+            id: 'thing_to_mention',
+            label: l10n.captureThingToMention,
+            eventType: 'note',
+          ),
+          _CaptureOption(
+            id: 'summary_note',
+            label: l10n.captureSummaryNote,
+            eventType: 'note',
+          ),
+        ],
+      ),
+      _CaptureSection(
+        title: l10n.captureOther,
+        options: [
+          _CaptureOption(
+            id: 'free_note',
+            label: l10n.captureFreeNote,
+            eventType: 'note',
+          ),
+        ],
+      ),
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final sections = _captureSections(l10n);
 
     return TaciteScaffold(
       title: l10n.thread,
@@ -177,49 +282,25 @@ class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
         TextButton(onPressed: () => context.go('/'), child: Text(l10n.home)),
       ],
       children: [
-        Text(l10n.recordTimelineNote, style: TaciteTextStyles.screenTitle),
+        Text(l10n.captureSomething, style: TaciteTextStyles.screenTitle),
         const SizedBox(height: TaciteSpacing.sm),
-        Text(l10n.recordTimelineNoteBody, style: TaciteTextStyles.bodyMuted),
+        Text(l10n.captureSomethingBody, style: TaciteTextStyles.bodyMuted),
         const SizedBox(height: TaciteSpacing.xl),
+        _CaptureCardPanel(
+          sections: sections,
+          selectedCaptureId: _selectedCaptureId,
+          onSelected: _selectCaptureOption,
+        ),
+        const SizedBox(height: TaciteSpacing.md),
+        Text(
+          l10n.selectedCaptureKind(_selectedCaptureLabel(l10n)),
+          style: TaciteTextStyles.small,
+        ),
+        const SizedBox(height: TaciteSpacing.md),
         TacitePanel(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              DropdownButtonFormField<String>(
-                initialValue: _eventType,
-                decoration: InputDecoration(labelText: l10n.kindOfNote),
-                items: [
-                  DropdownMenuItem(value: 'note', child: Text(l10n.note)),
-                  DropdownMenuItem(
-                    value: 'baseline_snapshot',
-                    child: Text(l10n.baselineSnapshot),
-                  ),
-                  DropdownMenuItem(
-                    value: 'started_medication',
-                    child: Text(l10n.startedTreatmentLabel),
-                  ),
-                  DropdownMenuItem(
-                    value: 'side_effect_note',
-                    child: Text(l10n.sideEffectNote),
-                  ),
-                  DropdownMenuItem(
-                    value: 'appointment_question',
-                    child: Text(l10n.appointmentQuestion),
-                  ),
-                ],
-                onChanged: _isRecording
-                    ? null
-                    : (value) {
-                        if (value == null) {
-                          return;
-                        }
-
-                        setState(() {
-                          _eventType = value;
-                        });
-                      },
-              ),
-              const SizedBox(height: TaciteSpacing.md),
               TaciteTextArea(
                 controller: _noteController,
                 label: l10n.messyNote,
@@ -264,6 +345,47 @@ class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
           ],
         ),
       ],
+    );
+  }
+}
+
+class _CaptureCardPanel extends StatelessWidget {
+  const _CaptureCardPanel({
+    required this.sections,
+    required this.selectedCaptureId,
+    required this.onSelected,
+  });
+
+  final List<_CaptureSection> sections;
+  final String selectedCaptureId;
+  final ValueChanged<_CaptureOption> onSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return TacitePanel(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          for (final section in sections) ...[
+            Text(section.title, style: TaciteTextStyles.label),
+            const SizedBox(height: TaciteSpacing.sm),
+            Wrap(
+              spacing: TaciteSpacing.xs,
+              runSpacing: TaciteSpacing.xs,
+              children: [
+                for (final option in section.options)
+                  TaciteChip(
+                    label: option.label,
+                    isSelected: option.id == selectedCaptureId,
+                    onTap: () => onSelected(option),
+                  ),
+              ],
+            ),
+            if (section != sections.last)
+              const SizedBox(height: TaciteSpacing.lg),
+          ],
+        ],
+      ),
     );
   }
 }
@@ -334,4 +456,23 @@ class _OriginalNotePanel extends StatelessWidget {
       ),
     );
   }
+}
+
+class _CaptureSection {
+  const _CaptureSection({required this.title, required this.options});
+
+  final String title;
+  final List<_CaptureOption> options;
+}
+
+class _CaptureOption {
+  const _CaptureOption({
+    required this.id,
+    required this.label,
+    required this.eventType,
+  });
+
+  final String id;
+  final String label;
+  final String eventType;
 }

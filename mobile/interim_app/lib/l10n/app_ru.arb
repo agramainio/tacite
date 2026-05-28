@@ -143,5 +143,30 @@
   "snapshotHigh": "высоко",
   "snapshotHard": "трудно",
   "snapshotPossible": "возможно",
-  "continueToFirstThread": "Перейти к первой теме"
+  "continueToFirstThread": "Перейти к первой теме",
+  "captureSomething": "Записать что-то",
+  "captureSomethingBody": "Выберите быструю карточку или пишите свободно. ИИ для этого не нужен.",
+  "captureTreatment": "Лечение",
+  "captureExperience": "Самочувствие",
+  "captureAppointment": "Встреча",
+  "captureOther": "Другое",
+  "captureStartTreatment": "Начало лечения по метке",
+  "captureChangeDose": "Изменение дозы",
+  "captureStopTreatment": "Остановка лечения по метке",
+  "captureMissedLateDose": "Пропущенная/поздняя доза",
+  "captureMoodAnxiety": "Настроение/тревога",
+  "captureSleep": "Сон",
+  "captureFocusTasks": "Фокус/задачи",
+  "captureSideEffect": "Побочный эффект",
+  "captureFunctioning": "Функционирование",
+  "captureQuestion": "Вопрос",
+  "captureThingToMention": "Что упомянуть",
+  "captureSummaryNote": "Заметка для резюме",
+  "captureFreeNote": "Свободная заметка",
+  "selectedCaptureKind": "Выбрано: {kind}",
+  "@selectedCaptureKind": {
+    "placeholders": {
+      "kind": {}
+    }
+  }
 }

@@ -469,4 +469,67 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get continueToFirstThread => 'Перейти к первой теме';
+
+  @override
+  String get captureSomething => 'Записать что-то';
+
+  @override
+  String get captureSomethingBody =>
+      'Выберите быструю карточку или пишите свободно. ИИ для этого не нужен.';
+
+  @override
+  String get captureTreatment => 'Лечение';
+
+  @override
+  String get captureExperience => 'Самочувствие';
+
+  @override
+  String get captureAppointment => 'Встреча';
+
+  @override
+  String get captureOther => 'Другое';
+
+  @override
+  String get captureStartTreatment => 'Начало лечения по метке';
+
+  @override
+  String get captureChangeDose => 'Изменение дозы';
+
+  @override
+  String get captureStopTreatment => 'Остановка лечения по метке';
+
+  @override
+  String get captureMissedLateDose => 'Пропущенная/поздняя доза';
+
+  @override
+  String get captureMoodAnxiety => 'Настроение/тревога';
+
+  @override
+  String get captureSleep => 'Сон';
+
+  @override
+  String get captureFocusTasks => 'Фокус/задачи';
+
+  @override
+  String get captureSideEffect => 'Побочный эффект';
+
+  @override
+  String get captureFunctioning => 'Функционирование';
+
+  @override
+  String get captureQuestion => 'Вопрос';
+
+  @override
+  String get captureThingToMention => 'Что упомянуть';
+
+  @override
+  String get captureSummaryNote => 'Заметка для резюме';
+
+  @override
+  String get captureFreeNote => 'Свободная заметка';
+
+  @override
+  String selectedCaptureKind(Object kind) {
+    return 'Выбрано: $kind';
+  }
 }

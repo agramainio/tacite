@@ -174,3 +174,17 @@ A frontend-only starting point screen has been added:
 - does not persist choices yet
 - does not create clinical scores
 - next phase should add AI-off structured capture cards
+
+
+## AI-off capture cards note
+
+The thread capture screen now has a frontend-only structured capture surface:
+
+- Treatment
+- Experience
+- Appointment
+- Other
+
+These cards do not add backend schema yet. They select a capture kind and map it onto the existing raw note + timeline event endpoint.
+
+This is the first product step away from a generic notes app. The next product step should make timeline cards more useful, including swipe actions and visible fallback options.

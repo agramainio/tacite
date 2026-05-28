@@ -66,7 +66,7 @@ void main() {
   });
 
   testWidgets(
-    'thread detail screen has one-tap timeline capture without network calls',
+    'thread detail screen has AI-off structured capture cards without network calls',
     (tester) async {
       await tester.pumpWidget(
         const InterimAppWrapper(
@@ -77,11 +77,22 @@ void main() {
         ),
       );
 
-      expect(find.text('Record a timeline note'), findsOneWidget);
-      expect(find.text('Kind of note'), findsOneWidget);
+      expect(find.text('Record something'), findsOneWidget);
+      expect(find.text('Treatment'), findsOneWidget);
+      expect(find.text('Experience'), findsOneWidget);
+      expect(find.text('Appointment'), findsOneWidget);
+      expect(find.text('Start treatment label'), findsOneWidget);
+      expect(find.text('Mood/anxiety'), findsOneWidget);
+      expect(find.text('Question'), findsOneWidget);
+
+      await tester.scrollUntilVisible(
+        find.text('Record to timeline'),
+        500,
+        scrollable: find.byType(Scrollable),
+      );
+
       expect(find.text('Messy note'), findsOneWidget);
       expect(find.text('Record to timeline'), findsOneWidget);
-      expect(find.text('Timeline'), findsOneWidget);
     },
   );
 }
