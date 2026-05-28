@@ -32,3 +32,12 @@ The original note is sacred. AI may format or summarize only when the user choos
 See:
 
     docs/LOCAL_DEVELOPMENT.md
+
+
+## Tacite product documentation
+
+Tacite product source of truth:
+
+    docs/tacite/
+
+The current Flutter/FastAPI implementation is a technical spike until the Tacite product foundation is fully implemented.
