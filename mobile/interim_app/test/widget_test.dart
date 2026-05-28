@@ -1,22 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:interim_app/features/home/home_screen.dart';
+import 'package:interim_app/features/onboarding/purpose_onboarding_screen.dart';
 import 'package:interim_app/features/thread/new_thread_screen.dart';
 import 'package:interim_app/features/thread/thread_detail_screen.dart';
 import 'package:interim_app/l10n/generated/app_localizations.dart';
 
 void main() {
-  testWidgets('home screen shows core product boundary without network calls', (
+  testWidgets(
+    'home screen shows setup and quick record actions without network calls',
+    (tester) async {
+      await tester.pumpWidget(
+        const InterimAppWrapper(child: HomeScreen(loadSessionOnStart: false)),
+      );
+
+      expect(find.text('Tacite'), findsOneWidget);
+      expect(find.text('No medical advice'), findsOneWidget);
+      expect(find.text('Not logged in'), findsOneWidget);
+      expect(find.text('Start setup'), findsOneWidget);
+      expect(find.text('Just record something'), findsOneWidget);
+    },
+  );
+
+  testWidgets('purpose onboarding shows three starting choices', (
     tester,
   ) async {
     await tester.pumpWidget(
-      const InterimAppWrapper(child: HomeScreen(loadSessionOnStart: false)),
+      const InterimAppWrapper(child: PurposeOnboardingScreen()),
     );
 
-    expect(find.text('Tacite'), findsOneWidget);
-    expect(find.text('No medical advice'), findsOneWidget);
-    expect(find.text('Not logged in'), findsOneWidget);
-    expect(find.text('Start a thread'), findsOneWidget);
+    expect(find.text('What are you here to do?'), findsOneWidget);
+    expect(find.text('I’m already in care'), findsOneWidget);
+    expect(find.text('I’m preparing for care'), findsOneWidget);
+    expect(find.text('Just record something'), findsOneWidget);
   });
 
   testWidgets('new thread screen shows thread creation form', (tester) async {

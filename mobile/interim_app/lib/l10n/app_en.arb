@@ -157,5 +157,17 @@
     "placeholders": {
       "message": {}
     }
-  }
+  },
+  "startSetup": "Start setup",
+  "justRecordSomething": "Just record something",
+  "onboardingTitle": "What are you here to do?",
+  "onboardingBody": "Choose the closest starting point. You can change direction later.",
+  "alreadyInCareTitle": "I’m already in care",
+  "alreadyInCareBody": "Track treatment changes, symptoms, side effects, appointments, and questions.",
+  "preparingForCareTitle": "I’m preparing for care",
+  "preparingForCareBody": "Put what is happening into words and prepare what to say.",
+  "justRecordTitle": "Just record something",
+  "justRecordBody": "Skip setup for now and capture something quickly.",
+  "continueAction": "Continue",
+  "setupLaterNote": "This choice is not stored yet. The next phase adds timeline beginning and starting snapshot."
 }

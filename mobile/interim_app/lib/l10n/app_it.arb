@@ -107,5 +107,17 @@
     "placeholders": {
       "message": {}
     }
-  }
+  },
+  "startSetup": "Inizia configurazione",
+  "justRecordSomething": "Registra qualcosa",
+  "onboardingTitle": "Per cosa sei qui?",
+  "onboardingBody": "Scegli il punto di partenza più vicino. Potrai cambiare direzione più tardi.",
+  "alreadyInCareTitle": "Sono già in cura",
+  "alreadyInCareBody": "Tieni traccia di cambiamenti di trattamento, sintomi, effetti collaterali, appuntamenti e domande.",
+  "preparingForCareTitle": "Mi sto preparando a chiedere aiuto",
+  "preparingForCareBody": "Metti in parole ciò che sta succedendo e prepara cosa dire.",
+  "justRecordTitle": "Registra qualcosa",
+  "justRecordBody": "Salta la configurazione per ora e cattura rapidamente qualcosa.",
+  "continueAction": "Continua",
+  "setupLaterNote": "Questa scelta non viene ancora salvata. La prossima fase aggiunge l’inizio della cronologia e il punto di partenza."
 }

@@ -353,4 +353,45 @@ class AppLocalizationsRu extends AppLocalizations {
   String couldNotRecordNote(Object message) {
     return 'Не удалось записать заметку: $message';
   }
+
+  @override
+  String get startSetup => 'Начать настройку';
+
+  @override
+  String get justRecordSomething => 'Просто записать что-то';
+
+  @override
+  String get onboardingTitle => 'Зачем вы здесь?';
+
+  @override
+  String get onboardingBody =>
+      'Выберите самый близкий вариант. Позже направление можно изменить.';
+
+  @override
+  String get alreadyInCareTitle => 'Я уже получаю помощь';
+
+  @override
+  String get alreadyInCareBody =>
+      'Отслеживать изменения лечения, симптомы, побочные эффекты, встречи и вопросы.';
+
+  @override
+  String get preparingForCareTitle => 'Я готовлюсь обратиться за помощью';
+
+  @override
+  String get preparingForCareBody =>
+      'Сформулировать, что происходит, и подготовить, что сказать.';
+
+  @override
+  String get justRecordTitle => 'Просто записать что-то';
+
+  @override
+  String get justRecordBody =>
+      'Пока пропустить настройку и быстро записать что-то.';
+
+  @override
+  String get continueAction => 'Продолжить';
+
+  @override
+  String get setupLaterNote =>
+      'Этот выбор пока не сохраняется. В следующей фазе появятся начало хронологии и исходное состояние.';
 }

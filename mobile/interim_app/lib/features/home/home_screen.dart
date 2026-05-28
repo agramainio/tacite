@@ -114,13 +114,13 @@ class _HomeScreenState extends State<HomeScreen> {
         const BoundaryCard(),
         const SizedBox(height: TaciteSpacing.xl),
         TacitePrimaryButton(
-          onPressed: () => context.go('/threads/new'),
-          label: l10n.startThread,
+          onPressed: () => context.go('/onboarding'),
+          label: l10n.startSetup,
         ),
         const SizedBox(height: TaciteSpacing.sm),
         TaciteSecondaryButton(
-          onPressed: () => context.go('/threads/placeholder'),
-          label: l10n.viewSampleTimeline,
+          onPressed: () => context.go('/threads/new'),
+          label: l10n.justRecordSomething,
         ),
         const SizedBox(height: TaciteSpacing.xl),
         const _PrinciplesList(),

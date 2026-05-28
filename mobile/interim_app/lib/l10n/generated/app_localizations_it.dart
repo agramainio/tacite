@@ -355,4 +355,45 @@ class AppLocalizationsIt extends AppLocalizations {
   String couldNotRecordNote(Object message) {
     return 'Impossibile registrare la nota: $message';
   }
+
+  @override
+  String get startSetup => 'Inizia configurazione';
+
+  @override
+  String get justRecordSomething => 'Registra qualcosa';
+
+  @override
+  String get onboardingTitle => 'Per cosa sei qui?';
+
+  @override
+  String get onboardingBody =>
+      'Scegli il punto di partenza più vicino. Potrai cambiare direzione più tardi.';
+
+  @override
+  String get alreadyInCareTitle => 'Sono già in cura';
+
+  @override
+  String get alreadyInCareBody =>
+      'Tieni traccia di cambiamenti di trattamento, sintomi, effetti collaterali, appuntamenti e domande.';
+
+  @override
+  String get preparingForCareTitle => 'Mi sto preparando a chiedere aiuto';
+
+  @override
+  String get preparingForCareBody =>
+      'Metti in parole ciò che sta succedendo e prepara cosa dire.';
+
+  @override
+  String get justRecordTitle => 'Registra qualcosa';
+
+  @override
+  String get justRecordBody =>
+      'Salta la configurazione per ora e cattura rapidamente qualcosa.';
+
+  @override
+  String get continueAction => 'Continua';
+
+  @override
+  String get setupLaterNote =>
+      'Questa scelta non viene ancora salvata. La prossima fase aggiunge l’inizio della cronologia e il punto di partenza.';
 }

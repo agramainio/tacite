@@ -719,6 +719,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not record the note: {message}'**
   String couldNotRecordNote(Object message);
+
+  /// No description provided for @startSetup.
+  ///
+  /// In en, this message translates to:
+  /// **'Start setup'**
+  String get startSetup;
+
+  /// No description provided for @justRecordSomething.
+  ///
+  /// In en, this message translates to:
+  /// **'Just record something'**
+  String get justRecordSomething;
+
+  /// No description provided for @onboardingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What are you here to do?'**
+  String get onboardingTitle;
+
+  /// No description provided for @onboardingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the closest starting point. You can change direction later.'**
+  String get onboardingBody;
+
+  /// No description provided for @alreadyInCareTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'I’m already in care'**
+  String get alreadyInCareTitle;
+
+  /// No description provided for @alreadyInCareBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Track treatment changes, symptoms, side effects, appointments, and questions.'**
+  String get alreadyInCareBody;
+
+  /// No description provided for @preparingForCareTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'I’m preparing for care'**
+  String get preparingForCareTitle;
+
+  /// No description provided for @preparingForCareBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Put what is happening into words and prepare what to say.'**
+  String get preparingForCareBody;
+
+  /// No description provided for @justRecordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Just record something'**
+  String get justRecordTitle;
+
+  /// No description provided for @justRecordBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip setup for now and capture something quickly.'**
+  String get justRecordBody;
+
+  /// No description provided for @continueAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get continueAction;
+
+  /// No description provided for @setupLaterNote.
+  ///
+  /// In en, this message translates to:
+  /// **'This choice is not stored yet. The next phase adds timeline beginning and starting snapshot.'**
+  String get setupLaterNote;
 }
 
 class _AppLocalizationsDelegate

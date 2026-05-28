@@ -107,5 +107,17 @@
     "placeholders": {
       "message": {}
     }
-  }
+  },
+  "startSetup": "Commencer la configuration",
+  "justRecordSomething": "Noter quelque chose",
+  "onboardingTitle": "Pourquoi êtes-vous ici ?",
+  "onboardingBody": "Choisissez le point de départ le plus proche. Vous pourrez changer de direction plus tard.",
+  "alreadyInCareTitle": "Je suis déjà suivi",
+  "alreadyInCareBody": "Suivre les changements de traitement, symptômes, effets indésirables, rendez-vous et questions.",
+  "preparingForCareTitle": "Je prépare une prise en charge",
+  "preparingForCareBody": "Mettre ce qui se passe en mots et préparer ce qu’il faut dire.",
+  "justRecordTitle": "Noter quelque chose",
+  "justRecordBody": "Passer la configuration pour l’instant et capturer rapidement quelque chose.",
+  "continueAction": "Continuer",
+  "setupLaterNote": "Ce choix n’est pas encore enregistré. La prochaine phase ajoute le début de la chronologie et le point de départ."
 }

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../features/auth/login_screen.dart';
 import '../features/home/home_screen.dart';
+import '../features/onboarding/purpose_onboarding_screen.dart';
 import '../features/thread/new_thread_screen.dart';
 import '../features/thread/thread_detail_screen.dart';
 import '../features/thread/thread_placeholder_screen.dart';
@@ -24,6 +25,10 @@ class _InterimAppState extends State<InterimApp> {
   static final GoRouter _router = GoRouter(
     routes: [
       GoRoute(path: '/', builder: (context, state) => const HomeScreen()),
+      GoRoute(
+        path: '/onboarding',
+        builder: (context, state) => const PurposeOnboardingScreen(),
+      ),
       GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
       GoRoute(
         path: '/threads/new',
@@ -59,7 +64,7 @@ class _InterimAppState extends State<InterimApp> {
         animation: _localeController,
         builder: (context, _) {
           return MaterialApp.router(
-            title: 'interim',
+            title: 'Tacite',
             debugShowCheckedModeBanner: false,
             theme: InterimTheme.light,
             locale: _localeController.locale,

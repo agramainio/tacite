@@ -352,4 +352,45 @@ class AppLocalizationsEn extends AppLocalizations {
   String couldNotRecordNote(Object message) {
     return 'Could not record the note: $message';
   }
+
+  @override
+  String get startSetup => 'Start setup';
+
+  @override
+  String get justRecordSomething => 'Just record something';
+
+  @override
+  String get onboardingTitle => 'What are you here to do?';
+
+  @override
+  String get onboardingBody =>
+      'Choose the closest starting point. You can change direction later.';
+
+  @override
+  String get alreadyInCareTitle => 'I’m already in care';
+
+  @override
+  String get alreadyInCareBody =>
+      'Track treatment changes, symptoms, side effects, appointments, and questions.';
+
+  @override
+  String get preparingForCareTitle => 'I’m preparing for care';
+
+  @override
+  String get preparingForCareBody =>
+      'Put what is happening into words and prepare what to say.';
+
+  @override
+  String get justRecordTitle => 'Just record something';
+
+  @override
+  String get justRecordBody =>
+      'Skip setup for now and capture something quickly.';
+
+  @override
+  String get continueAction => 'Continue';
+
+  @override
+  String get setupLaterNote =>
+      'This choice is not stored yet. The next phase adds timeline beginning and starting snapshot.';
 }
