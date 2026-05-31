@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../l10n/generated/app_localizations.dart';
+import '../../shared/onboarding/onboarding_state_repository.dart';
 import '../../shared/theme/tacite_spacing.dart';
 import '../../shared/theme/tacite_text_styles.dart';
 import '../../shared/widgets/tacite_chip.dart';
@@ -19,6 +20,8 @@ class StartingPointScreen extends StatefulWidget {
 }
 
 class _StartingPointScreenState extends State<StartingPointScreen> {
+  final _onboardingRepository = OnboardingStateRepository();
+
   String _timelineBeginning = 'today';
   bool _showSnapshot = false;
 
@@ -31,7 +34,13 @@ class _StartingPointScreenState extends State<StartingPointScreen> {
     'starting_tasks': 'mixed',
   };
 
-  void _continue() {
+  Future<void> _continue() async {
+    await _onboardingRepository.markSetupComplete();
+
+    if (!mounted) {
+      return;
+    }
+
     context.go('/threads/new');
   }
 

@@ -600,4 +600,74 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get summaryNotMedicalAdvice =>
       'Это резюме основано на ваших записях. Это не медицинский совет и не диагноз.';
+
+  @override
+  String get recordSomething => 'Записать что-то';
+
+  @override
+  String get privateAccountActive => 'Приватный аккаунт активен';
+
+  @override
+  String get privateAccountActiveBody =>
+      'Ваши записи связаны с этим приватным аккаунтом.';
+
+  @override
+  String get privateAccountInactive => 'Приватный аккаунт не активен';
+
+  @override
+  String get privateAccountInactiveBody =>
+      'Войдите, чтобы сохранять приватные записи между сессиями.';
+
+  @override
+  String get setupCompleteHomeBody =>
+      'Быстро запишите что-то, просмотрите хронологию или подготовьте резюме.';
+
+  @override
+  String get setupIncompleteHomeBody =>
+      'Настройте хронологию один раз или пропустите и запишите что-то сейчас.';
+
+  @override
+  String get timelinePreview => 'Хронология';
+
+  @override
+  String get captureType => 'Тип';
+
+  @override
+  String get changeType => 'Изменить тип';
+
+  @override
+  String get chooseCaptureType => 'Выбрать тип';
+
+  @override
+  String get selectedTypeHelper =>
+      'Это нужно только для организации хронологии. Позже можно изменить.';
+
+  @override
+  String get summaryLoading => 'Загрузка сохранённой хронологии…';
+
+  @override
+  String get summaryLoadedFromTimeline =>
+      'Черновик резюме обновлён из сохранённых записей.';
+
+  @override
+  String summaryCouldNotLoadTimeline(Object message) {
+    return 'Не удалось загрузить сохранённые записи: $message';
+  }
+
+  @override
+  String get summaryNoSavedTimeline =>
+      'Пока нет сохранённых записей хронологии. Сначала запишите что-то, потом вернитесь к резюме.';
+
+  @override
+  String get summaryGeneratedFromSavedData =>
+      'Этот черновик использует события хронологии и исходные заметки из этой темы.';
+
+  @override
+  String get timelineEntriesSection => 'Записи хронологии';
+
+  @override
+  String get originalNotesSection => 'Исходные заметки';
+
+  @override
+  String get noDate => 'без даты';
 }

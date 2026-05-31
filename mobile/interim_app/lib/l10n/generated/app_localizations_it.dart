@@ -605,4 +605,74 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get summaryNotMedicalAdvice =>
       'Questo riassunto si basa su ciò che hai registrato. Non è un consiglio medico né una diagnosi.';
+
+  @override
+  String get recordSomething => 'Registra qualcosa';
+
+  @override
+  String get privateAccountActive => 'Account privato attivo';
+
+  @override
+  String get privateAccountActiveBody =>
+      'I tuoi record sono collegati a questo account privato.';
+
+  @override
+  String get privateAccountInactive => 'Account privato non attivo';
+
+  @override
+  String get privateAccountInactiveBody =>
+      'Accedi prima di salvare record privati tra più sessioni.';
+
+  @override
+  String get setupCompleteHomeBody =>
+      'Registra qualcosa rapidamente, rivedi la cronologia o prepara un riassunto.';
+
+  @override
+  String get setupIncompleteHomeBody =>
+      'Configura una volta la cronologia, oppure salta e registra qualcosa ora.';
+
+  @override
+  String get timelinePreview => 'Cronologia';
+
+  @override
+  String get captureType => 'Tipo';
+
+  @override
+  String get changeType => 'Cambia tipo';
+
+  @override
+  String get chooseCaptureType => 'Scegli tipo';
+
+  @override
+  String get selectedTypeHelper =>
+      'Serve solo a organizzare la cronologia. Potrai cambiarlo più tardi.';
+
+  @override
+  String get summaryLoading => 'Caricamento della cronologia salvata…';
+
+  @override
+  String get summaryLoadedFromTimeline =>
+      'La bozza del riassunto è stata aggiornata dai record salvati.';
+
+  @override
+  String summaryCouldNotLoadTimeline(Object message) {
+    return 'Impossibile caricare i record salvati: $message';
+  }
+
+  @override
+  String get summaryNoSavedTimeline =>
+      'Nessuna voce salvata per ora. Registra qualcosa e poi torna al riassunto.';
+
+  @override
+  String get summaryGeneratedFromSavedData =>
+      'Questa bozza usa gli eventi della cronologia e le note originali salvati in questo filo.';
+
+  @override
+  String get timelineEntriesSection => 'Voci della cronologia';
+
+  @override
+  String get originalNotesSection => 'Note originali';
+
+  @override
+  String get noDate => 'senza data';
 }

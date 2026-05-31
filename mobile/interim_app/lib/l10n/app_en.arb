@@ -244,5 +244,30 @@
   "summaryTemplate": "Summary so far\\n\\nRange: selected range\\n\\nWhat I want help with:\\n- \\n\\nWhat changed:\\n- \\n\\nWhat I noticed after:\\n- \\n\\nSide effects or body changes:\\n- \\n\\nFunctioning:\\n- \\n\\nContext that may matter:\\n- \\n\\nQuestions to bring up:\\n- ",
   "copySummary": "Copy summary",
   "summaryCopied": "Summary copied.",
-  "summaryNotMedicalAdvice": "This summary is based on what you recorded. It is not medical advice or a diagnosis."
+  "summaryNotMedicalAdvice": "This summary is based on what you recorded. It is not medical advice or a diagnosis.",
+  "recordSomething": "Record something",
+  "privateAccountActive": "Private account active",
+  "privateAccountActiveBody": "Your records are linked to this private account.",
+  "privateAccountInactive": "Private account not active",
+  "privateAccountInactiveBody": "Log in before saving private records across sessions.",
+  "setupCompleteHomeBody": "Record something quickly, review the timeline, or prepare a summary.",
+  "setupIncompleteHomeBody": "Set up the timeline once, or skip and record something now.",
+  "timelinePreview": "Timeline",
+  "captureType": "Type",
+  "changeType": "Change type",
+  "chooseCaptureType": "Choose type",
+  "selectedTypeHelper": "This only helps organize the timeline. You can change it later.",
+  "summaryLoading": "Loading saved timeline…",
+  "summaryLoadedFromTimeline": "Summary draft updated from saved timeline records.",
+  "summaryCouldNotLoadTimeline": "Could not load saved timeline records: {message}",
+  "@summaryCouldNotLoadTimeline": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "summaryNoSavedTimeline": "No saved timeline entries yet. Record something first, then come back to Summary so far.",
+  "summaryGeneratedFromSavedData": "This draft uses saved timeline events and original notes from this thread.",
+  "timelineEntriesSection": "Timeline entries",
+  "originalNotesSection": "Original notes",
+  "noDate": "no date"
 }

@@ -216,3 +216,20 @@ A frontend-only Summary so far surface has been added:
 - no AI generation yet
 
 This is the second core product surface after the timeline.
+
+
+## Daily home and capture UX correction note
+
+Preview feedback showed that capture chips took too much screen space and made users scroll before writing.
+
+Correction implemented:
+
+- setup completion is stored locally after onboarding/start
+- Home changes after setup completion
+- Home no longer shows the persistent medical-advice card
+- Home no longer displays the login email
+- daily Home prioritizes Record something, Timeline, and Summary so far
+- capture screen now shows the text area first
+- capture type is secondary and opened from a compact Change type action
+
+This is a product-direction correction, not cosmetic polish.

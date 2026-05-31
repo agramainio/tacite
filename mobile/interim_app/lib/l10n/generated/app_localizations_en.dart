@@ -599,4 +599,74 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get summaryNotMedicalAdvice =>
       'This summary is based on what you recorded. It is not medical advice or a diagnosis.';
+
+  @override
+  String get recordSomething => 'Record something';
+
+  @override
+  String get privateAccountActive => 'Private account active';
+
+  @override
+  String get privateAccountActiveBody =>
+      'Your records are linked to this private account.';
+
+  @override
+  String get privateAccountInactive => 'Private account not active';
+
+  @override
+  String get privateAccountInactiveBody =>
+      'Log in before saving private records across sessions.';
+
+  @override
+  String get setupCompleteHomeBody =>
+      'Record something quickly, review the timeline, or prepare a summary.';
+
+  @override
+  String get setupIncompleteHomeBody =>
+      'Set up the timeline once, or skip and record something now.';
+
+  @override
+  String get timelinePreview => 'Timeline';
+
+  @override
+  String get captureType => 'Type';
+
+  @override
+  String get changeType => 'Change type';
+
+  @override
+  String get chooseCaptureType => 'Choose type';
+
+  @override
+  String get selectedTypeHelper =>
+      'This only helps organize the timeline. You can change it later.';
+
+  @override
+  String get summaryLoading => 'Loading saved timeline…';
+
+  @override
+  String get summaryLoadedFromTimeline =>
+      'Summary draft updated from saved timeline records.';
+
+  @override
+  String summaryCouldNotLoadTimeline(Object message) {
+    return 'Could not load saved timeline records: $message';
+  }
+
+  @override
+  String get summaryNoSavedTimeline =>
+      'No saved timeline entries yet. Record something first, then come back to Summary so far.';
+
+  @override
+  String get summaryGeneratedFromSavedData =>
+      'This draft uses saved timeline events and original notes from this thread.';
+
+  @override
+  String get timelineEntriesSection => 'Timeline entries';
+
+  @override
+  String get originalNotesSection => 'Original notes';
+
+  @override
+  String get noDate => 'no date';
 }

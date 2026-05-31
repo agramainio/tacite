@@ -1181,6 +1181,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This summary is based on what you recorded. It is not medical advice or a diagnosis.'**
   String get summaryNotMedicalAdvice;
+
+  /// No description provided for @recordSomething.
+  ///
+  /// In en, this message translates to:
+  /// **'Record something'**
+  String get recordSomething;
+
+  /// No description provided for @privateAccountActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Private account active'**
+  String get privateAccountActive;
+
+  /// No description provided for @privateAccountActiveBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your records are linked to this private account.'**
+  String get privateAccountActiveBody;
+
+  /// No description provided for @privateAccountInactive.
+  ///
+  /// In en, this message translates to:
+  /// **'Private account not active'**
+  String get privateAccountInactive;
+
+  /// No description provided for @privateAccountInactiveBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Log in before saving private records across sessions.'**
+  String get privateAccountInactiveBody;
+
+  /// No description provided for @setupCompleteHomeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Record something quickly, review the timeline, or prepare a summary.'**
+  String get setupCompleteHomeBody;
+
+  /// No description provided for @setupIncompleteHomeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Set up the timeline once, or skip and record something now.'**
+  String get setupIncompleteHomeBody;
+
+  /// No description provided for @timelinePreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Timeline'**
+  String get timelinePreview;
+
+  /// No description provided for @captureType.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get captureType;
+
+  /// No description provided for @changeType.
+  ///
+  /// In en, this message translates to:
+  /// **'Change type'**
+  String get changeType;
+
+  /// No description provided for @chooseCaptureType.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose type'**
+  String get chooseCaptureType;
+
+  /// No description provided for @selectedTypeHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'This only helps organize the timeline. You can change it later.'**
+  String get selectedTypeHelper;
+
+  /// No description provided for @summaryLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading saved timeline…'**
+  String get summaryLoading;
+
+  /// No description provided for @summaryLoadedFromTimeline.
+  ///
+  /// In en, this message translates to:
+  /// **'Summary draft updated from saved timeline records.'**
+  String get summaryLoadedFromTimeline;
+
+  /// No description provided for @summaryCouldNotLoadTimeline.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load saved timeline records: {message}'**
+  String summaryCouldNotLoadTimeline(Object message);
+
+  /// No description provided for @summaryNoSavedTimeline.
+  ///
+  /// In en, this message translates to:
+  /// **'No saved timeline entries yet. Record something first, then come back to Summary so far.'**
+  String get summaryNoSavedTimeline;
+
+  /// No description provided for @summaryGeneratedFromSavedData.
+  ///
+  /// In en, this message translates to:
+  /// **'This draft uses saved timeline events and original notes from this thread.'**
+  String get summaryGeneratedFromSavedData;
+
+  /// No description provided for @timelineEntriesSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Timeline entries'**
+  String get timelineEntriesSection;
+
+  /// No description provided for @originalNotesSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Original notes'**
+  String get originalNotesSection;
+
+  /// No description provided for @noDate.
+  ///
+  /// In en, this message translates to:
+  /// **'no date'**
+  String get noDate;
 }
 
 class _AppLocalizationsDelegate

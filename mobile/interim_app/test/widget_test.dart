@@ -8,43 +8,76 @@ import 'package:interim_app/features/thread/new_thread_screen.dart';
 import 'package:interim_app/features/thread/thread_detail_screen.dart';
 import 'package:interim_app/features/thread/thread_placeholder_screen.dart';
 import 'package:interim_app/l10n/generated/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
+  setUp(() {
+    SharedPreferences.setMockInitialValues({});
+  });
+
+  testWidgets('home screen before setup shows setup and quick record actions', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      const InterimAppWrapper(child: HomeScreen(loadSessionOnStart: false)),
+    );
+
+    await tester.pumpAndSettle();
+
+    expect(find.text('Tacite'), findsOneWidget);
+    expect(find.text('No medical advice'), findsNothing);
+    expect(find.text('Private account not active'), findsOneWidget);
+    expect(find.text('Start setup'), findsOneWidget);
+    expect(find.text('Just record something'), findsOneWidget);
+  });
+
+  testWidgets('home screen after setup prioritizes daily actions', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({'tacite_setup_complete': true});
+
+    await tester.pumpWidget(
+      const InterimAppWrapper(child: HomeScreen(loadSessionOnStart: false)),
+    );
+
+    await tester.pumpAndSettle();
+
+    expect(find.text('Record something'), findsOneWidget);
+    expect(find.text('Timeline'), findsOneWidget);
+    expect(find.text('Summary so far'), findsOneWidget);
+    expect(find.text('Start setup'), findsNothing);
+  });
+
   testWidgets(
-    'home screen shows setup, quick record, and summary actions without network calls',
+    'summary screen shows range selector and editable summary without network calls',
     (tester) async {
       await tester.pumpWidget(
-        const InterimAppWrapper(child: HomeScreen(loadSessionOnStart: false)),
+        const InterimAppWrapper(child: SummaryScreen(loadRecords: false)),
       );
 
-      expect(find.text('Tacite'), findsOneWidget);
-      expect(find.text('No medical advice'), findsOneWidget);
-      expect(find.text('Not logged in'), findsOneWidget);
-      expect(find.text('Start setup'), findsOneWidget);
-      expect(find.text('Just record something'), findsOneWidget);
-
-      await tester.scrollUntilVisible(
-        find.text('Summary so far'),
-        400,
-        scrollable: find.byType(Scrollable),
-      );
-
-      expect(find.text('Summary so far'), findsOneWidget);
+      expect(find.text('Summary so far'), findsWidgets);
+      expect(find.text('Range'), findsOneWidget);
+      expect(find.text('Since last appointment'), findsOneWidget);
+      expect(find.text('Editable summary'), findsOneWidget);
+      expect(find.text('Copy summary'), findsOneWidget);
+      expect(find.textContaining('What I want help with'), findsOneWidget);
     },
   );
 
-  testWidgets('summary screen shows range selector and editable summary', (
-    tester,
-  ) async {
-    await tester.pumpWidget(const InterimAppWrapper(child: SummaryScreen()));
+  testWidgets(
+    'thread summary screen can render without loading records in widget tests',
+    (tester) async {
+      await tester.pumpWidget(
+        const InterimAppWrapper(
+          child: SummaryScreen(threadId: 'test-thread-id', loadRecords: false),
+        ),
+      );
 
-    expect(find.text('Summary so far'), findsWidgets);
-    expect(find.text('Range'), findsOneWidget);
-    expect(find.text('Since last appointment'), findsOneWidget);
-    expect(find.text('Editable summary'), findsOneWidget);
-    expect(find.text('Copy summary'), findsOneWidget);
-    expect(find.textContaining('What I want help with'), findsOneWidget);
-  });
+      expect(find.text('Summary so far'), findsWidgets);
+      expect(find.text('Editable summary'), findsOneWidget);
+      expect(find.text('Copy summary'), findsOneWidget);
+    },
+  );
 
   testWidgets('purpose onboarding shows three starting choices', (
     tester,
@@ -89,7 +122,7 @@ void main() {
   });
 
   testWidgets(
-    'thread detail screen has AI-off structured capture cards without network calls',
+    'thread detail screen lets the user write before choosing a type',
     (tester) async {
       await tester.pumpWidget(
         const InterimAppWrapper(
@@ -101,21 +134,19 @@ void main() {
       );
 
       expect(find.text('Record something'), findsOneWidget);
+      expect(find.text('Messy note'), findsOneWidget);
+      expect(find.text('Type: Free note'), findsOneWidget);
+      expect(find.text('Change type'), findsOneWidget);
+      expect(find.text('Record to timeline'), findsOneWidget);
+      expect(find.text('Treatment'), findsNothing);
+
+      await tester.tap(find.text('Change type'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Choose type'), findsOneWidget);
       expect(find.text('Treatment'), findsOneWidget);
       expect(find.text('Experience'), findsOneWidget);
       expect(find.text('Appointment'), findsOneWidget);
-      expect(find.text('Start treatment label'), findsOneWidget);
-      expect(find.text('Mood/anxiety'), findsOneWidget);
-      expect(find.text('Question'), findsOneWidget);
-
-      await tester.scrollUntilVisible(
-        find.text('Record to timeline'),
-        500,
-        scrollable: find.byType(Scrollable),
-      );
-
-      expect(find.text('Messy note'), findsOneWidget);
-      expect(find.text('Record to timeline'), findsOneWidget);
     },
   );
 

@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 
 import '../../l10n/generated/app_localizations.dart';
 import '../../shared/locale/locale_scope.dart';
+import '../../shared/onboarding/onboarding_state_repository.dart';
 import '../../shared/theme/tacite_spacing.dart';
 import '../../shared/theme/tacite_text_styles.dart';
-import '../../shared/widgets/boundary_card.dart';
 import '../../shared/widgets/tacite_panel.dart';
 import '../../shared/widgets/tacite_primary_button.dart';
 import '../../shared/widgets/tacite_scaffold.dart';
@@ -25,19 +25,37 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final _authRepository = AuthRepository.defaultRepository();
+  final _onboardingRepository = OnboardingStateRepository();
 
   AuthProfile? _profile;
   bool _isCheckingSession = true;
+  bool _isCheckingSetup = true;
+  bool _isSetupComplete = false;
 
   @override
   void initState() {
     super.initState();
+
+    _loadSetupState();
 
     if (widget.loadSessionOnStart) {
       _loadSession();
     } else {
       _isCheckingSession = false;
     }
+  }
+
+  Future<void> _loadSetupState() async {
+    final isComplete = await _onboardingRepository.isSetupComplete();
+
+    if (!mounted) {
+      return;
+    }
+
+    setState(() {
+      _isSetupComplete = isComplete;
+      _isCheckingSetup = false;
+    });
   }
 
   Future<void> _loadSession() async {
@@ -80,6 +98,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final profile = _profile;
+    final isReady = !_isCheckingSetup;
+    final body = _isSetupComplete
+        ? l10n.setupCompleteHomeBody
+        : l10n.setupIncompleteHomeBody;
 
     return TaciteScaffold(
       title: l10n.appTitle,
@@ -105,14 +127,56 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
         Text(l10n.homeHero, style: TaciteTextStyles.title),
         const SizedBox(height: TaciteSpacing.sm),
-        Text(l10n.homeBody, style: TaciteTextStyles.bodyMuted),
+        Text(body, style: TaciteTextStyles.bodyMuted),
         const SizedBox(height: TaciteSpacing.xl),
         const _LanguagePicker(),
         const SizedBox(height: TaciteSpacing.md),
         _SessionPanel(profile: profile, isCheckingSession: _isCheckingSession),
-        const SizedBox(height: TaciteSpacing.md),
-        const BoundaryCard(),
         const SizedBox(height: TaciteSpacing.xl),
+        if (!isReady)
+          const Center(child: CircularProgressIndicator())
+        else if (_isSetupComplete)
+          _DailyHomeActions()
+        else
+          _SetupHomeActions(),
+      ],
+    );
+  }
+}
+
+class _DailyHomeActions extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
+    return Column(
+      children: [
+        TacitePrimaryButton(
+          onPressed: () => context.go('/threads/new'),
+          label: l10n.recordSomething,
+        ),
+        const SizedBox(height: TaciteSpacing.sm),
+        TaciteSecondaryButton(
+          onPressed: () => context.go('/threads/placeholder'),
+          label: l10n.timelinePreview,
+        ),
+        const SizedBox(height: TaciteSpacing.sm),
+        TaciteSecondaryButton(
+          onPressed: () => context.go('/summary'),
+          label: l10n.summarySoFar,
+        ),
+      ],
+    );
+  }
+}
+
+class _SetupHomeActions extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
+    return Column(
+      children: [
         TacitePrimaryButton(
           onPressed: () => context.go('/onboarding'),
           label: l10n.startSetup,
@@ -127,8 +191,6 @@ class _HomeScreenState extends State<HomeScreen> {
           onPressed: () => context.go('/summary'),
           label: l10n.summarySoFar,
         ),
-        const SizedBox(height: TaciteSpacing.xl),
-        const _PrinciplesList(),
       ],
     );
   }
@@ -189,11 +251,11 @@ class _SessionPanel extends StatelessWidget {
       title = l10n.checkingSession;
       body = l10n.checkingSessionBody;
     } else if (profile == null) {
-      title = l10n.notLoggedIn;
-      body = l10n.loginBeforePrivateRecords;
+      title = l10n.privateAccountInactive;
+      body = l10n.privateAccountInactiveBody;
     } else {
-      title = l10n.loggedIn;
-      body = profile!.emailIdentifier;
+      title = l10n.privateAccountActive;
+      body = l10n.privateAccountActiveBody;
     }
 
     return TacitePanel(
@@ -203,43 +265,6 @@ class _SessionPanel extends StatelessWidget {
           Text(title, style: TaciteTextStyles.sectionTitle),
           const SizedBox(height: TaciteSpacing.xs),
           Text(body, style: TaciteTextStyles.bodyMuted),
-        ],
-      ),
-    );
-  }
-}
-
-class _PrinciplesList extends StatelessWidget {
-  const _PrinciplesList();
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-
-    final items = [
-      l10n.boundaryNoRealName,
-      l10n.boundaryAiOptional,
-      l10n.boundaryOriginalNotes,
-      l10n.boundaryNoShame,
-    ];
-
-    return TacitePanel(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(l10n.productBoundaries, style: TaciteTextStyles.sectionTitle),
-          const SizedBox(height: TaciteSpacing.md),
-          for (final item in items)
-            Padding(
-              padding: const EdgeInsets.only(bottom: TaciteSpacing.sm),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('— '),
-                  Expanded(child: Text(item, style: TaciteTextStyles.body)),
-                ],
-              ),
-            ),
         ],
       ),
     );

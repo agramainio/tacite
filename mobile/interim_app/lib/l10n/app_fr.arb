@@ -194,5 +194,30 @@
   "summaryTemplate": "Résumé pour l’instant\\n\\nPériode : période choisie\\n\\nCe pour quoi je veux de l’aide :\\n- \\n\\nCe qui a changé :\\n- \\n\\nCe que j’ai remarqué après :\\n- \\n\\nEffets indésirables ou changements corporels :\\n- \\n\\nFonctionnement :\\n- \\n\\nContexte qui peut compter :\\n- \\n\\nQuestions à aborder :\\n- ",
   "copySummary": "Copier le résumé",
   "summaryCopied": "Résumé copié.",
-  "summaryNotMedicalAdvice": "Ce résumé est basé sur ce que vous avez noté. Ce n’est pas un avis médical ni un diagnostic."
+  "summaryNotMedicalAdvice": "Ce résumé est basé sur ce que vous avez noté. Ce n’est pas un avis médical ni un diagnostic.",
+  "recordSomething": "Noter quelque chose",
+  "privateAccountActive": "Compte privé actif",
+  "privateAccountActiveBody": "Vos notes sont liées à ce compte privé.",
+  "privateAccountInactive": "Compte privé non actif",
+  "privateAccountInactiveBody": "Connectez-vous avant d’enregistrer des notes privées entre plusieurs sessions.",
+  "setupCompleteHomeBody": "Notez quelque chose rapidement, relisez la chronologie ou préparez un résumé.",
+  "setupIncompleteHomeBody": "Configurez la chronologie une fois, ou passez et notez quelque chose maintenant.",
+  "timelinePreview": "Chronologie",
+  "captureType": "Type",
+  "changeType": "Changer le type",
+  "chooseCaptureType": "Choisir le type",
+  "selectedTypeHelper": "Cela sert seulement à organiser la chronologie. Vous pourrez le changer plus tard.",
+  "summaryLoading": "Chargement de la chronologie enregistrée…",
+  "summaryLoadedFromTimeline": "Le brouillon du résumé a été mis à jour depuis les éléments enregistrés.",
+  "summaryCouldNotLoadTimeline": "Impossible de charger les éléments enregistrés : {message}",
+  "@summaryCouldNotLoadTimeline": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "summaryNoSavedTimeline": "Aucune entrée enregistrée pour l’instant. Notez quelque chose, puis revenez au résumé.",
+  "summaryGeneratedFromSavedData": "Ce brouillon utilise les événements de chronologie et les notes originales enregistrés dans ce fil.",
+  "timelineEntriesSection": "Entrées de chronologie",
+  "originalNotesSection": "Notes originales",
+  "noDate": "sans date"
 }

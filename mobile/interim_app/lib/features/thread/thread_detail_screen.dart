@@ -165,6 +165,37 @@ class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
     });
   }
 
+  Future<void> _openCaptureTypeSheet() async {
+    final l10n = AppLocalizations.of(context);
+    final sections = _captureSections(l10n);
+
+    await showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      builder: (context) {
+        return SafeArea(
+          child: ListView(
+            padding: const EdgeInsets.all(TaciteSpacing.page),
+            children: [
+              Text(l10n.chooseCaptureType, style: TaciteTextStyles.screenTitle),
+              const SizedBox(height: TaciteSpacing.sm),
+              Text(l10n.selectedTypeHelper, style: TaciteTextStyles.bodyMuted),
+              const SizedBox(height: TaciteSpacing.xl),
+              _CaptureCardPanel(
+                sections: sections,
+                selectedCaptureId: _selectedCaptureId,
+                onSelected: (option) {
+                  _selectCaptureOption(option);
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   String _selectedCaptureLabel(AppLocalizations l10n) {
     final options = _captureSections(l10n).expand((section) => section.options);
 
@@ -281,12 +312,16 @@ class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final sections = _captureSections(l10n);
+    final selectedLabel = _selectedCaptureLabel(l10n);
 
     return TaciteScaffold(
       title: l10n.thread,
       actions: [
         TextButton(onPressed: _loadExistingRecords, child: Text(l10n.refresh)),
+        TextButton(
+          onPressed: () => context.go('/threads/${widget.threadId}/summary'),
+          child: Text(l10n.summarySoFar),
+        ),
         TextButton(onPressed: () => context.go('/'), child: Text(l10n.home)),
       ],
       children: [
@@ -294,17 +329,6 @@ class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
         const SizedBox(height: TaciteSpacing.sm),
         Text(l10n.captureSomethingBody, style: TaciteTextStyles.bodyMuted),
         const SizedBox(height: TaciteSpacing.xl),
-        _CaptureCardPanel(
-          sections: sections,
-          selectedCaptureId: _selectedCaptureId,
-          onSelected: _selectCaptureOption,
-        ),
-        const SizedBox(height: TaciteSpacing.md),
-        Text(
-          l10n.selectedCaptureKind(_selectedCaptureLabel(l10n)),
-          style: TaciteTextStyles.small,
-        ),
-        const SizedBox(height: TaciteSpacing.md),
         TacitePanel(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -313,9 +337,25 @@ class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
                 controller: _noteController,
                 label: l10n.messyNote,
                 hint: l10n.fakeDataHint,
-                minLines: 5,
-                maxLines: 10,
+                minLines: 6,
+                maxLines: 12,
               ),
+              const SizedBox(height: TaciteSpacing.md),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      '${l10n.captureType}: $selectedLabel',
+                      style: TaciteTextStyles.small,
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: _isRecording ? null : _openCaptureTypeSheet,
+                    child: Text(l10n.changeType),
+                  ),
+                ],
+              ),
+              Text(l10n.selectedTypeHelper, style: TaciteTextStyles.small),
               const SizedBox(height: TaciteSpacing.md),
               TacitePrimaryButton(
                 onPressed: _isRecording ? null : _recordToTimeline,
@@ -337,7 +377,7 @@ class _ThreadDetailScreenState extends State<ThreadDetailScreen> {
           children: [
             for (final event in _timelineEvents)
               TaciteTimelineCard(
-                cardKey: ValueKey('timeline-\${event.id}'),
+                cardKey: ValueKey('timeline-${event.id}'),
                 title: event.title,
                 body: event.userApprovedSummary,
                 meta: l10n.source(event.source),

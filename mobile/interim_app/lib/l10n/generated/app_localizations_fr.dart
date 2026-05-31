@@ -608,4 +608,74 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get summaryNotMedicalAdvice =>
       'Ce résumé est basé sur ce que vous avez noté. Ce n’est pas un avis médical ni un diagnostic.';
+
+  @override
+  String get recordSomething => 'Noter quelque chose';
+
+  @override
+  String get privateAccountActive => 'Compte privé actif';
+
+  @override
+  String get privateAccountActiveBody =>
+      'Vos notes sont liées à ce compte privé.';
+
+  @override
+  String get privateAccountInactive => 'Compte privé non actif';
+
+  @override
+  String get privateAccountInactiveBody =>
+      'Connectez-vous avant d’enregistrer des notes privées entre plusieurs sessions.';
+
+  @override
+  String get setupCompleteHomeBody =>
+      'Notez quelque chose rapidement, relisez la chronologie ou préparez un résumé.';
+
+  @override
+  String get setupIncompleteHomeBody =>
+      'Configurez la chronologie une fois, ou passez et notez quelque chose maintenant.';
+
+  @override
+  String get timelinePreview => 'Chronologie';
+
+  @override
+  String get captureType => 'Type';
+
+  @override
+  String get changeType => 'Changer le type';
+
+  @override
+  String get chooseCaptureType => 'Choisir le type';
+
+  @override
+  String get selectedTypeHelper =>
+      'Cela sert seulement à organiser la chronologie. Vous pourrez le changer plus tard.';
+
+  @override
+  String get summaryLoading => 'Chargement de la chronologie enregistrée…';
+
+  @override
+  String get summaryLoadedFromTimeline =>
+      'Le brouillon du résumé a été mis à jour depuis les éléments enregistrés.';
+
+  @override
+  String summaryCouldNotLoadTimeline(Object message) {
+    return 'Impossible de charger les éléments enregistrés : $message';
+  }
+
+  @override
+  String get summaryNoSavedTimeline =>
+      'Aucune entrée enregistrée pour l’instant. Notez quelque chose, puis revenez au résumé.';
+
+  @override
+  String get summaryGeneratedFromSavedData =>
+      'Ce brouillon utilise les événements de chronologie et les notes originales enregistrés dans ce fil.';
+
+  @override
+  String get timelineEntriesSection => 'Entrées de chronologie';
+
+  @override
+  String get originalNotesSection => 'Notes originales';
+
+  @override
+  String get noDate => 'sans date';
 }

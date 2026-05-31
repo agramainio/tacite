@@ -194,5 +194,30 @@
   "summaryTemplate": "Riassunto finora\\n\\nPeriodo: periodo scelto\\n\\nPer cosa voglio aiuto:\\n- \\n\\nCosa è cambiato:\\n- \\n\\nCosa ho notato dopo:\\n- \\n\\nEffetti collaterali o cambiamenti fisici:\\n- \\n\\nFunzionamento:\\n- \\n\\nContesto che può contare:\\n- \\n\\nDomande da fare:\\n- ",
   "copySummary": "Copia riassunto",
   "summaryCopied": "Riassunto copiato.",
-  "summaryNotMedicalAdvice": "Questo riassunto si basa su ciò che hai registrato. Non è un consiglio medico né una diagnosi."
+  "summaryNotMedicalAdvice": "Questo riassunto si basa su ciò che hai registrato. Non è un consiglio medico né una diagnosi.",
+  "recordSomething": "Registra qualcosa",
+  "privateAccountActive": "Account privato attivo",
+  "privateAccountActiveBody": "I tuoi record sono collegati a questo account privato.",
+  "privateAccountInactive": "Account privato non attivo",
+  "privateAccountInactiveBody": "Accedi prima di salvare record privati tra più sessioni.",
+  "setupCompleteHomeBody": "Registra qualcosa rapidamente, rivedi la cronologia o prepara un riassunto.",
+  "setupIncompleteHomeBody": "Configura una volta la cronologia, oppure salta e registra qualcosa ora.",
+  "timelinePreview": "Cronologia",
+  "captureType": "Tipo",
+  "changeType": "Cambia tipo",
+  "chooseCaptureType": "Scegli tipo",
+  "selectedTypeHelper": "Serve solo a organizzare la cronologia. Potrai cambiarlo più tardi.",
+  "summaryLoading": "Caricamento della cronologia salvata…",
+  "summaryLoadedFromTimeline": "La bozza del riassunto è stata aggiornata dai record salvati.",
+  "summaryCouldNotLoadTimeline": "Impossibile caricare i record salvati: {message}",
+  "@summaryCouldNotLoadTimeline": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "summaryNoSavedTimeline": "Nessuna voce salvata per ora. Registra qualcosa e poi torna al riassunto.",
+  "summaryGeneratedFromSavedData": "Questa bozza usa gli eventi della cronologia e le note originali salvati in questo filo.",
+  "timelineEntriesSection": "Voci della cronologia",
+  "originalNotesSection": "Note originali",
+  "noDate": "senza data"
 }
