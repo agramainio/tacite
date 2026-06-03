@@ -1,0 +1,549 @@
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../l10n/generated/app_localizations.dart';
+import '../../shared/theme/tacite_spacing.dart';
+import '../../shared/theme/tacite_text_styles.dart';
+import '../../shared/widgets/tacite_chip.dart';
+import '../../shared/widgets/tacite_message.dart';
+import '../../shared/widgets/tacite_panel.dart';
+import '../../shared/widgets/tacite_primary_button.dart';
+import '../../shared/widgets/tacite_scaffold.dart';
+import '../../shared/widgets/tacite_timeline_card.dart';
+import '../thread/data/thread_models.dart';
+import '../thread/data/thread_repository.dart';
+
+class TimelineHomeScreen extends StatefulWidget {
+  const TimelineHomeScreen({this.loadRecordsOnStart = true, super.key});
+
+  final bool loadRecordsOnStart;
+
+  @override
+  State<TimelineHomeScreen> createState() => _TimelineHomeScreenState();
+}
+
+class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
+  static const _defaultThreadIdKey = 'tacite_default_timeline_thread_id';
+
+  final _repository = ThreadRepository.defaultRepository();
+  final _noteController = TextEditingController();
+
+  bool _isLoading = false;
+  bool _isRecording = false;
+  bool _hideTextByDefault = true;
+  String? _defaultThreadId;
+  String? _message;
+
+  final Set<String> _selectedTagIds = {'sleep'};
+  final Set<String> _selectedFlagIds = {};
+  final Set<String> _revealedEventIds = {};
+  final List<TimelineEvent> _timelineEvents = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.loadRecordsOnStart) {
+      _loadTimeline();
+    }
+  }
+
+  @override
+  void dispose() {
+    _noteController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _loadTimeline() async {
+    final l10n = AppLocalizations.of(context);
+
+    setState(() {
+      _isLoading = true;
+      _message = l10n.timelineHomeLoading;
+    });
+
+    try {
+      final preferences = await SharedPreferences.getInstance();
+      final threadId = preferences.getString(_defaultThreadIdKey);
+
+      if (threadId == null) {
+        if (!mounted) {
+          return;
+        }
+
+        setState(() {
+          _defaultThreadId = null;
+          _timelineEvents.clear();
+          _message = null;
+          _isLoading = false;
+        });
+        return;
+      }
+
+      final events = await _repository.listTimelineEvents(threadId);
+
+      if (!mounted) {
+        return;
+      }
+
+      setState(() {
+        _defaultThreadId = threadId;
+        _timelineEvents
+          ..clear()
+          ..addAll(events.reversed);
+        _message = null;
+        _isLoading = false;
+      });
+    } on DioException catch (error) {
+      if (!mounted) {
+        return;
+      }
+
+      setState(() {
+        _message = l10n.timelineHomeCouldNotLoad(error.message ?? l10n.unknown);
+        _isLoading = false;
+      });
+    }
+  }
+
+  Future<String> _getOrCreateDefaultThreadId({
+    required String title,
+    required String userGoal,
+  }) async {
+    final preferences = await SharedPreferences.getInstance();
+    final savedThreadId = preferences.getString(_defaultThreadIdKey);
+
+    if (savedThreadId != null) {
+      return savedThreadId;
+    }
+
+    final thread = await _repository.createThread(
+      kind: 'appointment_preparation',
+      title: title,
+      userGoal: userGoal,
+    );
+
+    await preferences.setString(_defaultThreadIdKey, thread.id);
+
+    return thread.id;
+  }
+
+  Future<void> _recordEntry() async {
+    final l10n = AppLocalizations.of(context);
+    final text = _noteController.text.trim();
+
+    if (text.isEmpty) {
+      setState(() {
+        _message = l10n.writeNoteFirst;
+      });
+      return;
+    }
+
+    setState(() {
+      _isRecording = true;
+      _message = null;
+    });
+
+    try {
+      final threadId = await _getOrCreateDefaultThreadId(
+        title: l10n.personalTimelineTitle,
+        userGoal: l10n.personalTimelineGoal,
+      );
+
+      final note = await _repository.createRawNote(
+        threadId: threadId,
+        originalText: text,
+      );
+
+      final event = await _repository.createTimelineEvent(
+        threadId: threadId,
+        rawNoteId: note.id,
+        eventType: _eventTypeForSelectedTags(),
+        title: _entryTitle(l10n),
+        userApprovedSummary: _entrySummary(l10n, text),
+      );
+
+      if (!mounted) {
+        return;
+      }
+
+      setState(() {
+        _defaultThreadId = threadId;
+        _noteController.clear();
+        _timelineEvents.insert(0, event);
+        _message = l10n.recordedToTimeline;
+      });
+    } on DioException catch (error) {
+      final status = error.response?.statusCode;
+
+      if (status == 404) {
+        await _resetDefaultThreadId();
+
+        if (!mounted) {
+          return;
+        }
+
+        setState(() {
+          _message = l10n.timelineHomeCouldNotRecord(
+            'Saved timeline link was stale. Try recording again.',
+          );
+        });
+      } else {
+        if (!mounted) {
+          return;
+        }
+
+        setState(() {
+          _message = l10n.timelineHomeCouldNotRecord(
+            error.message ?? l10n.unknown,
+          );
+        });
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isRecording = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _resetDefaultThreadId() async {
+    final preferences = await SharedPreferences.getInstance();
+
+    await preferences.remove(_defaultThreadIdKey);
+  }
+
+  String _eventTypeForSelectedTags() {
+    if (_selectedTagIds.contains('question')) {
+      return 'appointment_question';
+    }
+
+    if (_selectedTagIds.contains('side_effect')) {
+      return 'side_effect_note';
+    }
+
+    if (_selectedTagIds.contains('medication') ||
+        _selectedTagIds.contains('dose_change') ||
+        _selectedTagIds.contains('missed_dose')) {
+      return 'started_medication';
+    }
+
+    return 'note';
+  }
+
+  String _entryTitle(AppLocalizations l10n) {
+    final tags = _tagOptions(l10n)
+        .where((tag) => _selectedTagIds.contains(tag.id))
+        .map((tag) => tag.label)
+        .toList();
+
+    if (tags.isEmpty) {
+      return l10n.captureFreeNote;
+    }
+
+    return tags.join(' ');
+  }
+
+  String _entrySummary(AppLocalizations l10n, String text) {
+    final tags = _tagOptions(l10n)
+        .where((tag) => _selectedTagIds.contains(tag.id))
+        .map((tag) => tag.label)
+        .join(' ');
+
+    final flags = _flagOptions(l10n)
+        .where((flag) => _selectedFlagIds.contains(flag.id))
+        .map((flag) => flag.label)
+        .join(', ');
+
+    final parts = <String>[];
+
+    if (tags.isNotEmpty) {
+      parts.add(tags);
+    }
+
+    if (flags.isNotEmpty) {
+      parts.add(flags);
+    }
+
+    parts.add(text);
+
+    return parts.join('\n');
+  }
+
+  void _toggleTag(String id) {
+    setState(() {
+      if (_selectedTagIds.contains(id)) {
+        _selectedTagIds.remove(id);
+      } else {
+        _selectedTagIds.add(id);
+      }
+    });
+  }
+
+  void _toggleFlag(String id) {
+    setState(() {
+      if (_selectedFlagIds.contains(id)) {
+        _selectedFlagIds.remove(id);
+      } else {
+        _selectedFlagIds.add(id);
+      }
+    });
+  }
+
+  Future<void> _openMoreTagsSheet() async {
+    final l10n = AppLocalizations.of(context);
+
+    await showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setSheetState) {
+            final tags = _secondaryTagOptions(l10n);
+
+            return SafeArea(
+              child: ListView(
+                padding: const EdgeInsets.all(TaciteSpacing.page),
+                children: [
+                  Text(l10n.chooseTags, style: TaciteTextStyles.screenTitle),
+                  const SizedBox(height: TaciteSpacing.xl),
+                  Wrap(
+                    spacing: TaciteSpacing.xs,
+                    runSpacing: TaciteSpacing.xs,
+                    children: [
+                      for (final tag in tags)
+                        TaciteChip(
+                          label: tag.label,
+                          isSelected: _selectedTagIds.contains(tag.id),
+                          onTap: () {
+                            _toggleTag(tag.id);
+                            setSheetState(() {});
+                          },
+                        ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  void _toggleReveal(String eventId) {
+    setState(() {
+      if (_revealedEventIds.contains(eventId)) {
+        _revealedEventIds.remove(eventId);
+      } else {
+        _revealedEventIds.add(eventId);
+      }
+    });
+  }
+
+  void _showTimelineActionPlaceholder(String action) {
+    final l10n = AppLocalizations.of(context);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(l10n.timelineActionPlaceholder(action))),
+    );
+  }
+
+  void _openSummary() {
+    final threadId = _defaultThreadId;
+
+    if (threadId == null) {
+      context.go('/summary');
+      return;
+    }
+
+    context.go('/threads/$threadId/summary');
+  }
+
+  List<_ControlledOption> _primaryTagOptions(AppLocalizations l10n) {
+    return [
+      _ControlledOption('sleep', l10n.tagSleep),
+      _ControlledOption('anxiety', l10n.tagAnxiety),
+      _ControlledOption('medication', l10n.tagMedication),
+      _ControlledOption('side_effect', l10n.tagSideEffect),
+      _ControlledOption('question', l10n.tagQuestion),
+    ];
+  }
+
+  List<_ControlledOption> _secondaryTagOptions(AppLocalizations l10n) {
+    return [
+      _ControlledOption('dose_change', l10n.tagDoseChange),
+      _ControlledOption('missed_dose', l10n.tagMissedDose),
+      _ControlledOption('mood', l10n.tagMood),
+      _ControlledOption('focus', l10n.tagFocus),
+      _ControlledOption('tasks', l10n.tagTasks),
+      _ControlledOption('work', l10n.tagWork),
+      _ControlledOption('self_care', l10n.tagSelfCare),
+      _ControlledOption('appointment', l10n.tagAppointment),
+      _ControlledOption('hard_to_say', l10n.tagHardToSay),
+      _ControlledOption('safety', l10n.tagSafety),
+    ];
+  }
+
+  List<_ControlledOption> _tagOptions(AppLocalizations l10n) {
+    return [..._primaryTagOptions(l10n), ..._secondaryTagOptions(l10n)];
+  }
+
+  List<_ControlledOption> _flagOptions(AppLocalizations l10n) {
+    return [
+      _ControlledOption('mention_this', l10n.flagMentionThis),
+      _ControlledOption('hard_to_say', l10n.flagHardToSay),
+      _ControlledOption('add_to_summary', l10n.flagAddToSummary),
+    ];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final primaryTags = _primaryTagOptions(l10n);
+    final flags = _flagOptions(l10n);
+
+    return TaciteScaffold(
+      title: l10n.appTitle,
+      actions: [
+        TextButton(onPressed: _openSummary, child: Text(l10n.summarySoFar)),
+      ],
+      children: [
+        Text(l10n.appTitle, style: TaciteTextStyles.title),
+        const SizedBox(height: TaciteSpacing.sm),
+        Text(l10n.timelineHomeBody, style: TaciteTextStyles.bodyMuted),
+        const SizedBox(height: TaciteSpacing.xl),
+        TacitePanel(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                l10n.whatChangedPrompt,
+                style: TaciteTextStyles.sectionTitle,
+              ),
+              const SizedBox(height: TaciteSpacing.sm),
+              TextField(
+                controller: _noteController,
+                minLines: 5,
+                maxLines: 10,
+                textInputAction: TextInputAction.newline,
+                decoration: InputDecoration(hintText: l10n.whatChangedHint),
+              ),
+              const SizedBox(height: TaciteSpacing.md),
+              Text(l10n.tags, style: TaciteTextStyles.label),
+              const SizedBox(height: TaciteSpacing.xs),
+              Wrap(
+                spacing: TaciteSpacing.xs,
+                runSpacing: TaciteSpacing.xs,
+                children: [
+                  for (final tag in primaryTags)
+                    TaciteChip(
+                      label: tag.label,
+                      isSelected: _selectedTagIds.contains(tag.id),
+                      onTap: () => _toggleTag(tag.id),
+                    ),
+                  TaciteChip(label: l10n.moreTags, onTap: _openMoreTagsSheet),
+                ],
+              ),
+              const SizedBox(height: TaciteSpacing.md),
+              Text(l10n.flags, style: TaciteTextStyles.label),
+              const SizedBox(height: TaciteSpacing.xs),
+              Wrap(
+                spacing: TaciteSpacing.xs,
+                runSpacing: TaciteSpacing.xs,
+                children: [
+                  for (final flag in flags)
+                    TaciteChip(
+                      label: flag.label,
+                      isSelected: _selectedFlagIds.contains(flag.id),
+                      onTap: () => _toggleFlag(flag.id),
+                    ),
+                ],
+              ),
+              const SizedBox(height: TaciteSpacing.md),
+              TacitePrimaryButton(
+                onPressed: _isRecording ? null : _recordEntry,
+                isBusy: _isRecording,
+                label: _isRecording ? l10n.recording : l10n.recordToTimeline,
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: TaciteSpacing.sm),
+        SwitchListTile.adaptive(
+          value: _hideTextByDefault,
+          title: Text(l10n.hideTimelineText, style: TaciteTextStyles.body),
+          onChanged: (value) {
+            setState(() {
+              _hideTextByDefault = value;
+            });
+          },
+        ),
+        if (_message != null) ...[
+          const SizedBox(height: TaciteSpacing.sm),
+          TaciteMessage(message: _message!),
+        ],
+        const SizedBox(height: TaciteSpacing.xl),
+        Row(
+          children: [
+            Expanded(
+              child: Text(l10n.timeline, style: TaciteTextStyles.screenTitle),
+            ),
+            TextButton(onPressed: _loadTimeline, child: Text(l10n.refresh)),
+          ],
+        ),
+        const SizedBox(height: TaciteSpacing.sm),
+        if (_isLoading)
+          TacitePanel(
+            child: Text(
+              l10n.timelineHomeLoading,
+              style: TaciteTextStyles.bodyMuted,
+            ),
+          )
+        else if (_timelineEvents.isEmpty)
+          TacitePanel(
+            child: Text(
+              l10n.timelineHomeEmpty,
+              style: TaciteTextStyles.bodyMuted,
+            ),
+          )
+        else
+          for (final event in _timelineEvents)
+            Padding(
+              padding: const EdgeInsets.only(bottom: TaciteSpacing.sm),
+              child: TaciteTimelineCard(
+                cardKey: ValueKey('timeline-home-${event.id}'),
+                title: event.title,
+                body:
+                    _hideTextByDefault && !_revealedEventIds.contains(event.id)
+                    ? l10n.hiddenTimelineText
+                    : event.userApprovedSummary,
+                meta: event.eventDate ?? event.createdAt.split('T').first,
+                addToSummaryLabel: l10n.addToSummary,
+                editLabel: l10n.edit,
+                moreOptionsLabel: l10n.moreOptions,
+                showOriginalNoteLabel: l10n.showOriginalNote,
+                swipeAddToSummaryLabel: l10n.swipeAddToSummary,
+                swipeMoreOptionsLabel: l10n.swipeMoreOptions,
+                onTap: () => _toggleReveal(event.id),
+                onAddToSummary: () =>
+                    _showTimelineActionPlaceholder(l10n.addToSummary),
+                onEdit: () => _showTimelineActionPlaceholder(l10n.edit),
+                onShowOriginalNote: () =>
+                    _showTimelineActionPlaceholder(l10n.showOriginalNote),
+              ),
+            ),
+      ],
+    );
+  }
+}
+
+class _ControlledOption {
+  const _ControlledOption(this.id, this.label);
+
+  final String id;
+  final String label;
+}

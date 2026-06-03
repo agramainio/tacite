@@ -678,4 +678,113 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get noDate => 'sans date';
+
+  @override
+  String get timelineHomeBody =>
+      'Une chronologie privée de ce qui a changé, de ce que vous avez remarqué et de ce qu’il faudra mentionner plus tard.';
+
+  @override
+  String get whatChangedPrompt => 'Qu’est-ce qui a changé ?';
+
+  @override
+  String get whatChangedHint =>
+      'Écrivez comme ça vient. Vous pouvez organiser avec des tags.';
+
+  @override
+  String get timelineHomeEmpty =>
+      'Aucune entrée pour l’instant. Notez quelque chose au-dessus.';
+
+  @override
+  String get timelineHomeLoading => 'Chargement de la chronologie…';
+
+  @override
+  String timelineHomeCouldNotLoad(Object message) {
+    return 'Impossible de charger la chronologie : $message';
+  }
+
+  @override
+  String timelineHomeCouldNotRecord(Object message) {
+    return 'Impossible d’enregistrer l’entrée : $message';
+  }
+
+  @override
+  String get hiddenTimelineText => 'Texte privé masqué. Touchez pour révéler.';
+
+  @override
+  String get hideTimelineText => 'Masquer le texte par défaut';
+
+  @override
+  String get showTimelineText => 'Afficher le texte';
+
+  @override
+  String get tags => 'Tags';
+
+  @override
+  String get flags => 'Marqueurs';
+
+  @override
+  String get moreTags => 'Plus de tags';
+
+  @override
+  String get chooseTags => 'Choisir les tags';
+
+  @override
+  String get tagMedication => '#traitement';
+
+  @override
+  String get tagDoseChange => '#changement-dose';
+
+  @override
+  String get tagMissedDose => '#dose-oubliée';
+
+  @override
+  String get tagAnxiety => '#anxiété';
+
+  @override
+  String get tagSleep => '#sommeil';
+
+  @override
+  String get tagMood => '#humeur';
+
+  @override
+  String get tagSideEffect => '#effet-indésirable';
+
+  @override
+  String get tagFocus => '#concentration';
+
+  @override
+  String get tagTasks => '#tâches';
+
+  @override
+  String get tagWork => '#travail';
+
+  @override
+  String get tagSelfCare => '#soins-quotidiens';
+
+  @override
+  String get tagQuestion => '#question';
+
+  @override
+  String get tagAppointment => '#rendez-vous';
+
+  @override
+  String get tagHardToSay => '#difficile-à-dire';
+
+  @override
+  String get tagSafety => '#sécurité';
+
+  @override
+  String get flagMentionThis => 'À mentionner';
+
+  @override
+  String get flagHardToSay => 'Difficile à dire';
+
+  @override
+  String get flagAddToSummary => 'Ajouter au résumé';
+
+  @override
+  String get personalTimelineTitle => 'Chronologie personnelle';
+
+  @override
+  String get personalTimelineGoal => 'Chronologie privée par défaut';
 }

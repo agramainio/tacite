@@ -1301,6 +1301,210 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'no date'**
   String get noDate;
+
+  /// No description provided for @timelineHomeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A private timeline of what changed, what you noticed, and what to mention later.'**
+  String get timelineHomeBody;
+
+  /// No description provided for @whatChangedPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'What changed?'**
+  String get whatChangedPrompt;
+
+  /// No description provided for @whatChangedHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Write messily. You can organize it with tags.'**
+  String get whatChangedHint;
+
+  /// No description provided for @timelineHomeEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No timeline entries yet. Record something above.'**
+  String get timelineHomeEmpty;
+
+  /// No description provided for @timelineHomeLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading timeline…'**
+  String get timelineHomeLoading;
+
+  /// No description provided for @timelineHomeCouldNotLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load timeline: {message}'**
+  String timelineHomeCouldNotLoad(Object message);
+
+  /// No description provided for @timelineHomeCouldNotRecord.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not record entry: {message}'**
+  String timelineHomeCouldNotRecord(Object message);
+
+  /// No description provided for @hiddenTimelineText.
+  ///
+  /// In en, this message translates to:
+  /// **'Private text hidden. Tap to reveal.'**
+  String get hiddenTimelineText;
+
+  /// No description provided for @hideTimelineText.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide note text by default'**
+  String get hideTimelineText;
+
+  /// No description provided for @showTimelineText.
+  ///
+  /// In en, this message translates to:
+  /// **'Show note text'**
+  String get showTimelineText;
+
+  /// No description provided for @tags.
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get tags;
+
+  /// No description provided for @flags.
+  ///
+  /// In en, this message translates to:
+  /// **'Flags'**
+  String get flags;
+
+  /// No description provided for @moreTags.
+  ///
+  /// In en, this message translates to:
+  /// **'More tags'**
+  String get moreTags;
+
+  /// No description provided for @chooseTags.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose tags'**
+  String get chooseTags;
+
+  /// No description provided for @tagMedication.
+  ///
+  /// In en, this message translates to:
+  /// **'#medication'**
+  String get tagMedication;
+
+  /// No description provided for @tagDoseChange.
+  ///
+  /// In en, this message translates to:
+  /// **'#dose-change'**
+  String get tagDoseChange;
+
+  /// No description provided for @tagMissedDose.
+  ///
+  /// In en, this message translates to:
+  /// **'#missed-dose'**
+  String get tagMissedDose;
+
+  /// No description provided for @tagAnxiety.
+  ///
+  /// In en, this message translates to:
+  /// **'#anxiety'**
+  String get tagAnxiety;
+
+  /// No description provided for @tagSleep.
+  ///
+  /// In en, this message translates to:
+  /// **'#sleep'**
+  String get tagSleep;
+
+  /// No description provided for @tagMood.
+  ///
+  /// In en, this message translates to:
+  /// **'#mood'**
+  String get tagMood;
+
+  /// No description provided for @tagSideEffect.
+  ///
+  /// In en, this message translates to:
+  /// **'#side-effect'**
+  String get tagSideEffect;
+
+  /// No description provided for @tagFocus.
+  ///
+  /// In en, this message translates to:
+  /// **'#focus'**
+  String get tagFocus;
+
+  /// No description provided for @tagTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'#tasks'**
+  String get tagTasks;
+
+  /// No description provided for @tagWork.
+  ///
+  /// In en, this message translates to:
+  /// **'#work'**
+  String get tagWork;
+
+  /// No description provided for @tagSelfCare.
+  ///
+  /// In en, this message translates to:
+  /// **'#self-care'**
+  String get tagSelfCare;
+
+  /// No description provided for @tagQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'#question'**
+  String get tagQuestion;
+
+  /// No description provided for @tagAppointment.
+  ///
+  /// In en, this message translates to:
+  /// **'#appointment'**
+  String get tagAppointment;
+
+  /// No description provided for @tagHardToSay.
+  ///
+  /// In en, this message translates to:
+  /// **'#hard-to-say'**
+  String get tagHardToSay;
+
+  /// No description provided for @tagSafety.
+  ///
+  /// In en, this message translates to:
+  /// **'#safety'**
+  String get tagSafety;
+
+  /// No description provided for @flagMentionThis.
+  ///
+  /// In en, this message translates to:
+  /// **'Mention this'**
+  String get flagMentionThis;
+
+  /// No description provided for @flagHardToSay.
+  ///
+  /// In en, this message translates to:
+  /// **'Hard to say'**
+  String get flagHardToSay;
+
+  /// No description provided for @flagAddToSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to summary'**
+  String get flagAddToSummary;
+
+  /// No description provided for @personalTimelineTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal timeline'**
+  String get personalTimelineTitle;
+
+  /// No description provided for @personalTimelineGoal.
+  ///
+  /// In en, this message translates to:
+  /// **'Default private timeline'**
+  String get personalTimelineGoal;
 }
 
 class _AppLocalizationsDelegate

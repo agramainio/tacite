@@ -269,5 +269,49 @@
   "summaryGeneratedFromSavedData": "This draft uses saved timeline events and original notes from this thread.",
   "timelineEntriesSection": "Timeline entries",
   "originalNotesSection": "Original notes",
-  "noDate": "no date"
+  "noDate": "no date",
+  "timelineHomeBody": "A private timeline of what changed, what you noticed, and what to mention later.",
+  "whatChangedPrompt": "What changed?",
+  "whatChangedHint": "Write messily. You can organize it with tags.",
+  "timelineHomeEmpty": "No timeline entries yet. Record something above.",
+  "timelineHomeLoading": "Loading timeline…",
+  "timelineHomeCouldNotLoad": "Could not load timeline: {message}",
+  "@timelineHomeCouldNotLoad": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "timelineHomeCouldNotRecord": "Could not record entry: {message}",
+  "@timelineHomeCouldNotRecord": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "hiddenTimelineText": "Private text hidden. Tap to reveal.",
+  "hideTimelineText": "Hide note text by default",
+  "showTimelineText": "Show note text",
+  "tags": "Tags",
+  "flags": "Flags",
+  "moreTags": "More tags",
+  "chooseTags": "Choose tags",
+  "tagMedication": "#medication",
+  "tagDoseChange": "#dose-change",
+  "tagMissedDose": "#missed-dose",
+  "tagAnxiety": "#anxiety",
+  "tagSleep": "#sleep",
+  "tagMood": "#mood",
+  "tagSideEffect": "#side-effect",
+  "tagFocus": "#focus",
+  "tagTasks": "#tasks",
+  "tagWork": "#work",
+  "tagSelfCare": "#self-care",
+  "tagQuestion": "#question",
+  "tagAppointment": "#appointment",
+  "tagHardToSay": "#hard-to-say",
+  "tagSafety": "#safety",
+  "flagMentionThis": "Mention this",
+  "flagHardToSay": "Hard to say",
+  "flagAddToSummary": "Add to summary",
+  "personalTimelineTitle": "Personal timeline",
+  "personalTimelineGoal": "Default private timeline"
 }

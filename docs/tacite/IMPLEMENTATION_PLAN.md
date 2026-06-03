@@ -233,3 +233,18 @@ Correction implemented:
 - capture type is secondary and opened from a compact Change type action
 
 This is a product-direction correction, not cosmetic polish.
+
+
+## Single timeline home note
+
+Tacite now treats the timeline as the primary Home surface:
+
+- one personal timeline
+- direct capture from Home
+- threads are hidden backend compatibility
+- controlled tags and flags are used instead of free-text hashtags
+- note text is hidden/spoilered by default in timeline cards
+- Summary is available from the timeline
+- legacy thread screens remain temporarily for compatibility/testing
+
+Next step should be a visual/product UI pass on this single timeline surface, not more legacy thread work.

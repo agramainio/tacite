@@ -675,4 +675,115 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get noDate => 'senza data';
+
+  @override
+  String get timelineHomeBody =>
+      'Una cronologia privata di cosa è cambiato, cosa hai notato e cosa menzionare più tardi.';
+
+  @override
+  String get whatChangedPrompt => 'Cosa è cambiato?';
+
+  @override
+  String get whatChangedHint =>
+      'Scrivi in modo disordinato. Puoi organizzare con i tag.';
+
+  @override
+  String get timelineHomeEmpty =>
+      'Nessuna voce per ora. Registra qualcosa sopra.';
+
+  @override
+  String get timelineHomeLoading => 'Caricamento della cronologia…';
+
+  @override
+  String timelineHomeCouldNotLoad(Object message) {
+    return 'Impossibile caricare la cronologia: $message';
+  }
+
+  @override
+  String timelineHomeCouldNotRecord(Object message) {
+    return 'Impossibile registrare la voce: $message';
+  }
+
+  @override
+  String get hiddenTimelineText =>
+      'Testo privato nascosto. Tocca per rivelare.';
+
+  @override
+  String get hideTimelineText =>
+      'Nascondi il testo per impostazione predefinita';
+
+  @override
+  String get showTimelineText => 'Mostra testo';
+
+  @override
+  String get tags => 'Tag';
+
+  @override
+  String get flags => 'Marcatori';
+
+  @override
+  String get moreTags => 'Altri tag';
+
+  @override
+  String get chooseTags => 'Scegli tag';
+
+  @override
+  String get tagMedication => '#farmaco';
+
+  @override
+  String get tagDoseChange => '#cambio-dose';
+
+  @override
+  String get tagMissedDose => '#dose-saltata';
+
+  @override
+  String get tagAnxiety => '#ansia';
+
+  @override
+  String get tagSleep => '#sonno';
+
+  @override
+  String get tagMood => '#umore';
+
+  @override
+  String get tagSideEffect => '#effetto-collaterale';
+
+  @override
+  String get tagFocus => '#concentrazione';
+
+  @override
+  String get tagTasks => '#compiti';
+
+  @override
+  String get tagWork => '#lavoro';
+
+  @override
+  String get tagSelfCare => '#cura-di-sé';
+
+  @override
+  String get tagQuestion => '#domanda';
+
+  @override
+  String get tagAppointment => '#appuntamento';
+
+  @override
+  String get tagHardToSay => '#difficile-da-dire';
+
+  @override
+  String get tagSafety => '#sicurezza';
+
+  @override
+  String get flagMentionThis => 'Da menzionare';
+
+  @override
+  String get flagHardToSay => 'Difficile da dire';
+
+  @override
+  String get flagAddToSummary => 'Aggiungi al riassunto';
+
+  @override
+  String get personalTimelineTitle => 'Cronologia personale';
+
+  @override
+  String get personalTimelineGoal => 'Cronologia privata predefinita';
 }

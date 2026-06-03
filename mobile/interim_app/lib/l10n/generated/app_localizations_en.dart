@@ -669,4 +669,112 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noDate => 'no date';
+
+  @override
+  String get timelineHomeBody =>
+      'A private timeline of what changed, what you noticed, and what to mention later.';
+
+  @override
+  String get whatChangedPrompt => 'What changed?';
+
+  @override
+  String get whatChangedHint => 'Write messily. You can organize it with tags.';
+
+  @override
+  String get timelineHomeEmpty =>
+      'No timeline entries yet. Record something above.';
+
+  @override
+  String get timelineHomeLoading => 'Loading timeline…';
+
+  @override
+  String timelineHomeCouldNotLoad(Object message) {
+    return 'Could not load timeline: $message';
+  }
+
+  @override
+  String timelineHomeCouldNotRecord(Object message) {
+    return 'Could not record entry: $message';
+  }
+
+  @override
+  String get hiddenTimelineText => 'Private text hidden. Tap to reveal.';
+
+  @override
+  String get hideTimelineText => 'Hide note text by default';
+
+  @override
+  String get showTimelineText => 'Show note text';
+
+  @override
+  String get tags => 'Tags';
+
+  @override
+  String get flags => 'Flags';
+
+  @override
+  String get moreTags => 'More tags';
+
+  @override
+  String get chooseTags => 'Choose tags';
+
+  @override
+  String get tagMedication => '#medication';
+
+  @override
+  String get tagDoseChange => '#dose-change';
+
+  @override
+  String get tagMissedDose => '#missed-dose';
+
+  @override
+  String get tagAnxiety => '#anxiety';
+
+  @override
+  String get tagSleep => '#sleep';
+
+  @override
+  String get tagMood => '#mood';
+
+  @override
+  String get tagSideEffect => '#side-effect';
+
+  @override
+  String get tagFocus => '#focus';
+
+  @override
+  String get tagTasks => '#tasks';
+
+  @override
+  String get tagWork => '#work';
+
+  @override
+  String get tagSelfCare => '#self-care';
+
+  @override
+  String get tagQuestion => '#question';
+
+  @override
+  String get tagAppointment => '#appointment';
+
+  @override
+  String get tagHardToSay => '#hard-to-say';
+
+  @override
+  String get tagSafety => '#safety';
+
+  @override
+  String get flagMentionThis => 'Mention this';
+
+  @override
+  String get flagHardToSay => 'Hard to say';
+
+  @override
+  String get flagAddToSummary => 'Add to summary';
+
+  @override
+  String get personalTimelineTitle => 'Personal timeline';
+
+  @override
+  String get personalTimelineGoal => 'Default private timeline';
 }

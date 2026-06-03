@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:interim_app/features/home/home_screen.dart';
 import 'package:interim_app/features/onboarding/purpose_onboarding_screen.dart';
 import 'package:interim_app/features/onboarding/starting_point_screen.dart';
 import 'package:interim_app/features/summary/summary_screen.dart';
 import 'package:interim_app/features/thread/new_thread_screen.dart';
 import 'package:interim_app/features/thread/thread_detail_screen.dart';
 import 'package:interim_app/features/thread/thread_placeholder_screen.dart';
+import 'package:interim_app/features/timeline/timeline_home_screen.dart';
 import 'package:interim_app/l10n/generated/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,37 +15,43 @@ void main() {
     SharedPreferences.setMockInitialValues({});
   });
 
-  testWidgets('home screen before setup shows setup and quick record actions', (
-    tester,
-  ) async {
+  testWidgets('timeline home is the default product surface', (tester) async {
     await tester.pumpWidget(
-      const InterimAppWrapper(child: HomeScreen(loadSessionOnStart: false)),
+      const InterimAppWrapper(
+        child: TimelineHomeScreen(loadRecordsOnStart: false),
+      ),
     );
 
-    await tester.pumpAndSettle();
-
-    expect(find.text('Tacite'), findsOneWidget);
+    expect(find.text('Tacite'), findsWidgets);
+    expect(find.text('What changed?'), findsOneWidget);
+    expect(find.text('#sleep'), findsOneWidget);
+    expect(find.text('#anxiety'), findsOneWidget);
+    expect(find.text('#medication'), findsOneWidget);
+    expect(find.text('#side-effect'), findsOneWidget);
+    expect(find.text('#question'), findsOneWidget);
+    expect(find.text('Mention this'), findsOneWidget);
+    expect(find.text('Hard to say'), findsOneWidget);
+    expect(find.text('Add to summary'), findsOneWidget);
+    expect(find.text('Record to timeline'), findsOneWidget);
     expect(find.text('No medical advice'), findsNothing);
-    expect(find.text('Private account not active'), findsOneWidget);
-    expect(find.text('Start setup'), findsOneWidget);
-    expect(find.text('Just record something'), findsOneWidget);
+    expect(find.text('Private account active'), findsNothing);
   });
 
-  testWidgets('home screen after setup prioritizes daily actions', (
-    tester,
-  ) async {
-    SharedPreferences.setMockInitialValues({'tacite_setup_complete': true});
-
+  testWidgets('timeline home exposes controlled more tags', (tester) async {
     await tester.pumpWidget(
-      const InterimAppWrapper(child: HomeScreen(loadSessionOnStart: false)),
+      const InterimAppWrapper(
+        child: TimelineHomeScreen(loadRecordsOnStart: false),
+      ),
     );
 
+    await tester.tap(find.text('More tags'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Record something'), findsOneWidget);
-    expect(find.text('Timeline'), findsOneWidget);
-    expect(find.text('Summary so far'), findsOneWidget);
-    expect(find.text('Start setup'), findsNothing);
+    expect(find.text('Choose tags'), findsOneWidget);
+    expect(find.text('#dose-change'), findsOneWidget);
+    expect(find.text('#tasks'), findsOneWidget);
+    expect(find.text('#hard-to-say'), findsOneWidget);
+    expect(find.text('#safety'), findsOneWidget);
   });
 
   testWidgets(
@@ -112,7 +118,9 @@ void main() {
     },
   );
 
-  testWidgets('new thread screen shows thread creation form', (tester) async {
+  testWidgets('new thread screen shows thread creation form for legacy flow', (
+    tester,
+  ) async {
     await tester.pumpWidget(const InterimAppWrapper(child: NewThreadScreen()));
 
     expect(find.text('Treatment change'), findsOneWidget);
@@ -122,7 +130,7 @@ void main() {
   });
 
   testWidgets(
-    'thread detail screen lets the user write before choosing a type',
+    'thread detail screen still renders legacy direct thread capture',
     (tester) async {
       await tester.pumpWidget(
         const InterimAppWrapper(
@@ -138,15 +146,6 @@ void main() {
       expect(find.text('Type: Free note'), findsOneWidget);
       expect(find.text('Change type'), findsOneWidget);
       expect(find.text('Record to timeline'), findsOneWidget);
-      expect(find.text('Treatment'), findsNothing);
-
-      await tester.tap(find.text('Change type'));
-      await tester.pumpAndSettle();
-
-      expect(find.text('Choose type'), findsOneWidget);
-      expect(find.text('Treatment'), findsOneWidget);
-      expect(find.text('Experience'), findsOneWidget);
-      expect(find.text('Appointment'), findsOneWidget);
     },
   );
 

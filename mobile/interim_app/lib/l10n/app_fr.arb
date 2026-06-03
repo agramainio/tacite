@@ -219,5 +219,49 @@
   "summaryGeneratedFromSavedData": "Ce brouillon utilise les événements de chronologie et les notes originales enregistrés dans ce fil.",
   "timelineEntriesSection": "Entrées de chronologie",
   "originalNotesSection": "Notes originales",
-  "noDate": "sans date"
+  "noDate": "sans date",
+  "timelineHomeBody": "Une chronologie privée de ce qui a changé, de ce que vous avez remarqué et de ce qu’il faudra mentionner plus tard.",
+  "whatChangedPrompt": "Qu’est-ce qui a changé ?",
+  "whatChangedHint": "Écrivez comme ça vient. Vous pouvez organiser avec des tags.",
+  "timelineHomeEmpty": "Aucune entrée pour l’instant. Notez quelque chose au-dessus.",
+  "timelineHomeLoading": "Chargement de la chronologie…",
+  "timelineHomeCouldNotLoad": "Impossible de charger la chronologie : {message}",
+  "@timelineHomeCouldNotLoad": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "timelineHomeCouldNotRecord": "Impossible d’enregistrer l’entrée : {message}",
+  "@timelineHomeCouldNotRecord": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "hiddenTimelineText": "Texte privé masqué. Touchez pour révéler.",
+  "hideTimelineText": "Masquer le texte par défaut",
+  "showTimelineText": "Afficher le texte",
+  "tags": "Tags",
+  "flags": "Marqueurs",
+  "moreTags": "Plus de tags",
+  "chooseTags": "Choisir les tags",
+  "tagMedication": "#traitement",
+  "tagDoseChange": "#changement-dose",
+  "tagMissedDose": "#dose-oubliée",
+  "tagAnxiety": "#anxiété",
+  "tagSleep": "#sommeil",
+  "tagMood": "#humeur",
+  "tagSideEffect": "#effet-indésirable",
+  "tagFocus": "#concentration",
+  "tagTasks": "#tâches",
+  "tagWork": "#travail",
+  "tagSelfCare": "#soins-quotidiens",
+  "tagQuestion": "#question",
+  "tagAppointment": "#rendez-vous",
+  "tagHardToSay": "#difficile-à-dire",
+  "tagSafety": "#sécurité",
+  "flagMentionThis": "À mentionner",
+  "flagHardToSay": "Difficile à dire",
+  "flagAddToSummary": "Ajouter au résumé",
+  "personalTimelineTitle": "Chronologie personnelle",
+  "personalTimelineGoal": "Chronologie privée par défaut"
 }

@@ -219,5 +219,49 @@
   "summaryGeneratedFromSavedData": "Этот черновик использует события хронологии и исходные заметки из этой темы.",
   "timelineEntriesSection": "Записи хронологии",
   "originalNotesSection": "Исходные заметки",
-  "noDate": "без даты"
+  "noDate": "без даты",
+  "timelineHomeBody": "Приватная хронология того, что изменилось, что вы заметили и что стоит упомянуть позже.",
+  "whatChangedPrompt": "Что изменилось?",
+  "whatChangedHint": "Пишите как получится. Можно организовать с помощью тегов.",
+  "timelineHomeEmpty": "Пока нет записей. Запишите что-то выше.",
+  "timelineHomeLoading": "Загрузка хронологии…",
+  "timelineHomeCouldNotLoad": "Не удалось загрузить хронологию: {message}",
+  "@timelineHomeCouldNotLoad": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "timelineHomeCouldNotRecord": "Не удалось сохранить запись: {message}",
+  "@timelineHomeCouldNotRecord": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "hiddenTimelineText": "Приватный текст скрыт. Нажмите, чтобы показать.",
+  "hideTimelineText": "Скрывать текст заметок по умолчанию",
+  "showTimelineText": "Показать текст",
+  "tags": "Теги",
+  "flags": "Флаги",
+  "moreTags": "Ещё теги",
+  "chooseTags": "Выбрать теги",
+  "tagMedication": "#лекарство",
+  "tagDoseChange": "#изменение-дозы",
+  "tagMissedDose": "#пропущенная-доза",
+  "tagAnxiety": "#тревога",
+  "tagSleep": "#сон",
+  "tagMood": "#настроение",
+  "tagSideEffect": "#побочный-эффект",
+  "tagFocus": "#фокус",
+  "tagTasks": "#задачи",
+  "tagWork": "#работа",
+  "tagSelfCare": "#самоуход",
+  "tagQuestion": "#вопрос",
+  "tagAppointment": "#встреча",
+  "tagHardToSay": "#трудно-сказать",
+  "tagSafety": "#безопасность",
+  "flagMentionThis": "Упомянуть",
+  "flagHardToSay": "Трудно сказать",
+  "flagAddToSummary": "Добавить в резюме",
+  "personalTimelineTitle": "Личная хронология",
+  "personalTimelineGoal": "Приватная хронология по умолчанию"
 }

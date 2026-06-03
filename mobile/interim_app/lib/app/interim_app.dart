@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../features/auth/login_screen.dart';
 import '../features/home/home_screen.dart';
+import '../features/timeline/timeline_home_screen.dart';
 import '../features/onboarding/purpose_onboarding_screen.dart';
 import '../features/onboarding/starting_point_screen.dart';
 import '../features/summary/summary_screen.dart';
@@ -26,7 +27,14 @@ class _InterimAppState extends State<InterimApp> {
 
   static final GoRouter _router = GoRouter(
     routes: [
-      GoRoute(path: '/', builder: (context, state) => const HomeScreen()),
+      GoRoute(
+        path: '/',
+        builder: (context, state) => const TimelineHomeScreen(),
+      ),
+      GoRoute(
+        path: '/legacy-home',
+        builder: (context, state) => const HomeScreen(),
+      ),
       GoRoute(
         path: '/summary',
         builder: (context, state) => const SummaryScreen(),
@@ -47,6 +55,14 @@ class _InterimAppState extends State<InterimApp> {
       GoRoute(
         path: '/threads/placeholder',
         builder: (context, state) => const ThreadPlaceholderScreen(),
+      ),
+      GoRoute(
+        path: '/threads/:threadId/summary',
+        builder: (context, state) {
+          final threadId = state.pathParameters['threadId']!;
+
+          return SummaryScreen(threadId: threadId);
+        },
       ),
       GoRoute(
         path: '/threads/:threadId',

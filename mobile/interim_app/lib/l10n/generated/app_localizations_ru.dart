@@ -670,4 +670,113 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get noDate => 'без даты';
+
+  @override
+  String get timelineHomeBody =>
+      'Приватная хронология того, что изменилось, что вы заметили и что стоит упомянуть позже.';
+
+  @override
+  String get whatChangedPrompt => 'Что изменилось?';
+
+  @override
+  String get whatChangedHint =>
+      'Пишите как получится. Можно организовать с помощью тегов.';
+
+  @override
+  String get timelineHomeEmpty => 'Пока нет записей. Запишите что-то выше.';
+
+  @override
+  String get timelineHomeLoading => 'Загрузка хронологии…';
+
+  @override
+  String timelineHomeCouldNotLoad(Object message) {
+    return 'Не удалось загрузить хронологию: $message';
+  }
+
+  @override
+  String timelineHomeCouldNotRecord(Object message) {
+    return 'Не удалось сохранить запись: $message';
+  }
+
+  @override
+  String get hiddenTimelineText =>
+      'Приватный текст скрыт. Нажмите, чтобы показать.';
+
+  @override
+  String get hideTimelineText => 'Скрывать текст заметок по умолчанию';
+
+  @override
+  String get showTimelineText => 'Показать текст';
+
+  @override
+  String get tags => 'Теги';
+
+  @override
+  String get flags => 'Флаги';
+
+  @override
+  String get moreTags => 'Ещё теги';
+
+  @override
+  String get chooseTags => 'Выбрать теги';
+
+  @override
+  String get tagMedication => '#лекарство';
+
+  @override
+  String get tagDoseChange => '#изменение-дозы';
+
+  @override
+  String get tagMissedDose => '#пропущенная-доза';
+
+  @override
+  String get tagAnxiety => '#тревога';
+
+  @override
+  String get tagSleep => '#сон';
+
+  @override
+  String get tagMood => '#настроение';
+
+  @override
+  String get tagSideEffect => '#побочный-эффект';
+
+  @override
+  String get tagFocus => '#фокус';
+
+  @override
+  String get tagTasks => '#задачи';
+
+  @override
+  String get tagWork => '#работа';
+
+  @override
+  String get tagSelfCare => '#самоуход';
+
+  @override
+  String get tagQuestion => '#вопрос';
+
+  @override
+  String get tagAppointment => '#встреча';
+
+  @override
+  String get tagHardToSay => '#трудно-сказать';
+
+  @override
+  String get tagSafety => '#безопасность';
+
+  @override
+  String get flagMentionThis => 'Упомянуть';
+
+  @override
+  String get flagHardToSay => 'Трудно сказать';
+
+  @override
+  String get flagAddToSummary => 'Добавить в резюме';
+
+  @override
+  String get personalTimelineTitle => 'Личная хронология';
+
+  @override
+  String get personalTimelineGoal => 'Приватная хронология по умолчанию';
 }
