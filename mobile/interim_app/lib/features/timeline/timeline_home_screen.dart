@@ -458,15 +458,21 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
     final primaryTopics = _primaryTopicOptions(l10n);
 
     return TaciteScaffold(
-      title: l10n.appTitle,
-      actions: [
-        TextButton(onPressed: _openSummary, child: Text(l10n.summarySoFar)),
-      ],
       children: [
-        Text(l10n.appTitle, style: TaciteTextStyles.title),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(child: Text(l10n.appTitle, style: TaciteTextStyles.title)),
+            TextButton.icon(
+              onPressed: _openSummary,
+              icon: const Icon(Icons.description_outlined, size: 17),
+              label: Text(l10n.summarySoFar),
+            ),
+          ],
+        ),
         const SizedBox(height: TaciteSpacing.sm),
         Text(l10n.timelineHomeBody, style: TaciteTextStyles.bodyMuted),
-        const SizedBox(height: TaciteSpacing.xl),
+        const SizedBox(height: TaciteSpacing.lg),
         TacitePanel(
           isEmphasized: true,
           child: Column(
@@ -571,11 +577,6 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
           children: [
             Expanded(
               child: Text(l10n.timeline, style: TaciteTextStyles.screenTitle),
-            ),
-            TextButton.icon(
-              onPressed: _openSummary,
-              icon: const Icon(Icons.description_outlined, size: 18),
-              label: Text(l10n.summarySoFar),
             ),
             TextButton(onPressed: _loadTimeline, child: Text(l10n.refresh)),
           ],

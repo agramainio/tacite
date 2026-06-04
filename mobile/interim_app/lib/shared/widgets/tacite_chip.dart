@@ -20,8 +20,8 @@ class TaciteChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final background = isSelected
         ? TaciteColors.accentSoft
-        : TaciteColors.paper;
-    final border = isSelected ? TaciteColors.accent : TaciteColors.line;
+        : TaciteColors.panelSoft;
+    final border = isSelected ? TaciteColors.accent : TaciteColors.lineSoft;
     final textColor = isSelected
         ? TaciteColors.accentInk
         : TaciteColors.inkMuted;
@@ -33,11 +33,11 @@ class TaciteChip extends StatelessWidget {
         borderRadius: BorderRadius.circular(999),
         onTap: onTap,
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 120),
+          duration: const Duration(milliseconds: 110),
           curve: Curves.easeOut,
           padding: const EdgeInsets.symmetric(
-            horizontal: TaciteSpacing.md,
-            vertical: TaciteSpacing.xs,
+            horizontal: TaciteSpacing.sm,
+            vertical: TaciteSpacing.xxs,
           ),
           decoration: BoxDecoration(
             color: background,
@@ -48,6 +48,7 @@ class TaciteChip extends StatelessWidget {
             label,
             style: TaciteTextStyles.small.copyWith(
               color: textColor,
+              fontSize: 12,
               fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
             ),
           ),

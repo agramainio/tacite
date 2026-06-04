@@ -298,3 +298,18 @@ The timeline surface received a first visual polish pass:
 - timeline header now gives Summary so far a more intentional placement
 
 This pass is visual polish only; no data model changes were made.
+
+
+## Timeline UI polish checkpoint
+
+The timeline UI polish pass intentionally stayed within the existing architecture:
+
+- Home remains the single timeline surface.
+- The app bar was removed from the main timeline surface to reduce duplicated title/action chrome.
+- Summary so far is now a quiet contextual action beside the Tacite title.
+- The capture surface is still prominent but less dashboard-like.
+- Topic pills are smaller, flatter, and more typographic.
+- Timeline entries are rendered as a flatter timeline row with a date gutter, subtle rail, and bottom separator instead of nested cards.
+- The privacy control remains compact and secondary.
+
+This checkpoint is visual/product UI polish only. It does not change backend behavior, AI behavior, auth, or the data model.

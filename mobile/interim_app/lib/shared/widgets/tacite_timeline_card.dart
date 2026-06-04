@@ -41,36 +41,52 @@ class TaciteTimelineCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final content = InkWell(
-      borderRadius: BorderRadius.circular(TaciteSpacing.radius),
+      borderRadius: BorderRadius.circular(TaciteSpacing.radiusSmall),
       onTap: onTap,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: TaciteColors.panel,
-          borderRadius: BorderRadius.circular(TaciteSpacing.radius),
-          border: Border.all(color: TaciteColors.lineSoft),
-        ),
-        child: IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  color: TaciteColors.accentSoft,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(TaciteSpacing.radius),
-                    bottomLeft: Radius.circular(TaciteSpacing.radius),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: TaciteSpacing.sm),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 82,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 2),
+                child: Text(
+                  meta,
+                  textAlign: TextAlign.right,
+                  style: TaciteTextStyles.small.copyWith(
+                    color: TaciteColors.inkFaint,
+                    fontSize: 11.5,
+                    height: 1.25,
                   ),
                 ),
-                child: const SizedBox(width: 4),
               ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                    TaciteSpacing.md,
-                    TaciteSpacing.sm,
-                    TaciteSpacing.xs,
-                    TaciteSpacing.md,
+            ),
+            const SizedBox(width: TaciteSpacing.sm),
+            Column(
+              children: [
+                Container(
+                  width: 7,
+                  height: 7,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: TaciteColors.accent,
                   ),
+                ),
+                Container(width: 1, height: 66, color: TaciteColors.lineSoft),
+              ],
+            ),
+            const SizedBox(width: TaciteSpacing.sm),
+            Expanded(
+              child: DecoratedBox(
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(color: TaciteColors.lineSoft),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: TaciteSpacing.md),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -78,7 +94,12 @@ class TaciteTimelineCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
-                            child: Text(meta, style: TaciteTextStyles.small),
+                            child: title.trim().isEmpty
+                                ? const SizedBox.shrink()
+                                : Text(
+                                    title,
+                                    style: TaciteTextStyles.sectionTitle,
+                                  ),
                           ),
                           _TimelineCardMenu(
                             moreOptionsLabel: moreOptionsLabel,
@@ -91,18 +112,16 @@ class TaciteTimelineCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      if (title.trim().isNotEmpty) ...[
+                      if (body.trim().isNotEmpty) ...[
                         const SizedBox(height: TaciteSpacing.xs),
-                        Text(title, style: TaciteTextStyles.sectionTitle),
+                        Text(body, style: TaciteTextStyles.body),
                       ],
-                      const SizedBox(height: TaciteSpacing.xs),
-                      Text(body, style: TaciteTextStyles.body),
                     ],
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -162,8 +181,8 @@ class _TimelineCardMenu extends StatelessWidget {
       padding: EdgeInsets.zero,
       icon: const Icon(
         Icons.more_horiz,
-        size: 19,
-        color: TaciteColors.inkMuted,
+        size: 18,
+        color: TaciteColors.inkFaint,
       ),
       onSelected: (action) {
         switch (action) {
@@ -209,8 +228,8 @@ class _SwipeBackground extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: isLeft ? TaciteColors.accentSoft : TaciteColors.paperMuted,
-        borderRadius: BorderRadius.circular(TaciteSpacing.radius),
-        border: Border.all(color: TaciteColors.line),
+        borderRadius: BorderRadius.circular(TaciteSpacing.radiusSmall),
+        border: Border.all(color: TaciteColors.lineSoft),
       ),
       child: Align(
         alignment: alignment,
