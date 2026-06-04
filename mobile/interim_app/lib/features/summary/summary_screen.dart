@@ -45,7 +45,10 @@ class _SummaryScreenState extends State<SummaryScreen> {
     super.didChangeDependencies();
 
     if (!_hasInitializedText) {
-      _savedSummaryText = AppLocalizations.of(context).summaryTemplate;
+      final l10n = AppLocalizations.of(context);
+      _savedSummaryText = widget.threadId == null
+          ? l10n.summaryNoSavedTimeline
+          : l10n.summaryTemplate;
       _summaryController.text = _savedSummaryText;
       _hasInitializedText = true;
     }

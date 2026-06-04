@@ -341,15 +341,26 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
     );
   }
 
-  void _openSummary() {
-    final threadId = _defaultThreadId;
+  Future<void> _openSummary() async {
+    final l10n = AppLocalizations.of(context);
 
-    if (threadId == null) {
-      context.push('/summary');
-      return;
+    try {
+      final threadId = await _getDefaultThreadId();
+
+      if (!mounted) {
+        return;
+      }
+
+      context.push('/threads/$threadId/summary');
+    } on DioException catch (error) {
+      if (!mounted) {
+        return;
+      }
+
+      setState(() {
+        _message = l10n.timelineHomeCouldNotLoad(error.message ?? l10n.unknown);
+      });
     }
-
-    context.push('/threads/$threadId/summary');
   }
 
   List<_ControlledOption> _defaultPrimaryTopicOptions(AppLocalizations l10n) {
