@@ -345,11 +345,11 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
     final threadId = _defaultThreadId;
 
     if (threadId == null) {
-      context.go('/summary');
+      context.push('/summary');
       return;
     }
 
-    context.go('/threads/$threadId/summary');
+    context.push('/threads/$threadId/summary');
   }
 
   List<_ControlledOption> _defaultPrimaryTopicOptions(AppLocalizations l10n) {

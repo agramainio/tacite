@@ -279,7 +279,16 @@ class _SummaryScreenState extends State<SummaryScreen> {
     return TaciteScaffold(
       title: l10n.summaryScreenTitle,
       actions: [
-        TextButton(onPressed: () => context.go('/'), child: Text(l10n.home)),
+        TextButton(
+          onPressed: () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go('/');
+            }
+          },
+          child: Text(l10n.home),
+        ),
       ],
       children: [
         Text(l10n.summaryScreenTitle, style: TaciteTextStyles.screenTitle),
