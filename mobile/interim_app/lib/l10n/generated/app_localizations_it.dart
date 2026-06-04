@@ -728,49 +728,49 @@ class AppLocalizationsIt extends AppLocalizations {
   String get chooseTags => 'Scegli tag';
 
   @override
-  String get tagMedication => '#farmaco';
+  String get tagMedication => 'Farmaco';
 
   @override
-  String get tagDoseChange => '#cambio-dose';
+  String get tagDoseChange => 'Cambio dose';
 
   @override
-  String get tagMissedDose => '#dose-saltata';
+  String get tagMissedDose => 'Dose saltata';
 
   @override
-  String get tagAnxiety => '#ansia';
+  String get tagAnxiety => 'Ansia';
 
   @override
-  String get tagSleep => '#sonno';
+  String get tagSleep => 'Sonno';
 
   @override
-  String get tagMood => '#umore';
+  String get tagMood => 'Umore';
 
   @override
-  String get tagSideEffect => '#effetto-collaterale';
+  String get tagSideEffect => 'Effetto collaterale';
 
   @override
-  String get tagFocus => '#concentrazione';
+  String get tagFocus => 'Concentrazione';
 
   @override
-  String get tagTasks => '#compiti';
+  String get tagTasks => 'Compiti';
 
   @override
-  String get tagWork => '#lavoro';
+  String get tagWork => 'Lavoro';
 
   @override
-  String get tagSelfCare => '#cura-di-sé';
+  String get tagSelfCare => 'Cura di sé';
 
   @override
-  String get tagQuestion => '#domanda';
+  String get tagQuestion => 'Domanda';
 
   @override
-  String get tagAppointment => '#appuntamento';
+  String get tagAppointment => 'Appuntamento';
 
   @override
-  String get tagHardToSay => '#difficile-da-dire';
+  String get tagHardToSay => 'Difficile da spiegare';
 
   @override
-  String get tagSafety => '#sicurezza';
+  String get tagSafety => 'Sicurezza';
 
   @override
   String get flagMentionThis => 'Da menzionare';

@@ -17,6 +17,7 @@ from app.services.thread import (
     create_raw_note,
     create_thread,
     create_timeline_event,
+    get_or_create_default_timeline_thread,
     get_owned_thread,
     list_raw_notes,
     list_threads,
@@ -87,6 +88,16 @@ def get_preparation_threads(
     current_profile: Annotated[Profile, Depends(get_current_profile)],
 ) -> list[ThreadResponse]:
     return [to_thread_response(thread) for thread in list_threads(db, current_profile)]
+
+
+@router.get("/threads/default-timeline")
+def get_default_timeline_thread(
+    db: DbSession,
+    current_profile: Annotated[Profile, Depends(get_current_profile)],
+) -> ThreadResponse:
+    thread = get_or_create_default_timeline_thread(db, current_profile)
+
+    return to_thread_response(thread)
 
 
 @router.get("/threads/{thread_id}")

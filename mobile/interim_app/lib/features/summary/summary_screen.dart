@@ -212,7 +212,10 @@ class _SummaryScreenState extends State<SummaryScreen> {
   }
 
   String _cleanSummaryText(String value) {
-    return value.replaceAll(_excludeFromSummaryMarker, '').trim();
+    return value
+        .replaceAll(_excludeFromSummaryMarker, '')
+        .replaceAll('#', '')
+        .trim();
   }
 
   DateTime? _rangeStart() {

@@ -268,3 +268,19 @@ The working timeline and summary surfaces have been corrected:
 - Summary screen has less nested card structure
 
 This is still structural UX correction, not final visual polish.
+
+
+## Timeline persistence and topic UI note
+
+The single timeline now uses a backend-backed default personal timeline endpoint instead of relying on a local hidden thread id as source of truth.
+
+Topic UI changes:
+
+- visible topic pills no longer use # labels
+- topic IDs remain controlled internally
+- recently used topics are remembered locally
+- recently used topics are shown directly under the text field
+- less-used topics stay behind More topics
+- existing legacy # text is cleaned for display where possible
+
+This fixes the issue where returning from Summary could make the timeline appear empty even though the backend data still existed.

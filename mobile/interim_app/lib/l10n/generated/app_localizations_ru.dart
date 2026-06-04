@@ -721,49 +721,49 @@ class AppLocalizationsRu extends AppLocalizations {
   String get chooseTags => 'Выбрать теги';
 
   @override
-  String get tagMedication => '#лекарство';
+  String get tagMedication => 'Лекарство';
 
   @override
-  String get tagDoseChange => '#изменение-дозы';
+  String get tagDoseChange => 'Изменение дозы';
 
   @override
-  String get tagMissedDose => '#пропущенная-доза';
+  String get tagMissedDose => 'Пропущенная доза';
 
   @override
-  String get tagAnxiety => '#тревога';
+  String get tagAnxiety => 'Тревога';
 
   @override
-  String get tagSleep => '#сон';
+  String get tagSleep => 'Сон';
 
   @override
-  String get tagMood => '#настроение';
+  String get tagMood => 'Настроение';
 
   @override
-  String get tagSideEffect => '#побочный-эффект';
+  String get tagSideEffect => 'Побочный эффект';
 
   @override
-  String get tagFocus => '#фокус';
+  String get tagFocus => 'Фокус';
 
   @override
-  String get tagTasks => '#задачи';
+  String get tagTasks => 'Задачи';
 
   @override
-  String get tagWork => '#работа';
+  String get tagWork => 'Работа';
 
   @override
-  String get tagSelfCare => '#самоуход';
+  String get tagSelfCare => 'Самоуход';
 
   @override
-  String get tagQuestion => '#вопрос';
+  String get tagQuestion => 'Вопрос';
 
   @override
-  String get tagAppointment => '#встреча';
+  String get tagAppointment => 'Встреча';
 
   @override
-  String get tagHardToSay => '#трудно-сказать';
+  String get tagHardToSay => 'Трудно объяснить';
 
   @override
-  String get tagSafety => '#безопасность';
+  String get tagSafety => 'Безопасность';
 
   @override
   String get flagMentionThis => 'Упомянуть';

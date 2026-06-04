@@ -1389,91 +1389,91 @@ abstract class AppLocalizations {
   /// No description provided for @tagMedication.
   ///
   /// In en, this message translates to:
-  /// **'#medication'**
+  /// **'Medication'**
   String get tagMedication;
 
   /// No description provided for @tagDoseChange.
   ///
   /// In en, this message translates to:
-  /// **'#dose-change'**
+  /// **'Dose change'**
   String get tagDoseChange;
 
   /// No description provided for @tagMissedDose.
   ///
   /// In en, this message translates to:
-  /// **'#missed-dose'**
+  /// **'Missed dose'**
   String get tagMissedDose;
 
   /// No description provided for @tagAnxiety.
   ///
   /// In en, this message translates to:
-  /// **'#anxiety'**
+  /// **'Anxiety'**
   String get tagAnxiety;
 
   /// No description provided for @tagSleep.
   ///
   /// In en, this message translates to:
-  /// **'#sleep'**
+  /// **'Sleep'**
   String get tagSleep;
 
   /// No description provided for @tagMood.
   ///
   /// In en, this message translates to:
-  /// **'#mood'**
+  /// **'Mood'**
   String get tagMood;
 
   /// No description provided for @tagSideEffect.
   ///
   /// In en, this message translates to:
-  /// **'#side-effect'**
+  /// **'Side effect'**
   String get tagSideEffect;
 
   /// No description provided for @tagFocus.
   ///
   /// In en, this message translates to:
-  /// **'#focus'**
+  /// **'Focus'**
   String get tagFocus;
 
   /// No description provided for @tagTasks.
   ///
   /// In en, this message translates to:
-  /// **'#tasks'**
+  /// **'Tasks'**
   String get tagTasks;
 
   /// No description provided for @tagWork.
   ///
   /// In en, this message translates to:
-  /// **'#work'**
+  /// **'Work'**
   String get tagWork;
 
   /// No description provided for @tagSelfCare.
   ///
   /// In en, this message translates to:
-  /// **'#self-care'**
+  /// **'Self-care'**
   String get tagSelfCare;
 
   /// No description provided for @tagQuestion.
   ///
   /// In en, this message translates to:
-  /// **'#question'**
+  /// **'Question'**
   String get tagQuestion;
 
   /// No description provided for @tagAppointment.
   ///
   /// In en, this message translates to:
-  /// **'#appointment'**
+  /// **'Appointment'**
   String get tagAppointment;
 
   /// No description provided for @tagHardToSay.
   ///
   /// In en, this message translates to:
-  /// **'#hard-to-say'**
+  /// **'Hard to explain'**
   String get tagHardToSay;
 
   /// No description provided for @tagSafety.
   ///
   /// In en, this message translates to:
-  /// **'#safety'**
+  /// **'Safety'**
   String get tagSafety;
 
   /// No description provided for @flagMentionThis.

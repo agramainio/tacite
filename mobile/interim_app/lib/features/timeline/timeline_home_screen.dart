@@ -25,7 +25,7 @@ class TimelineHomeScreen extends StatefulWidget {
 }
 
 class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
-  static const _defaultThreadIdKey = 'tacite_default_timeline_thread_id';
+  static const _recentTopicIdsKey = 'tacite_recent_topic_ids';
   static const _excludeFromSummaryMarker = '[tacite:exclude-from-summary]';
 
   final _repository = ThreadRepository.defaultRepository();
@@ -41,10 +41,13 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
   final Set<String> _selectedTopicIds = {};
   final Set<String> _revealedEventIds = {};
   final List<TimelineEvent> _timelineEvents = [];
+  List<String> _recentTopicIds = [];
 
   @override
   void initState() {
     super.initState();
+
+    _loadRecentTopics();
 
     if (widget.loadRecordsOnStart) {
       _loadTimeline();
@@ -57,6 +60,41 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
     super.dispose();
   }
 
+  Future<void> _loadRecentTopics() async {
+    final preferences = await SharedPreferences.getInstance();
+    final recentTopicIds = preferences.getStringList(_recentTopicIdsKey) ?? [];
+
+    if (!mounted) {
+      return;
+    }
+
+    setState(() {
+      _recentTopicIds = recentTopicIds;
+    });
+  }
+
+  Future<void> _rememberRecentTopics(List<String> topicIds) async {
+    if (topicIds.isEmpty) {
+      return;
+    }
+
+    final preferences = await SharedPreferences.getInstance();
+    final updated = <String>[
+      ...topicIds,
+      ..._recentTopicIds.where((id) => !topicIds.contains(id)),
+    ].take(5).toList();
+
+    await preferences.setStringList(_recentTopicIdsKey, updated);
+
+    if (!mounted) {
+      return;
+    }
+
+    setState(() {
+      _recentTopicIds = updated;
+    });
+  }
+
   Future<void> _loadTimeline() async {
     final l10n = AppLocalizations.of(context);
 
@@ -66,31 +104,15 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
     });
 
     try {
-      final preferences = await SharedPreferences.getInstance();
-      final threadId = preferences.getString(_defaultThreadIdKey);
-
-      if (threadId == null) {
-        if (!mounted) {
-          return;
-        }
-
-        setState(() {
-          _defaultThreadId = null;
-          _timelineEvents.clear();
-          _message = null;
-          _isLoading = false;
-        });
-        return;
-      }
-
-      final events = await _repository.listTimelineEvents(threadId);
+      final thread = await _repository.getDefaultTimeline();
+      final events = await _repository.listTimelineEvents(thread.id);
 
       if (!mounted) {
         return;
       }
 
       setState(() {
-        _defaultThreadId = threadId;
+        _defaultThreadId = thread.id;
         _timelineEvents
           ..clear()
           ..addAll(events.reversed);
@@ -109,24 +131,13 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
     }
   }
 
-  Future<String> _getOrCreateDefaultThreadId({
-    required String title,
-    required String userGoal,
-  }) async {
-    final preferences = await SharedPreferences.getInstance();
-    final savedThreadId = preferences.getString(_defaultThreadIdKey);
-
-    if (savedThreadId != null) {
-      return savedThreadId;
+  Future<String> _getDefaultThreadId() async {
+    if (_defaultThreadId != null) {
+      return _defaultThreadId!;
     }
 
-    final thread = await _repository.createThread(
-      kind: 'appointment_preparation',
-      title: title,
-      userGoal: userGoal,
-    );
-
-    await preferences.setString(_defaultThreadIdKey, thread.id);
+    final thread = await _repository.getDefaultTimeline();
+    _defaultThreadId = thread.id;
 
     return thread.id;
   }
@@ -147,11 +158,10 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
       _message = null;
     });
 
+    final selectedTopics = _selectedTopicIds.toList();
+
     try {
-      final threadId = await _getOrCreateDefaultThreadId(
-        title: l10n.personalTimelineTitle,
-        userGoal: l10n.personalTimelineGoal,
-      );
+      final threadId = await _getDefaultThreadId();
 
       final note = await _repository.createRawNote(
         threadId: threadId,
@@ -166,6 +176,8 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
         userApprovedSummary: _entrySummary(l10n, text),
       );
 
+      await _rememberRecentTopics(selectedTopics);
+
       if (!mounted) {
         return;
       }
@@ -179,31 +191,15 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
         _message = l10n.recordedToTimeline;
       });
     } on DioException catch (error) {
-      final status = error.response?.statusCode;
-
-      if (status == 404) {
-        await _resetDefaultThreadId();
-
-        if (!mounted) {
-          return;
-        }
-
-        setState(() {
-          _message = l10n.timelineHomeCouldNotRecord(
-            'Saved timeline link was stale. Try recording again.',
-          );
-        });
-      } else {
-        if (!mounted) {
-          return;
-        }
-
-        setState(() {
-          _message = l10n.timelineHomeCouldNotRecord(
-            error.message ?? l10n.unknown,
-          );
-        });
+      if (!mounted) {
+        return;
       }
+
+      setState(() {
+        _message = l10n.timelineHomeCouldNotRecord(
+          error.message ?? l10n.unknown,
+        );
+      });
     } finally {
       if (mounted) {
         setState(() {
@@ -211,12 +207,6 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
         });
       }
     }
-  }
-
-  Future<void> _resetDefaultThreadId() async {
-    final preferences = await SharedPreferences.getInstance();
-
-    await preferences.remove(_defaultThreadIdKey);
   }
 
   String _eventTypeForSelectedTopics() {
@@ -238,7 +228,7 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
   }
 
   String _entryTitle(AppLocalizations l10n) {
-    final topics = _topicOptions(l10n)
+    final topics = _allTopicOptions(l10n)
         .where((topic) => _selectedTopicIds.contains(topic.id))
         .map((topic) => topic.label)
         .toList();
@@ -247,14 +237,14 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
       return l10n.captureFreeNote;
     }
 
-    return topics.join(' ');
+    return topics.join(' · ');
   }
 
   String _entrySummary(AppLocalizations l10n, String text) {
-    final topics = _topicOptions(l10n)
+    final topics = _allTopicOptions(l10n)
         .where((topic) => _selectedTopicIds.contains(topic.id))
         .map((topic) => topic.label)
-        .join(' ');
+        .join(' · ');
 
     final parts = <String>[];
 
@@ -272,7 +262,14 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
   }
 
   String _displaySummary(String value) {
-    return value.replaceAll(_excludeFromSummaryMarker, '').trim();
+    return value
+        .replaceAll(_excludeFromSummaryMarker, '')
+        .replaceAll('#', '')
+        .trim();
+  }
+
+  String _displayTitle(String value) {
+    return value.replaceAll('#', '').replaceAll(' ·  · ', ' · ').trim();
   }
 
   void _toggleTopic(String id) {
@@ -355,7 +352,7 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
     context.go('/threads/$threadId/summary');
   }
 
-  List<_ControlledOption> _primaryTopicOptions(AppLocalizations l10n) {
+  List<_ControlledOption> _defaultPrimaryTopicOptions(AppLocalizations l10n) {
     return [
       _ControlledOption('sleep', l10n.tagSleep),
       _ControlledOption('anxiety', l10n.tagAnxiety),
@@ -365,8 +362,47 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
     ];
   }
 
+  List<_ControlledOption> _primaryTopicOptions(AppLocalizations l10n) {
+    final allTopicsById = {
+      for (final topic in _allTopicOptions(l10n)) topic.id: topic,
+    };
+
+    final ordered = <_ControlledOption>[];
+
+    for (final id in _recentTopicIds) {
+      final topic = allTopicsById[id];
+
+      if (topic != null && !ordered.any((item) => item.id == topic.id)) {
+        ordered.add(topic);
+      }
+    }
+
+    for (final topic in _defaultPrimaryTopicOptions(l10n)) {
+      if (!ordered.any((item) => item.id == topic.id)) {
+        ordered.add(topic);
+      }
+    }
+
+    return ordered.take(5).toList();
+  }
+
   List<_ControlledOption> _secondaryTopicOptions(AppLocalizations l10n) {
+    final primaryIds = _primaryTopicOptions(
+      l10n,
+    ).map((topic) => topic.id).toSet();
+
+    return _allTopicOptions(
+      l10n,
+    ).where((topic) => !primaryIds.contains(topic.id)).toList();
+  }
+
+  List<_ControlledOption> _allTopicOptions(AppLocalizations l10n) {
     return [
+      _ControlledOption('sleep', l10n.tagSleep),
+      _ControlledOption('anxiety', l10n.tagAnxiety),
+      _ControlledOption('medication', l10n.tagMedication),
+      _ControlledOption('side_effect', l10n.tagSideEffect),
+      _ControlledOption('question', l10n.tagQuestion),
       _ControlledOption('dose_change', l10n.tagDoseChange),
       _ControlledOption('missed_dose', l10n.tagMissedDose),
       _ControlledOption('mood', l10n.tagMood),
@@ -378,10 +414,6 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
       _ControlledOption('hard_to_say', l10n.tagHardToSay),
       _ControlledOption('safety', l10n.tagSafety),
     ];
-  }
-
-  List<_ControlledOption> _topicOptions(AppLocalizations l10n) {
-    return [..._primaryTopicOptions(l10n), ..._secondaryTopicOptions(l10n)];
   }
 
   String _formatTimelineDate(BuildContext context, TimelineEvent event) {
@@ -539,7 +571,7 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
               padding: const EdgeInsets.only(bottom: TaciteSpacing.sm),
               child: TaciteTimelineCard(
                 cardKey: ValueKey('timeline-home-${event.id}'),
-                title: event.title,
+                title: _displayTitle(event.title),
                 body:
                     _hideTextByDefault && !_revealedEventIds.contains(event.id)
                     ? l10n.hiddenTimelineText

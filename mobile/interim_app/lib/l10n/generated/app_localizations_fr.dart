@@ -729,49 +729,49 @@ class AppLocalizationsFr extends AppLocalizations {
   String get chooseTags => 'Choisir les tags';
 
   @override
-  String get tagMedication => '#traitement';
+  String get tagMedication => 'Traitement';
 
   @override
-  String get tagDoseChange => '#changement-dose';
+  String get tagDoseChange => 'Changement de dose';
 
   @override
-  String get tagMissedDose => '#dose-oubliée';
+  String get tagMissedDose => 'Dose oubliée';
 
   @override
-  String get tagAnxiety => '#anxiété';
+  String get tagAnxiety => 'Anxiété';
 
   @override
-  String get tagSleep => '#sommeil';
+  String get tagSleep => 'Sommeil';
 
   @override
-  String get tagMood => '#humeur';
+  String get tagMood => 'Humeur';
 
   @override
-  String get tagSideEffect => '#effet-indésirable';
+  String get tagSideEffect => 'Effet indésirable';
 
   @override
-  String get tagFocus => '#concentration';
+  String get tagFocus => 'Concentration';
 
   @override
-  String get tagTasks => '#tâches';
+  String get tagTasks => 'Tâches';
 
   @override
-  String get tagWork => '#travail';
+  String get tagWork => 'Travail';
 
   @override
-  String get tagSelfCare => '#soins-quotidiens';
+  String get tagSelfCare => 'Soins quotidiens';
 
   @override
-  String get tagQuestion => '#question';
+  String get tagQuestion => 'Question';
 
   @override
-  String get tagAppointment => '#rendez-vous';
+  String get tagAppointment => 'Rendez-vous';
 
   @override
-  String get tagHardToSay => '#difficile-à-dire';
+  String get tagHardToSay => 'Difficile à expliquer';
 
   @override
-  String get tagSafety => '#sécurité';
+  String get tagSafety => 'Sécurité';
 
   @override
   String get flagMentionThis => 'À mentionner';

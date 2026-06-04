@@ -173,3 +173,33 @@ def list_timeline_events(
             )
         )
     )
+
+
+def get_or_create_default_timeline_thread(
+    db: Session,
+    profile: Profile,
+) -> PreparationThread:
+    existing_thread = db.scalar(
+        select(PreparationThread)
+        .where(PreparationThread.profile_id == profile.id)
+        .where(PreparationThread.kind == "appointment_preparation")
+        .where(PreparationThread.title == "Personal timeline")
+        .where(PreparationThread.status == "active")
+        .order_by(PreparationThread.created_at.asc())
+    )
+
+    if existing_thread is not None:
+        return existing_thread
+
+    thread = PreparationThread(
+        profile_id=profile.id,
+        kind="appointment_preparation",
+        title="Personal timeline",
+        user_goal="Default private timeline",
+    )
+
+    db.add(thread)
+    db.commit()
+    db.refresh(thread)
+
+    return thread

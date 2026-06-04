@@ -25,11 +25,12 @@ void main() {
     expect(find.text('Tacite'), findsWidgets);
     expect(find.text('What changed?'), findsOneWidget);
     expect(find.text('Topics'), findsOneWidget);
-    expect(find.text('#sleep'), findsOneWidget);
-    expect(find.text('#anxiety'), findsOneWidget);
-    expect(find.text('#medication'), findsOneWidget);
-    expect(find.text('#side-effect'), findsOneWidget);
-    expect(find.text('#question'), findsOneWidget);
+    expect(find.text('Sleep'), findsOneWidget);
+    expect(find.text('Anxiety'), findsOneWidget);
+    expect(find.text('Medication'), findsOneWidget);
+    expect(find.text('Side effect'), findsOneWidget);
+    expect(find.text('Question'), findsOneWidget);
+    expect(find.text('#sleep'), findsNothing);
     expect(find.text('Summary'), findsOneWidget);
     expect(find.text('Included in summary'), findsOneWidget);
     expect(find.text('Keep out of summary'), findsOneWidget);
@@ -49,10 +50,30 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Choose topics'), findsOneWidget);
-    expect(find.text('#dose-change'), findsOneWidget);
-    expect(find.text('#tasks'), findsOneWidget);
-    expect(find.text('#hard-to-say'), findsOneWidget);
-    expect(find.text('#safety'), findsOneWidget);
+    expect(find.text('Dose change'), findsOneWidget);
+    expect(find.text('Tasks'), findsOneWidget);
+    expect(find.text('Hard to explain'), findsOneWidget);
+    expect(find.text('Safety'), findsOneWidget);
+    expect(find.text('#dose-change'), findsNothing);
+  });
+
+  testWidgets('recently used topics appear directly on timeline home', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({
+      'tacite_recent_topic_ids': ['tasks', 'mood'],
+    });
+
+    await tester.pumpWidget(
+      const InterimAppWrapper(
+        child: TimelineHomeScreen(loadRecordsOnStart: false),
+      ),
+    );
+
+    await tester.pumpAndSettle();
+
+    expect(find.text('Tasks'), findsOneWidget);
+    expect(find.text('Mood'), findsOneWidget);
   });
 
   testWidgets('summary screen is read-only before editing', (tester) async {

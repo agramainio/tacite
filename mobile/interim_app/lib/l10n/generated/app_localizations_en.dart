@@ -719,49 +719,49 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chooseTags => 'Choose tags';
 
   @override
-  String get tagMedication => '#medication';
+  String get tagMedication => 'Medication';
 
   @override
-  String get tagDoseChange => '#dose-change';
+  String get tagDoseChange => 'Dose change';
 
   @override
-  String get tagMissedDose => '#missed-dose';
+  String get tagMissedDose => 'Missed dose';
 
   @override
-  String get tagAnxiety => '#anxiety';
+  String get tagAnxiety => 'Anxiety';
 
   @override
-  String get tagSleep => '#sleep';
+  String get tagSleep => 'Sleep';
 
   @override
-  String get tagMood => '#mood';
+  String get tagMood => 'Mood';
 
   @override
-  String get tagSideEffect => '#side-effect';
+  String get tagSideEffect => 'Side effect';
 
   @override
-  String get tagFocus => '#focus';
+  String get tagFocus => 'Focus';
 
   @override
-  String get tagTasks => '#tasks';
+  String get tagTasks => 'Tasks';
 
   @override
-  String get tagWork => '#work';
+  String get tagWork => 'Work';
 
   @override
-  String get tagSelfCare => '#self-care';
+  String get tagSelfCare => 'Self-care';
 
   @override
-  String get tagQuestion => '#question';
+  String get tagQuestion => 'Question';
 
   @override
-  String get tagAppointment => '#appointment';
+  String get tagAppointment => 'Appointment';
 
   @override
-  String get tagHardToSay => '#hard-to-say';
+  String get tagHardToSay => 'Hard to explain';
 
   @override
-  String get tagSafety => '#safety';
+  String get tagSafety => 'Safety';
 
   @override
   String get flagMentionThis => 'Mention this';

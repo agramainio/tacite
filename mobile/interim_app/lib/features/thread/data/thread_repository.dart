@@ -21,6 +21,14 @@ class ThreadRepository {
         .toList();
   }
 
+  Future<PreparationThread> getDefaultTimeline() async {
+    final response = await _apiClient.dio.get<Map<String, dynamic>>(
+      '/threads/default-timeline',
+    );
+
+    return PreparationThread.fromJson(response.data ?? <String, dynamic>{});
+  }
+
   Future<PreparationThread> createThread({
     required String kind,
     required String title,
