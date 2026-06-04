@@ -457,6 +457,7 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
         Text(l10n.timelineHomeBody, style: TaciteTextStyles.bodyMuted),
         const SizedBox(height: TaciteSpacing.xl),
         TacitePanel(
+          isEmphasized: true,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -528,14 +529,26 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
           ),
         ),
         const SizedBox(height: TaciteSpacing.sm),
-        SwitchListTile.adaptive(
-          value: _hideTextByDefault,
-          title: Text(l10n.hideTimelineText, style: TaciteTextStyles.body),
-          onChanged: (value) {
-            setState(() {
-              _hideTextByDefault = value;
-            });
-          },
+        Align(
+          alignment: Alignment.centerLeft,
+          child: TextButton.icon(
+            onPressed: () {
+              setState(() {
+                _hideTextByDefault = !_hideTextByDefault;
+              });
+            },
+            icon: Icon(
+              _hideTextByDefault
+                  ? Icons.visibility_off_outlined
+                  : Icons.visibility_outlined,
+              size: 18,
+            ),
+            label: Text(
+              _hideTextByDefault
+                  ? l10n.hideTimelineText
+                  : l10n.showTimelineText,
+            ),
+          ),
         ),
         if (_message != null) ...[
           const SizedBox(height: TaciteSpacing.sm),
@@ -543,9 +556,15 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
         ],
         const SizedBox(height: TaciteSpacing.xl),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
               child: Text(l10n.timeline, style: TaciteTextStyles.screenTitle),
+            ),
+            TextButton.icon(
+              onPressed: _openSummary,
+              icon: const Icon(Icons.description_outlined, size: 18),
+              label: Text(l10n.summarySoFar),
             ),
             TextButton(onPressed: _loadTimeline, child: Text(l10n.refresh)),
           ],

@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../theme/tacite_colors.dart';
 import '../theme/tacite_spacing.dart';
+import '../theme/tacite_text_styles.dart';
 
 class TaciteChip extends StatelessWidget {
   const TaciteChip({
     required this.label,
-    required this.onTap,
     this.isSelected = false,
+    this.onTap,
     super.key,
   });
 
@@ -19,28 +20,35 @@ class TaciteChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final background = isSelected
         ? TaciteColors.accentSoft
-        : TaciteColors.panel;
+        : TaciteColors.paper;
     final border = isSelected ? TaciteColors.accent : TaciteColors.line;
+    final textColor = isSelected
+        ? TaciteColors.accentInk
+        : TaciteColors.inkMuted;
 
-    return InkWell(
-      borderRadius: BorderRadius.circular(999),
-      onTap: onTap,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: background,
-          borderRadius: BorderRadius.circular(999),
-          border: Border.all(color: border),
-        ),
-        child: Padding(
+    return Semantics(
+      button: true,
+      selected: isSelected,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(999),
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 120),
+          curve: Curves.easeOut,
           padding: const EdgeInsets.symmetric(
             horizontal: TaciteSpacing.md,
-            vertical: TaciteSpacing.sm,
+            vertical: TaciteSpacing.xs,
+          ),
+          decoration: BoxDecoration(
+            color: background,
+            borderRadius: BorderRadius.circular(999),
+            border: Border.all(color: border),
           ),
           child: Text(
             label,
-            style: TextStyle(
-              color: isSelected ? TaciteColors.accentInk : TaciteColors.ink,
-              fontWeight: FontWeight.w700,
+            style: TaciteTextStyles.small.copyWith(
+              color: textColor,
+              fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
             ),
           ),
         ),

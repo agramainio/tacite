@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../theme/tacite_colors.dart';
 import '../theme/tacite_spacing.dart';
 import '../theme/tacite_text_styles.dart';
-import 'tacite_panel.dart';
 
 class TaciteTimelineCard extends StatelessWidget {
   const TaciteTimelineCard({
@@ -41,33 +40,69 @@ class TaciteTimelineCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final content = TacitePanel(
-      child: InkWell(
-        borderRadius: BorderRadius.circular(TaciteSpacing.radius),
-        onTap: onTap,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(child: Text(meta, style: TaciteTextStyles.small)),
-                _TimelineCardMenu(
-                  moreOptionsLabel: moreOptionsLabel,
-                  addToSummaryLabel: addToSummaryLabel,
-                  editLabel: editLabel,
-                  showOriginalNoteLabel: showOriginalNoteLabel,
-                  onAddToSummary: onAddToSummary,
-                  onEdit: onEdit,
-                  onShowOriginalNote: onShowOriginalNote,
+    final content = InkWell(
+      borderRadius: BorderRadius.circular(TaciteSpacing.radius),
+      onTap: onTap,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: TaciteColors.panel,
+          borderRadius: BorderRadius.circular(TaciteSpacing.radius),
+          border: Border.all(color: TaciteColors.lineSoft),
+        ),
+        child: IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  color: TaciteColors.accentSoft,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(TaciteSpacing.radius),
+                    bottomLeft: Radius.circular(TaciteSpacing.radius),
+                  ),
                 ),
-              ],
-            ),
-            const SizedBox(height: TaciteSpacing.xs),
-            Text(title, style: TaciteTextStyles.sectionTitle),
-            const SizedBox(height: TaciteSpacing.xs),
-            Text(body, style: TaciteTextStyles.body),
-          ],
+                child: const SizedBox(width: 4),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                    TaciteSpacing.md,
+                    TaciteSpacing.sm,
+                    TaciteSpacing.xs,
+                    TaciteSpacing.md,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Text(meta, style: TaciteTextStyles.small),
+                          ),
+                          _TimelineCardMenu(
+                            moreOptionsLabel: moreOptionsLabel,
+                            addToSummaryLabel: addToSummaryLabel,
+                            editLabel: editLabel,
+                            showOriginalNoteLabel: showOriginalNoteLabel,
+                            onAddToSummary: onAddToSummary,
+                            onEdit: onEdit,
+                            onShowOriginalNote: onShowOriginalNote,
+                          ),
+                        ],
+                      ),
+                      if (title.trim().isNotEmpty) ...[
+                        const SizedBox(height: TaciteSpacing.xs),
+                        Text(title, style: TaciteTextStyles.sectionTitle),
+                      ],
+                      const SizedBox(height: TaciteSpacing.xs),
+                      Text(body, style: TaciteTextStyles.body),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -124,7 +159,12 @@ class _TimelineCardMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopupMenuButton<_TimelineCardAction>(
       tooltip: moreOptionsLabel,
-      icon: const Icon(Icons.more_horiz, size: 20),
+      padding: EdgeInsets.zero,
+      icon: const Icon(
+        Icons.more_horiz,
+        size: 19,
+        color: TaciteColors.inkMuted,
+      ),
       onSelected: (action) {
         switch (action) {
           case _TimelineCardAction.addToSummary:

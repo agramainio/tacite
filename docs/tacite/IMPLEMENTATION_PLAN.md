@@ -284,3 +284,17 @@ Topic UI changes:
 - existing legacy # text is cleaned for display where possible
 
 This fixes the issue where returning from Summary could make the timeline appear empty even though the backend data still existed.
+
+
+## Timeline UI polish note
+
+The timeline surface received a first visual polish pass:
+
+- panels are softer and less nested-looking
+- capture panel is emphasized without feeling like a generic form card
+- topic pills have a calmer custom style
+- timeline entries use a quieter card with a subtle timeline rail
+- privacy text hiding moved from a full switch row to a smaller explicit control
+- timeline header now gives Summary so far a more intentional placement
+
+This pass is visual polish only; no data model changes were made.
