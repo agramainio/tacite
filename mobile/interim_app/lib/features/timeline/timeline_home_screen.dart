@@ -26,6 +26,7 @@ class TimelineHomeScreen extends StatefulWidget {
 
 class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
   static const _defaultThreadIdKey = 'tacite_default_timeline_thread_id';
+  static const _excludeFromSummaryMarker = '[tacite:exclude-from-summary]';
 
   final _repository = ThreadRepository.defaultRepository();
   final _noteController = TextEditingController();
@@ -33,11 +34,11 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
   bool _isLoading = false;
   bool _isRecording = false;
   bool _hideTextByDefault = true;
+  String _summaryStatus = 'include';
   String? _defaultThreadId;
   String? _message;
 
-  final Set<String> _selectedTagIds = {'sleep'};
-  final Set<String> _selectedFlagIds = {};
+  final Set<String> _selectedTopicIds = {};
   final Set<String> _revealedEventIds = {};
   final List<TimelineEvent> _timelineEvents = [];
 
@@ -160,7 +161,7 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
       final event = await _repository.createTimelineEvent(
         threadId: threadId,
         rawNoteId: note.id,
-        eventType: _eventTypeForSelectedTags(),
+        eventType: _eventTypeForSelectedTopics(),
         title: _entryTitle(l10n),
         userApprovedSummary: _entrySummary(l10n, text),
       );
@@ -172,6 +173,8 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
       setState(() {
         _defaultThreadId = threadId;
         _noteController.clear();
+        _selectedTopicIds.clear();
+        _summaryStatus = 'include';
         _timelineEvents.insert(0, event);
         _message = l10n.recordedToTimeline;
       });
@@ -216,18 +219,18 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
     await preferences.remove(_defaultThreadIdKey);
   }
 
-  String _eventTypeForSelectedTags() {
-    if (_selectedTagIds.contains('question')) {
+  String _eventTypeForSelectedTopics() {
+    if (_selectedTopicIds.contains('question')) {
       return 'appointment_question';
     }
 
-    if (_selectedTagIds.contains('side_effect')) {
+    if (_selectedTopicIds.contains('side_effect')) {
       return 'side_effect_note';
     }
 
-    if (_selectedTagIds.contains('medication') ||
-        _selectedTagIds.contains('dose_change') ||
-        _selectedTagIds.contains('missed_dose')) {
+    if (_selectedTopicIds.contains('medication') ||
+        _selectedTopicIds.contains('dose_change') ||
+        _selectedTopicIds.contains('missed_dose')) {
       return 'started_medication';
     }
 
@@ -235,37 +238,32 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
   }
 
   String _entryTitle(AppLocalizations l10n) {
-    final tags = _tagOptions(l10n)
-        .where((tag) => _selectedTagIds.contains(tag.id))
-        .map((tag) => tag.label)
+    final topics = _topicOptions(l10n)
+        .where((topic) => _selectedTopicIds.contains(topic.id))
+        .map((topic) => topic.label)
         .toList();
 
-    if (tags.isEmpty) {
+    if (topics.isEmpty) {
       return l10n.captureFreeNote;
     }
 
-    return tags.join(' ');
+    return topics.join(' ');
   }
 
   String _entrySummary(AppLocalizations l10n, String text) {
-    final tags = _tagOptions(l10n)
-        .where((tag) => _selectedTagIds.contains(tag.id))
-        .map((tag) => tag.label)
+    final topics = _topicOptions(l10n)
+        .where((topic) => _selectedTopicIds.contains(topic.id))
+        .map((topic) => topic.label)
         .join(' ');
-
-    final flags = _flagOptions(l10n)
-        .where((flag) => _selectedFlagIds.contains(flag.id))
-        .map((flag) => flag.label)
-        .join(', ');
 
     final parts = <String>[];
 
-    if (tags.isNotEmpty) {
-      parts.add(tags);
+    if (_summaryStatus == 'exclude') {
+      parts.add(_excludeFromSummaryMarker);
     }
 
-    if (flags.isNotEmpty) {
-      parts.add(flags);
+    if (topics.isNotEmpty) {
+      parts.add(topics);
     }
 
     parts.add(text);
@@ -273,27 +271,21 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
     return parts.join('\n');
   }
 
-  void _toggleTag(String id) {
+  String _displaySummary(String value) {
+    return value.replaceAll(_excludeFromSummaryMarker, '').trim();
+  }
+
+  void _toggleTopic(String id) {
     setState(() {
-      if (_selectedTagIds.contains(id)) {
-        _selectedTagIds.remove(id);
+      if (_selectedTopicIds.contains(id)) {
+        _selectedTopicIds.remove(id);
       } else {
-        _selectedTagIds.add(id);
+        _selectedTopicIds.add(id);
       }
     });
   }
 
-  void _toggleFlag(String id) {
-    setState(() {
-      if (_selectedFlagIds.contains(id)) {
-        _selectedFlagIds.remove(id);
-      } else {
-        _selectedFlagIds.add(id);
-      }
-    });
-  }
-
-  Future<void> _openMoreTagsSheet() async {
+  Future<void> _openMoreTopicsSheet() async {
     final l10n = AppLocalizations.of(context);
 
     await showModalBottomSheet<void>(
@@ -302,24 +294,24 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
       builder: (context) {
         return StatefulBuilder(
           builder: (context, setSheetState) {
-            final tags = _secondaryTagOptions(l10n);
+            final topics = _secondaryTopicOptions(l10n);
 
             return SafeArea(
               child: ListView(
                 padding: const EdgeInsets.all(TaciteSpacing.page),
                 children: [
-                  Text(l10n.chooseTags, style: TaciteTextStyles.screenTitle),
+                  Text(l10n.chooseTopics, style: TaciteTextStyles.screenTitle),
                   const SizedBox(height: TaciteSpacing.xl),
                   Wrap(
                     spacing: TaciteSpacing.xs,
                     runSpacing: TaciteSpacing.xs,
                     children: [
-                      for (final tag in tags)
+                      for (final topic in topics)
                         TaciteChip(
-                          label: tag.label,
-                          isSelected: _selectedTagIds.contains(tag.id),
+                          label: topic.label,
+                          isSelected: _selectedTopicIds.contains(topic.id),
                           onTap: () {
-                            _toggleTag(tag.id);
+                            _toggleTopic(topic.id);
                             setSheetState(() {});
                           },
                         ),
@@ -363,7 +355,7 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
     context.go('/threads/$threadId/summary');
   }
 
-  List<_ControlledOption> _primaryTagOptions(AppLocalizations l10n) {
+  List<_ControlledOption> _primaryTopicOptions(AppLocalizations l10n) {
     return [
       _ControlledOption('sleep', l10n.tagSleep),
       _ControlledOption('anxiety', l10n.tagAnxiety),
@@ -373,7 +365,7 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
     ];
   }
 
-  List<_ControlledOption> _secondaryTagOptions(AppLocalizations l10n) {
+  List<_ControlledOption> _secondaryTopicOptions(AppLocalizations l10n) {
     return [
       _ControlledOption('dose_change', l10n.tagDoseChange),
       _ControlledOption('missed_dose', l10n.tagMissedDose),
@@ -388,23 +380,39 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
     ];
   }
 
-  List<_ControlledOption> _tagOptions(AppLocalizations l10n) {
-    return [..._primaryTagOptions(l10n), ..._secondaryTagOptions(l10n)];
+  List<_ControlledOption> _topicOptions(AppLocalizations l10n) {
+    return [..._primaryTopicOptions(l10n), ..._secondaryTopicOptions(l10n)];
   }
 
-  List<_ControlledOption> _flagOptions(AppLocalizations l10n) {
-    return [
-      _ControlledOption('mention_this', l10n.flagMentionThis),
-      _ControlledOption('hard_to_say', l10n.flagHardToSay),
-      _ControlledOption('add_to_summary', l10n.flagAddToSummary),
-    ];
+  String _formatTimelineDate(BuildContext context, TimelineEvent event) {
+    final material = MaterialLocalizations.of(context);
+    final createdAt = DateTime.tryParse(event.createdAt)?.toLocal();
+    final eventDate = DateTime.tryParse(event.eventDate ?? '');
+
+    final displayDate = eventDate ?? createdAt;
+
+    if (displayDate == null) {
+      return '';
+    }
+
+    final date = material.formatMediumDate(displayDate);
+
+    if (createdAt == null) {
+      return date;
+    }
+
+    final time = material.formatTimeOfDay(
+      TimeOfDay.fromDateTime(createdAt),
+      alwaysUse24HourFormat: true,
+    );
+
+    return '$date · $time';
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final primaryTags = _primaryTagOptions(l10n);
-    final flags = _flagOptions(l10n);
+    final primaryTopics = _primaryTopicOptions(l10n);
 
     return TaciteScaffold(
       title: l10n.appTitle,
@@ -433,34 +441,49 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
                 decoration: InputDecoration(hintText: l10n.whatChangedHint),
               ),
               const SizedBox(height: TaciteSpacing.md),
-              Text(l10n.tags, style: TaciteTextStyles.label),
+              Text(l10n.topics, style: TaciteTextStyles.label),
               const SizedBox(height: TaciteSpacing.xs),
               Wrap(
                 spacing: TaciteSpacing.xs,
                 runSpacing: TaciteSpacing.xs,
                 children: [
-                  for (final tag in primaryTags)
+                  for (final topic in primaryTopics)
                     TaciteChip(
-                      label: tag.label,
-                      isSelected: _selectedTagIds.contains(tag.id),
-                      onTap: () => _toggleTag(tag.id),
+                      label: topic.label,
+                      isSelected: _selectedTopicIds.contains(topic.id),
+                      onTap: () => _toggleTopic(topic.id),
                     ),
-                  TaciteChip(label: l10n.moreTags, onTap: _openMoreTagsSheet),
+                  TaciteChip(
+                    label: l10n.moreTopics,
+                    onTap: _openMoreTopicsSheet,
+                  ),
                 ],
               ),
               const SizedBox(height: TaciteSpacing.md),
-              Text(l10n.flags, style: TaciteTextStyles.label),
+              Text(l10n.summaryStatus, style: TaciteTextStyles.label),
               const SizedBox(height: TaciteSpacing.xs),
               Wrap(
                 spacing: TaciteSpacing.xs,
                 runSpacing: TaciteSpacing.xs,
                 children: [
-                  for (final flag in flags)
-                    TaciteChip(
-                      label: flag.label,
-                      isSelected: _selectedFlagIds.contains(flag.id),
-                      onTap: () => _toggleFlag(flag.id),
-                    ),
+                  TaciteChip(
+                    label: l10n.includedInSummary,
+                    isSelected: _summaryStatus == 'include',
+                    onTap: () {
+                      setState(() {
+                        _summaryStatus = 'include';
+                      });
+                    },
+                  ),
+                  TaciteChip(
+                    label: l10n.keepOutOfSummary,
+                    isSelected: _summaryStatus == 'exclude',
+                    onTap: () {
+                      setState(() {
+                        _summaryStatus = 'exclude';
+                      });
+                    },
+                  ),
                 ],
               ),
               const SizedBox(height: TaciteSpacing.md),
@@ -520,8 +543,8 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
                 body:
                     _hideTextByDefault && !_revealedEventIds.contains(event.id)
                     ? l10n.hiddenTimelineText
-                    : event.userApprovedSummary,
-                meta: event.eventDate ?? event.createdAt.split('T').first,
+                    : _displaySummary(event.userApprovedSummary),
+                meta: _formatTimelineDate(context, event),
                 addToSummaryLabel: l10n.addToSummary,
                 editLabel: l10n.edit,
                 moreOptionsLabel: l10n.moreOptions,

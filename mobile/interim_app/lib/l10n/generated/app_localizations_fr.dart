@@ -597,7 +597,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get summaryTemplate =>
-      'Résumé pour l’instant\\n\\nPériode : période choisie\\n\\nCe pour quoi je veux de l’aide :\\n- \\n\\nCe qui a changé :\\n- \\n\\nCe que j’ai remarqué après :\\n- \\n\\nEffets indésirables ou changements corporels :\\n- \\n\\nFonctionnement :\\n- \\n\\nContexte qui peut compter :\\n- \\n\\nQuestions à aborder :\\n- ';
+      'Résumé pour l’instant\\n\\nPériode : période choisie\\n\\nCe pour quoi je veux de l’aide :\\n- \\n\\nCe qui a changé :\\n- \\n\\nCe que j’ai remarqué après :\\n- \\n\\nEffets indésirables ou changements corporels :\\n- \\n\\nFonctionnement :\\n- \\n\\nContexte qui peut compter :\\n- \\n\\nQuestions à aborder :\\n-';
 
   @override
   String get copySummary => 'Copier le résumé';
@@ -607,7 +607,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get summaryNotMedicalAdvice =>
-      'Ce résumé est basé sur ce que vous avez noté. Ce n’est pas un avis médical ni un diagnostic.';
+      'À utiliser comme note de préparation pour une consultation.';
 
   @override
   String get recordSomething => 'Noter quelque chose';
@@ -787,4 +787,38 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get personalTimelineGoal => 'Chronologie privée par défaut';
+
+  @override
+  String get topics => 'Sujets';
+
+  @override
+  String get moreTopics => 'Plus de sujets';
+
+  @override
+  String get chooseTopics => 'Choisir les sujets';
+
+  @override
+  String get summaryStatus => 'Résumé';
+
+  @override
+  String get includedInSummary => 'Inclus dans le résumé';
+
+  @override
+  String get keepOutOfSummary => 'Ne pas inclure';
+
+  @override
+  String get editSummary => 'Modifier le résumé';
+
+  @override
+  String get saveSummaryChanges => 'Enregistrer';
+
+  @override
+  String get cancelSummaryEdit => 'Annuler';
+
+  @override
+  String get summaryReadOnlyHint =>
+      'Relisez d’abord le résumé. Touchez Modifier seulement si vous voulez changer le texte.';
+
+  @override
+  String get summarySaved => 'Modifications du résumé enregistrées localement.';
 }

@@ -588,7 +588,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get summaryTemplate =>
-      'Summary so far\\n\\nRange: selected range\\n\\nWhat I want help with:\\n- \\n\\nWhat changed:\\n- \\n\\nWhat I noticed after:\\n- \\n\\nSide effects or body changes:\\n- \\n\\nFunctioning:\\n- \\n\\nContext that may matter:\\n- \\n\\nQuestions to bring up:\\n- ';
+      'Summary so far\\n\\nRange: selected range\\n\\nWhat I want help with:\\n- \\n\\nWhat changed:\\n- \\n\\nWhat I noticed after:\\n- \\n\\nSide effects or body changes:\\n- \\n\\nFunctioning:\\n- \\n\\nContext that may matter:\\n- \\n\\nQuestions to bring up:\\n-';
 
   @override
   String get copySummary => 'Copy summary';
@@ -598,7 +598,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get summaryNotMedicalAdvice =>
-      'This summary is based on what you recorded. It is not medical advice or a diagnosis.';
+      'Use this as a preparation note for care.';
 
   @override
   String get recordSomething => 'Record something';
@@ -777,4 +777,38 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get personalTimelineGoal => 'Default private timeline';
+
+  @override
+  String get topics => 'Topics';
+
+  @override
+  String get moreTopics => 'More topics';
+
+  @override
+  String get chooseTopics => 'Choose topics';
+
+  @override
+  String get summaryStatus => 'Summary';
+
+  @override
+  String get includedInSummary => 'Included in summary';
+
+  @override
+  String get keepOutOfSummary => 'Keep out of summary';
+
+  @override
+  String get editSummary => 'Edit summary';
+
+  @override
+  String get saveSummaryChanges => 'Save changes';
+
+  @override
+  String get cancelSummaryEdit => 'Cancel';
+
+  @override
+  String get summaryReadOnlyHint =>
+      'Review the summary first. Tap Edit only when you want to change the text.';
+
+  @override
+  String get summarySaved => 'Summary changes saved locally.';
 }

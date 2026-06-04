@@ -248,3 +248,23 @@ Tacite now treats the timeline as the primary Home surface:
 - legacy thread screens remain temporarily for compatibility/testing
 
 Next step should be a visual/product UI pass on this single timeline surface, not more legacy thread work.
+
+
+## Summary and timeline UX correction note
+
+The working timeline and summary surfaces have been corrected:
+
+- repeated medical-advice warning copy was removed from working surfaces
+- Summary is read-only by default
+- Summary has explicit Edit / Save / Cancel controls
+- AI-off summary no longer shows a separate Original notes section
+- timeline and summary dates use localized readable date + 24h time
+- Tags were renamed to Topics
+- confusing flags were replaced with Summary status
+- entries are included in summary by default
+- Keep out of summary is the explicit exception
+- selected topics/status reset after recording
+- Home routes return to the single timeline
+- Summary screen has less nested card structure
+
+This is still structural UX correction, not final visual polish.

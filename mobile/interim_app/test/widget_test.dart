@@ -24,51 +24,56 @@ void main() {
 
     expect(find.text('Tacite'), findsWidgets);
     expect(find.text('What changed?'), findsOneWidget);
+    expect(find.text('Topics'), findsOneWidget);
     expect(find.text('#sleep'), findsOneWidget);
     expect(find.text('#anxiety'), findsOneWidget);
     expect(find.text('#medication'), findsOneWidget);
     expect(find.text('#side-effect'), findsOneWidget);
     expect(find.text('#question'), findsOneWidget);
-    expect(find.text('Mention this'), findsOneWidget);
-    expect(find.text('Hard to say'), findsOneWidget);
-    expect(find.text('Add to summary'), findsOneWidget);
+    expect(find.text('Summary'), findsOneWidget);
+    expect(find.text('Included in summary'), findsOneWidget);
+    expect(find.text('Keep out of summary'), findsOneWidget);
     expect(find.text('Record to timeline'), findsOneWidget);
     expect(find.text('No medical advice'), findsNothing);
     expect(find.text('Private account active'), findsNothing);
   });
 
-  testWidgets('timeline home exposes controlled more tags', (tester) async {
+  testWidgets('timeline home exposes controlled more topics', (tester) async {
     await tester.pumpWidget(
       const InterimAppWrapper(
         child: TimelineHomeScreen(loadRecordsOnStart: false),
       ),
     );
 
-    await tester.tap(find.text('More tags'));
+    await tester.tap(find.text('More topics'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Choose tags'), findsOneWidget);
+    expect(find.text('Choose topics'), findsOneWidget);
     expect(find.text('#dose-change'), findsOneWidget);
     expect(find.text('#tasks'), findsOneWidget);
     expect(find.text('#hard-to-say'), findsOneWidget);
     expect(find.text('#safety'), findsOneWidget);
   });
 
-  testWidgets(
-    'summary screen shows range selector and editable summary without network calls',
-    (tester) async {
-      await tester.pumpWidget(
-        const InterimAppWrapper(child: SummaryScreen(loadRecords: false)),
-      );
+  testWidgets('summary screen is read-only before editing', (tester) async {
+    await tester.pumpWidget(
+      const InterimAppWrapper(child: SummaryScreen(loadRecords: false)),
+    );
 
-      expect(find.text('Summary so far'), findsWidgets);
-      expect(find.text('Range'), findsOneWidget);
-      expect(find.text('Since last appointment'), findsOneWidget);
-      expect(find.text('Editable summary'), findsOneWidget);
-      expect(find.text('Copy summary'), findsOneWidget);
-      expect(find.textContaining('What I want help with'), findsOneWidget);
-    },
-  );
+    expect(find.text('Summary so far'), findsWidgets);
+    expect(find.text('Range'), findsOneWidget);
+    expect(find.text('Since last appointment'), findsOneWidget);
+    expect(find.text('Edit summary'), findsOneWidget);
+    expect(find.text('Copy summary'), findsOneWidget);
+    expect(find.byType(TextField), findsNothing);
+
+    await tester.tap(find.text('Edit summary'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(TextField), findsOneWidget);
+    expect(find.text('Save changes'), findsOneWidget);
+    expect(find.text('Cancel'), findsOneWidget);
+  });
 
   testWidgets(
     'thread summary screen can render without loading records in widget tests',
@@ -80,7 +85,7 @@ void main() {
       );
 
       expect(find.text('Summary so far'), findsWidgets);
-      expect(find.text('Editable summary'), findsOneWidget);
+      expect(find.text('Edit summary'), findsOneWidget);
       expect(find.text('Copy summary'), findsOneWidget);
     },
   );

@@ -594,7 +594,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get summaryTemplate =>
-      'Riassunto finora\\n\\nPeriodo: periodo scelto\\n\\nPer cosa voglio aiuto:\\n- \\n\\nCosa è cambiato:\\n- \\n\\nCosa ho notato dopo:\\n- \\n\\nEffetti collaterali o cambiamenti fisici:\\n- \\n\\nFunzionamento:\\n- \\n\\nContesto che può contare:\\n- \\n\\nDomande da fare:\\n- ';
+      'Riassunto finora\\n\\nPeriodo: periodo scelto\\n\\nPer cosa voglio aiuto:\\n- \\n\\nCosa è cambiato:\\n- \\n\\nCosa ho notato dopo:\\n- \\n\\nEffetti collaterali o cambiamenti fisici:\\n- \\n\\nFunzionamento:\\n- \\n\\nContesto che può contare:\\n- \\n\\nDomande da fare:\\n-';
 
   @override
   String get copySummary => 'Copia riassunto';
@@ -604,7 +604,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get summaryNotMedicalAdvice =>
-      'Questo riassunto si basa su ciò che hai registrato. Non è un consiglio medico né una diagnosi.';
+      'Da usare come nota di preparazione per la visita.';
 
   @override
   String get recordSomething => 'Registra qualcosa';
@@ -786,4 +786,38 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get personalTimelineGoal => 'Cronologia privata predefinita';
+
+  @override
+  String get topics => 'Argomenti';
+
+  @override
+  String get moreTopics => 'Altri argomenti';
+
+  @override
+  String get chooseTopics => 'Scegli argomenti';
+
+  @override
+  String get summaryStatus => 'Riassunto';
+
+  @override
+  String get includedInSummary => 'Incluso nel riassunto';
+
+  @override
+  String get keepOutOfSummary => 'Non includere';
+
+  @override
+  String get editSummary => 'Modifica riassunto';
+
+  @override
+  String get saveSummaryChanges => 'Salva modifiche';
+
+  @override
+  String get cancelSummaryEdit => 'Annulla';
+
+  @override
+  String get summaryReadOnlyHint =>
+      'Rileggi prima il riassunto. Tocca Modifica solo se vuoi cambiare il testo.';
+
+  @override
+  String get summarySaved => 'Modifiche al riassunto salvate localmente.';
 }

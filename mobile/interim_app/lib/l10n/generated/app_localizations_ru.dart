@@ -589,7 +589,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get summaryTemplate =>
-      'Резюме на данный момент\\n\\nПериод: выбранный период\\n\\nС чем я хочу получить помощь:\\n- \\n\\nЧто изменилось:\\n- \\n\\nЧто я заметил после:\\n- \\n\\nПобочные эффекты или изменения в теле:\\n- \\n\\nФункционирование:\\n- \\n\\nКонтекст, который может быть важен:\\n- \\n\\nВопросы, которые нужно обсудить:\\n- ';
+      'Резюме на данный момент\\n\\nПериод: выбранный период\\n\\nС чем я хочу получить помощь:\\n- \\n\\nЧто изменилось:\\n- \\n\\nЧто я заметил после:\\n- \\n\\nПобочные эффекты или изменения в теле:\\n- \\n\\nФункционирование:\\n- \\n\\nКонтекст, который может быть важен:\\n- \\n\\nВопросы, которые нужно обсудить:\\n-';
 
   @override
   String get copySummary => 'Скопировать резюме';
@@ -599,7 +599,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get summaryNotMedicalAdvice =>
-      'Это резюме основано на ваших записях. Это не медицинский совет и не диагноз.';
+      'Используйте это как подготовительную заметку к визиту.';
 
   @override
   String get recordSomething => 'Записать что-то';
@@ -779,4 +779,38 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get personalTimelineGoal => 'Приватная хронология по умолчанию';
+
+  @override
+  String get topics => 'Темы';
+
+  @override
+  String get moreTopics => 'Ещё темы';
+
+  @override
+  String get chooseTopics => 'Выбрать темы';
+
+  @override
+  String get summaryStatus => 'Резюме';
+
+  @override
+  String get includedInSummary => 'Включено в резюме';
+
+  @override
+  String get keepOutOfSummary => 'Не включать';
+
+  @override
+  String get editSummary => 'Редактировать резюме';
+
+  @override
+  String get saveSummaryChanges => 'Сохранить изменения';
+
+  @override
+  String get cancelSummaryEdit => 'Отмена';
+
+  @override
+  String get summaryReadOnlyHint =>
+      'Сначала просмотрите резюме. Нажимайте Редактировать только если хотите изменить текст.';
+
+  @override
+  String get summarySaved => 'Изменения резюме сохранены локально.';
 }

@@ -1161,7 +1161,7 @@ abstract class AppLocalizations {
   /// No description provided for @summaryTemplate.
   ///
   /// In en, this message translates to:
-  /// **'Summary so far\\n\\nRange: selected range\\n\\nWhat I want help with:\\n- \\n\\nWhat changed:\\n- \\n\\nWhat I noticed after:\\n- \\n\\nSide effects or body changes:\\n- \\n\\nFunctioning:\\n- \\n\\nContext that may matter:\\n- \\n\\nQuestions to bring up:\\n- '**
+  /// **'Summary so far\\n\\nRange: selected range\\n\\nWhat I want help with:\\n- \\n\\nWhat changed:\\n- \\n\\nWhat I noticed after:\\n- \\n\\nSide effects or body changes:\\n- \\n\\nFunctioning:\\n- \\n\\nContext that may matter:\\n- \\n\\nQuestions to bring up:\\n-'**
   String get summaryTemplate;
 
   /// No description provided for @copySummary.
@@ -1179,7 +1179,7 @@ abstract class AppLocalizations {
   /// No description provided for @summaryNotMedicalAdvice.
   ///
   /// In en, this message translates to:
-  /// **'This summary is based on what you recorded. It is not medical advice or a diagnosis.'**
+  /// **'Use this as a preparation note for care.'**
   String get summaryNotMedicalAdvice;
 
   /// No description provided for @recordSomething.
@@ -1505,6 +1505,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Default private timeline'**
   String get personalTimelineGoal;
+
+  /// No description provided for @topics.
+  ///
+  /// In en, this message translates to:
+  /// **'Topics'**
+  String get topics;
+
+  /// No description provided for @moreTopics.
+  ///
+  /// In en, this message translates to:
+  /// **'More topics'**
+  String get moreTopics;
+
+  /// No description provided for @chooseTopics.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose topics'**
+  String get chooseTopics;
+
+  /// No description provided for @summaryStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Summary'**
+  String get summaryStatus;
+
+  /// No description provided for @includedInSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Included in summary'**
+  String get includedInSummary;
+
+  /// No description provided for @keepOutOfSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep out of summary'**
+  String get keepOutOfSummary;
+
+  /// No description provided for @editSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit summary'**
+  String get editSummary;
+
+  /// No description provided for @saveSummaryChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Save changes'**
+  String get saveSummaryChanges;
+
+  /// No description provided for @cancelSummaryEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancelSummaryEdit;
+
+  /// No description provided for @summaryReadOnlyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Review the summary first. Tap Edit only when you want to change the text.'**
+  String get summaryReadOnlyHint;
+
+  /// No description provided for @summarySaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Summary changes saved locally.'**
+  String get summarySaved;
 }
 
 class _AppLocalizationsDelegate

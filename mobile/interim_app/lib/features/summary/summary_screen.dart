@@ -24,24 +24,29 @@ class SummaryScreen extends StatefulWidget {
 }
 
 class _SummaryScreenState extends State<SummaryScreen> {
+  static const _excludeFromSummaryMarker = '[tacite:exclude-from-summary]';
+
   final _repository = ThreadRepository.defaultRepository();
   final _summaryController = TextEditingController();
 
   String _selectedRange = 'since_last_appointment';
+  String _savedSummaryText = '';
+  String _draftBeforeEdit = '';
   bool _hasInitializedText = false;
   bool _hasLoadedRecords = false;
   bool _isLoading = false;
+  bool _isEditing = false;
   String? _message;
 
   List<TimelineEvent> _timelineEvents = [];
-  List<RawNote> _rawNotes = [];
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
     if (!_hasInitializedText) {
-      _summaryController.text = AppLocalizations.of(context).summaryTemplate;
+      _savedSummaryText = AppLocalizations.of(context).summaryTemplate;
+      _summaryController.text = _savedSummaryText;
       _hasInitializedText = true;
     }
 
@@ -72,7 +77,6 @@ class _SummaryScreenState extends State<SummaryScreen> {
     });
 
     try {
-      final notes = await _repository.listRawNotes(threadId);
       final events = await _repository.listTimelineEvents(threadId);
 
       if (!mounted) {
@@ -80,9 +84,9 @@ class _SummaryScreenState extends State<SummaryScreen> {
       }
 
       setState(() {
-        _rawNotes = notes;
         _timelineEvents = events;
-        _summaryController.text = _buildSummaryDraft(l10n);
+        _savedSummaryText = _buildSummaryDraft(context, l10n);
+        _summaryController.text = _savedSummaryText;
         _message = l10n.summaryLoadedFromTimeline;
         _isLoading = false;
       });
@@ -103,7 +107,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
   Future<void> _copySummary() async {
     final l10n = AppLocalizations.of(context);
 
-    await Clipboard.setData(ClipboardData(text: _summaryController.text));
+    await Clipboard.setData(ClipboardData(text: _savedSummaryText));
 
     if (!mounted) {
       return;
@@ -114,23 +118,47 @@ class _SummaryScreenState extends State<SummaryScreen> {
     ).showSnackBar(SnackBar(content: Text(l10n.summaryCopied)));
   }
 
+  void _startEditing() {
+    setState(() {
+      _draftBeforeEdit = _summaryController.text;
+      _isEditing = true;
+    });
+  }
+
+  void _saveEditing() {
+    final l10n = AppLocalizations.of(context);
+
+    setState(() {
+      _savedSummaryText = _summaryController.text;
+      _isEditing = false;
+      _message = l10n.summarySaved;
+    });
+  }
+
+  void _cancelEditing() {
+    setState(() {
+      _summaryController.text = _draftBeforeEdit;
+      _isEditing = false;
+    });
+  }
+
   void _updateRange(String value) {
     final l10n = AppLocalizations.of(context);
 
     setState(() {
       _selectedRange = value;
 
-      if (widget.threadId != null) {
-        _summaryController.text = _buildSummaryDraft(l10n);
+      if (widget.threadId != null && !_isEditing) {
+        _savedSummaryText = _buildSummaryDraft(context, l10n);
+        _summaryController.text = _savedSummaryText;
       }
     });
   }
 
-  String _buildSummaryDraft(AppLocalizations l10n) {
+  String _buildSummaryDraft(BuildContext context, AppLocalizations l10n) {
     final events = _filteredEvents();
-    final notes = _filteredNotes();
 
-    if (events.isEmpty && notes.isEmpty) {
+    if (events.isEmpty) {
       return l10n.summaryNoSavedTimeline;
     }
 
@@ -139,49 +167,34 @@ class _SummaryScreenState extends State<SummaryScreen> {
       ..writeln()
       ..writeln('${l10n.summaryRange}: ${_selectedRangeLabel(l10n)}')
       ..writeln()
-      ..writeln(l10n.summaryGeneratedFromSavedData)
-      ..writeln()
       ..writeln(l10n.timelineEntriesSection);
 
-    if (events.isEmpty) {
-      buffer.writeln('- ${l10n.summaryNoSavedTimeline}');
-    } else {
-      for (final event in events) {
-        final date =
-            event.eventDate ?? _datePart(event.createdAt) ?? l10n.noDate;
-        buffer.writeln(
-          '- $date — ${event.title}: ${event.userApprovedSummary}',
-        );
+    for (final event in events) {
+      final date = _formatEventDateTime(context, event);
+      final text = _cleanSummaryText(event.userApprovedSummary);
+
+      if (text.isEmpty) {
+        continue;
       }
+
+      buffer.writeln('- $date — ${event.title}: $text');
     }
 
-    if (notes.isNotEmpty) {
-      buffer
-        ..writeln()
-        ..writeln(l10n.originalNotesSection);
-
-      for (final note in notes) {
-        final date =
-            note.userLocalDate ?? _datePart(note.createdAt) ?? l10n.noDate;
-        buffer.writeln('- $date — ${note.originalText}');
-      }
-    }
-
-    buffer
-      ..writeln()
-      ..writeln(l10n.summaryNotMedicalAdvice);
-
-    return buffer.toString();
+    return buffer.toString().trim();
   }
 
   List<TimelineEvent> _filteredEvents() {
     final start = _rangeStart();
 
-    if (start == null) {
-      return _timelineEvents;
-    }
+    final events = _timelineEvents.where((event) {
+      if (_isExcludedFromSummary(event)) {
+        return false;
+      }
 
-    return _timelineEvents.where((event) {
+      if (start == null) {
+        return true;
+      }
+
       final date = _parseDate(event.eventDate) ?? _parseDate(event.createdAt);
 
       if (date == null) {
@@ -190,24 +203,16 @@ class _SummaryScreenState extends State<SummaryScreen> {
 
       return !date.isBefore(start);
     }).toList();
+
+    return events;
   }
 
-  List<RawNote> _filteredNotes() {
-    final start = _rangeStart();
+  bool _isExcludedFromSummary(TimelineEvent event) {
+    return event.userApprovedSummary.contains(_excludeFromSummaryMarker);
+  }
 
-    if (start == null) {
-      return _rawNotes;
-    }
-
-    return _rawNotes.where((note) {
-      final date = _parseDate(note.userLocalDate) ?? _parseDate(note.createdAt);
-
-      if (date == null) {
-        return true;
-      }
-
-      return !date.isBefore(start);
-    }).toList();
+  String _cleanSummaryText(String value) {
+    return value.replaceAll(_excludeFromSummaryMarker, '').trim();
   }
 
   DateTime? _rangeStart() {
@@ -228,12 +233,29 @@ class _SummaryScreenState extends State<SummaryScreen> {
     return DateTime.tryParse(value);
   }
 
-  String? _datePart(String? value) {
-    if (value == null || value.isEmpty) {
-      return null;
+  String _formatEventDateTime(BuildContext context, TimelineEvent event) {
+    final material = MaterialLocalizations.of(context);
+    final createdAt = DateTime.tryParse(event.createdAt)?.toLocal();
+    final eventDate = DateTime.tryParse(event.eventDate ?? '');
+
+    final displayDate = eventDate ?? createdAt;
+
+    if (displayDate == null) {
+      return AppLocalizations.of(context).noDate;
     }
 
-    return value.split('T').first;
+    final date = material.formatMediumDate(displayDate);
+
+    if (createdAt == null) {
+      return date;
+    }
+
+    final time = material.formatTimeOfDay(
+      TimeOfDay.fromDateTime(createdAt),
+      alwaysUse24HourFormat: true,
+    );
+
+    return '$date · $time';
   }
 
   String _selectedRangeLabel(AppLocalizations l10n) {
@@ -291,13 +313,15 @@ class _SummaryScreenState extends State<SummaryScreen> {
                 child: Text(l10n.summaryRangeCustom),
               ),
             ],
-            onChanged: (value) {
-              if (value == null) {
-                return;
-              }
+            onChanged: _isEditing
+                ? null
+                : (value) {
+                    if (value == null) {
+                      return;
+                    }
 
-              _updateRange(value);
-            },
+                    _updateRange(value);
+                  },
           ),
         ),
         if (_message != null) ...[
@@ -305,30 +329,50 @@ class _SummaryScreenState extends State<SummaryScreen> {
           TaciteMessage(message: _message!),
         ],
         const SizedBox(height: TaciteSpacing.md),
-        TacitePanel(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        Text(l10n.summaryReadOnlyHint, style: TaciteTextStyles.small),
+        const SizedBox(height: TaciteSpacing.md),
+        if (_isEditing) ...[
+          Row(
             children: [
-              Text(l10n.summaryDraftLabel, style: TaciteTextStyles.label),
-              const SizedBox(height: TaciteSpacing.sm),
-              TextField(
-                controller: _summaryController,
-                minLines: 14,
-                maxLines: 22,
-                enabled: !_isLoading,
-                textInputAction: TextInputAction.newline,
-                decoration: const InputDecoration(),
+              Expanded(
+                child: TacitePrimaryButton(
+                  label: l10n.saveSummaryChanges,
+                  onPressed: _isLoading ? null : _saveEditing,
+                ),
               ),
-              const SizedBox(height: TaciteSpacing.md),
-              TacitePrimaryButton(
-                label: l10n.copySummary,
-                onPressed: _isLoading ? null : _copySummary,
+              const SizedBox(width: TaciteSpacing.sm),
+              TextButton(
+                onPressed: _isLoading ? null : _cancelEditing,
+                child: Text(l10n.cancelSummaryEdit),
               ),
             ],
           ),
-        ),
-        const SizedBox(height: TaciteSpacing.md),
-        TaciteMessage(message: l10n.summaryNotMedicalAdvice),
+          const SizedBox(height: TaciteSpacing.md),
+          TextField(
+            controller: _summaryController,
+            minLines: 14,
+            maxLines: 22,
+            enabled: !_isLoading,
+            textInputAction: TextInputAction.newline,
+            decoration: const InputDecoration(),
+          ),
+        ] else ...[
+          SelectableText(_savedSummaryText, style: TaciteTextStyles.body),
+          const SizedBox(height: TaciteSpacing.md),
+          Column(
+            children: [
+              TacitePrimaryButton(
+                label: l10n.editSummary,
+                onPressed: _isLoading ? null : _startEditing,
+              ),
+              const SizedBox(height: TaciteSpacing.sm),
+              TextButton(
+                onPressed: _isLoading ? null : _copySummary,
+                child: Text(l10n.copySummary),
+              ),
+            ],
+          ),
+        ],
       ],
     );
   }
