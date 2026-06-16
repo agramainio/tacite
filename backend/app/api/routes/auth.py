@@ -32,7 +32,7 @@ def request_login_code(
 ) -> RequestLoginCodeResponse:
     code = create_login_code(db, str(payload.email), settings)
 
-    if settings.app_env == "local":
+    if settings.app_env in {"local", "staging"}:
         return RequestLoginCodeResponse(dev_code=code)
 
     return RequestLoginCodeResponse()
