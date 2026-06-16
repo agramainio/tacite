@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 
 import '../features/auth/login_screen.dart';
 import '../features/home/home_screen.dart';
-import '../features/timeline/timeline_home_screen.dart';
 import '../features/onboarding/purpose_onboarding_screen.dart';
 import '../features/onboarding/starting_point_screen.dart';
 import '../features/summary/summary_screen.dart';
@@ -11,6 +10,7 @@ import '../features/thread/new_thread_screen.dart';
 import '../features/thread/thread_detail_screen.dart';
 import '../features/thread/thread_placeholder_screen.dart';
 import '../l10n/generated/app_localizations.dart';
+import '../shared/auth/auth_gate.dart';
 import '../shared/locale/locale_controller.dart';
 import '../shared/locale/locale_scope.dart';
 import '../shared/theme/interim_theme.dart';
@@ -29,7 +29,7 @@ class _InterimAppState extends State<InterimApp> {
     routes: [
       GoRoute(
         path: '/',
-        builder: (context, state) => const TimelineHomeScreen(),
+        builder: (context, state) => const AuthGate(),
       ),
       GoRoute(
         path: '/legacy-home',

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../l10n/generated/app_localizations.dart';
+import '../../shared/auth/session_store.dart';
 import '../../shared/theme/tacite_spacing.dart';
 import '../../shared/theme/tacite_text_styles.dart';
 import '../../shared/widgets/tacite_chip.dart';
@@ -29,6 +30,7 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
   static const _excludeFromSummaryMarker = '[tacite:exclude-from-summary]';
 
   final _repository = ThreadRepository.defaultRepository();
+  final _sessionStore = const SessionStore();
   final _noteController = TextEditingController();
 
   bool _isLoading = false;
@@ -95,6 +97,23 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
     });
   }
 
+
+  Future<bool> _redirectToLoginIfUnauthorized(DioException error) async {
+    if (error.response?.statusCode != 401) {
+      return false;
+    }
+
+    await _sessionStore.clear();
+
+    if (!mounted) {
+      return true;
+    }
+
+    context.go('/login');
+
+    return true;
+  }
+
   Future<void> _loadTimeline() async {
     final l10n = AppLocalizations.of(context);
 
@@ -120,12 +139,16 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
         _isLoading = false;
       });
     } on DioException catch (error) {
+      if (await _redirectToLoginIfUnauthorized(error)) {
+        return;
+      }
+
       if (!mounted) {
         return;
       }
 
       setState(() {
-        _message = l10n.timelineHomeCouldNotLoad(error.message ?? l10n.unknown);
+        _message = l10n.timelineHomeCouldNotLoad(l10n.unknown);
         _isLoading = false;
       });
     }
@@ -191,14 +214,16 @@ class _TimelineHomeScreenState extends State<TimelineHomeScreen> {
         _message = l10n.recordedToTimeline;
       });
     } on DioException catch (error) {
+      if (await _redirectToLoginIfUnauthorized(error)) {
+        return;
+      }
+
       if (!mounted) {
         return;
       }
 
       setState(() {
-        _message = l10n.timelineHomeCouldNotRecord(
-          error.message ?? l10n.unknown,
-        );
+        _message = l10n.timelineHomeCouldNotRecord(l10n.unknown);
       });
     } finally {
       if (mounted) {
