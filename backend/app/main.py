@@ -1,4 +1,8 @@
+from pathlib import Path
+
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
+from starlette.responses import Response
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.routes.auth import router as auth_router
@@ -35,3 +39,21 @@ def create_app() -> FastAPI:
 
 
 app = create_app()
+
+_WEB_STATIC_DIR = Path(__file__).resolve().parent / "web_static"
+
+
+@app.get("/app")
+@app.get("/app/{full_path:path}")
+def serve_flutter_app(full_path: str = ""):
+    if not _WEB_STATIC_DIR.exists():
+        return Response("Tacite web build is not available.", status_code=404)
+
+    requested = (_WEB_STATIC_DIR / full_path).resolve()
+    root = _WEB_STATIC_DIR.resolve()
+
+    if requested.is_file() and root in requested.parents:
+        return FileResponse(requested)
+
+    return FileResponse(root / "index.html")
+
